@@ -71,7 +71,7 @@ def test_predict_gameweek_falls_back_to_uniform_goal_times():
 def test_run_backtest_scores_each_gameweek(tmp_path):
     summary = run_backtest(1, 3, _inputs(), out_dir=tmp_path, proxy="live")
     assert [g["gameweek"] for g in summary["gameweeks"]] == [1, 2, 3]
-    assert (tmp_path / "predictions" / "gw02.json").exists()
+    assert (tmp_path / "predictions" / "gw02" / "dixon-coles.json").exists()
     assert (tmp_path / "results" / "season.json").exists()
     assert summary["scorer_leak"] is True
     # home always wins 2-0 in history and in "actual" results → model should get results right
@@ -85,8 +85,8 @@ def test_backtest_records_proxy_and_impact(tmp_path):
     assert summary["availability_proxy"] == "lagged"
     assert summary["injury_impact"] == 0.5
     # Saka played GW1 then missed GW2 → lagged proxy has him out for GW3 only
-    gw3 = json.loads((tmp_path / "predictions" / "gw03.json").read_text())
-    gw2 = json.loads((tmp_path / "predictions" / "gw02.json").read_text())
+    gw3 = json.loads((tmp_path / "predictions" / "gw03" / "dixon-coles.json").read_text())
+    gw2 = json.loads((tmp_path / "predictions" / "gw02" / "dixon-coles.json").read_text())
     assert gw3["matches"][0]["missing"]["home"] == [{"name": "Saka", "xg_share": 1.0}]
     assert gw2["matches"][0]["missing"]["home"] == []
 

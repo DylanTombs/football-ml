@@ -1,0 +1,632 @@
+{
+  "gameweek": 2,
+  "predictor": "dixon-coles",
+  "predictor_config": {
+    "type": "dixon-coles"
+  },
+  "generated_at": "2026-11-03T15:34:00.380217+00:00",
+  "model": {
+    "name": "dixon-coles",
+    "trained_until": "2026-08-28",
+    "home_advantage": 0.205,
+    "rho": -0.059,
+    "goal_time_samples": 30,
+    "injury_impact": 0.0
+  },
+  "matches": [
+    {
+      "fixture_id": 11,
+      "kickoff": "2026-08-28T19:00:00+00:00",
+      "home": "Crystal Palace",
+      "away": "Man City",
+      "prediction": {
+        "score": {
+          "home": 0,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "33'",
+            "sort_key": 33.0,
+            "team": "Man City",
+            "scorer": "Haaland",
+            "scorer_id": 411
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 0,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.1844,
+        "draw": 0.2437,
+        "away_win": 0.5719
+      },
+      "expected_goals": {
+        "home": 0.92,
+        "away": 1.79
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1162
+        },
+        {
+          "score": "0-1",
+          "probability": 0.113
+        },
+        {
+          "score": "0-2",
+          "probability": 0.1067
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 14,
+      "kickoff": "2026-08-29T11:30:00+00:00",
+      "home": "Liverpool",
+      "away": "Nott'm Forest",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "5'",
+            "sort_key": 5.0,
+            "team": "Liverpool",
+            "scorer": "Isak",
+            "scorer_id": 379
+          },
+          {
+            "minute": "42'",
+            "sort_key": 42.0,
+            "team": "Nott'm Forest",
+            "scorer": "Ndoye",
+            "scorer_id": 483
+          },
+          {
+            "minute": "88'",
+            "sort_key": 88.0,
+            "team": "Liverpool",
+            "scorer": "Isak",
+            "scorer_id": 379
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 2,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.5893,
+        "draw": 0.223,
+        "away_win": 0.1876
+      },
+      "expected_goals": {
+        "home": 2.02,
+        "away": 1.06
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1042
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0994
+        },
+        {
+          "score": "2-0",
+          "probability": 0.0935
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 12,
+      "kickoff": "2026-08-29T14:00:00+00:00",
+      "home": "Bournemouth",
+      "away": "Everton",
+      "prediction": {
+        "score": {
+          "home": 1,
+          "away": 0
+        },
+        "goals": [
+          {
+            "minute": "38'",
+            "sort_key": 38.0,
+            "team": "Bournemouth",
+            "scorer": "Tavernier",
+            "scorer_id": 68
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 1,
+        "away": 0
+      },
+      "probabilities": {
+        "home_win": 0.4534,
+        "draw": 0.2806,
+        "away_win": 0.266
+      },
+      "expected_goals": {
+        "home": 1.43,
+        "away": 1.04
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1332
+        },
+        {
+          "score": "1-0",
+          "probability": 0.114
+        },
+        {
+          "score": "0-0",
+          "probability": 0.0923
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 13,
+      "kickoff": "2026-08-29T14:00:00+00:00",
+      "home": "Coventry",
+      "away": "Hull",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "8'",
+            "sort_key": 8.0,
+            "team": "Coventry",
+            "scorer": "Rudoni",
+            "scorer_id": 183
+          },
+          {
+            "minute": "41'",
+            "sort_key": 41.0,
+            "team": "Hull",
+            "scorer": "McBurnie",
+            "scorer_id": 295
+          },
+          {
+            "minute": "88'",
+            "sort_key": 88.0,
+            "team": "Coventry",
+            "scorer": "Awoniyi",
+            "scorer_id": 492
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 2,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.5697,
+        "draw": 0.234,
+        "away_win": 0.1963
+      },
+      "expected_goals": {
+        "home": 1.9,
+        "away": 1.03
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1106
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0993
+        },
+        {
+          "score": "2-0",
+          "probability": 0.096
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 15,
+      "kickoff": "2026-08-29T16:30:00+00:00",
+      "home": "Tottenham",
+      "away": "Newcastle",
+      "prediction": {
+        "score": {
+          "home": 1,
+          "away": 2
+        },
+        "goals": [
+          {
+            "minute": "24'",
+            "sort_key": 24.0,
+            "team": "Newcastle",
+            "scorer": "Wissa",
+            "scorer_id": 464
+          },
+          {
+            "minute": "26'",
+            "sort_key": 26.0,
+            "team": "Tottenham",
+            "scorer": "Van Hecke",
+            "scorer_id": 112
+          },
+          {
+            "minute": "90'",
+            "sort_key": 90.0,
+            "team": "Newcastle",
+            "scorer": "Barnes",
+            "scorer_id": 453
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 1,
+        "away": 2
+      },
+      "probabilities": {
+        "home_win": 0.3592,
+        "draw": 0.2443,
+        "away_win": 0.3964
+      },
+      "expected_goals": {
+        "home": 1.58,
+        "away": 1.67
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1086
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0854
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0809
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 16,
+      "kickoff": "2026-08-30T13:00:00+00:00",
+      "home": "Chelsea",
+      "away": "Brighton",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "12'",
+            "sort_key": 12.0,
+            "team": "Chelsea",
+            "scorer": "Rogers",
+            "scorer_id": 40
+          },
+          {
+            "minute": "38'",
+            "sort_key": 38.0,
+            "team": "Brighton",
+            "scorer": "Hinshelwood",
+            "scorer_id": 123
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Chelsea",
+            "scorer": "Palmer",
+            "scorer_id": 154
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 2,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.4504,
+        "draw": 0.2539,
+        "away_win": 0.2956
+      },
+      "expected_goals": {
+        "home": 1.66,
+        "away": 1.3
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1185
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0926
+        },
+        {
+          "score": "1-0",
+          "probability": 0.0791
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 17,
+      "kickoff": "2026-08-30T13:00:00+00:00",
+      "home": "Leeds",
+      "away": "Brentford",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "17'",
+            "sort_key": 17.0,
+            "team": "Leeds",
+            "scorer": "Calvert-Lewin",
+            "scorer_id": 346
+          },
+          {
+            "minute": "49'",
+            "sort_key": 49.0,
+            "team": "Brentford",
+            "scorer": "Thiago",
+            "scorer_id": 106
+          },
+          {
+            "minute": "90+9'",
+            "sort_key": 90.09,
+            "team": "Leeds",
+            "scorer": "Calvert-Lewin",
+            "scorer_id": 346
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 2,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.3823,
+        "draw": 0.2673,
+        "away_win": 0.3504
+      },
+      "expected_goals": {
+        "home": 1.43,
+        "away": 1.36
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1265
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0854
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0812
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 19,
+      "kickoff": "2026-08-30T13:00:00+00:00",
+      "home": "Sunderland",
+      "away": "Fulham",
+      "prediction": {
+        "score": {
+          "home": 0,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "49'",
+            "sort_key": 49.0,
+            "team": "Fulham",
+            "scorer": "Gonzalo",
+            "scorer_id": 569
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 0,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.2999,
+        "draw": 0.3004,
+        "away_win": 0.3997
+      },
+      "expected_goals": {
+        "home": 1.03,
+        "away": 1.23
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.14
+        },
+        {
+          "score": "0-1",
+          "probability": 0.1206
+        },
+        {
+          "score": "0-0",
+          "probability": 0.1122
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 18,
+      "kickoff": "2026-08-30T15:30:00+00:00",
+      "home": "Man United",
+      "away": "Ipswich",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "5'",
+            "sort_key": 5.0,
+            "team": "Man United",
+            "scorer": "Mbeumo",
+            "scorer_id": 427
+          },
+          {
+            "minute": "41'",
+            "sort_key": 41.0,
+            "team": "Ipswich",
+            "scorer": "Emersonn",
+            "scorer_id": 316
+          },
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Man United",
+            "scorer": "B.Fernandes",
+            "scorer_id": 426
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 2,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.6429,
+        "draw": 0.202,
+        "away_win": 0.1551
+      },
+      "expected_goals": {
+        "home": 2.23,
+        "away": 1.02
+      },
+      "top_scorelines": [
+        {
+          "score": "2-1",
+          "probability": 0.0983
+        },
+        {
+          "score": "2-0",
+          "probability": 0.0966
+        },
+        {
+          "score": "1-1",
+          "probability": 0.0933
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 20,
+      "kickoff": "2026-08-31T19:00:00+00:00",
+      "home": "Aston Villa",
+      "away": "Arsenal",
+      "prediction": {
+        "score": {
+          "home": 0,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "90'",
+            "sort_key": 90.0,
+            "team": "Arsenal",
+            "scorer": "Havertz",
+            "scorer_id": 26
+          }
+        ],
+        "fallback": false
+      },
+      "baseline_score": {
+        "home": 0,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.2129,
+        "draw": 0.2579,
+        "away_win": 0.5292
+      },
+      "expected_goals": {
+        "home": 0.97,
+        "away": 1.66
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.123
+        },
+        {
+          "score": "0-1",
+          "probability": 0.1132
+        },
+        {
+          "score": "0-2",
+          "probability": 0.0996
+        }
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
+    }
+  ]
+}

@@ -29,14 +29,27 @@
   - The predictor list lives in `config.py` as `(name, provider, model)`.
 - **Output:** `out/predictions/gwNN/<predictor>.json`. Move the existing `gw10.json` to `gw10/dixon-coles.json`.
 
+- **Added while building:**
+  - Models (checked 2026-11-03): `claude` → `claude-opus-5-5` (Anthropic SDK, effort `high`), `gpt` → `openai/gpt-6.1-sol`, `gemini` → `google/gemini-4-argon` (both via OpenRouter, both support strict JSON schema).
+  - Claude uses the official `anthropic` SDK with structured outputs (`output_config.format`) and the server-side refusal fallback (`fallbacks: "default"`), so a declined request is re-run on another Claude model rather than failing. Tests inject a fake client.
+  - Failure types: a bad key, unknown model or rejected request (`LLMConfigError`) stops the run, because falling back silently on all 10 fixtures would hide it. Timeouts, 5xx errors, refusals and invalid output retry once (with the error fed back), then fall back to Dixon-Coles.
+  - Only validated responses are cached (`data/cache/llm/gwNN/<predictor>/<fixture>.json`), so a rerun retries fallbacks.
+  - Scorer choices are available, non-departed players with minutes. Clocks must be 1–90' with stoppage only after 45' or 90' (max +15).
+  - The prompt includes the points rules, since that's the game every predictor is playing.
+  - Every match's `probabilities`, `expected_goals`, `top_scorelines` and `missing` are always Dixon-Coles's, whatever the predictor. `baseline_score` shows what the LLM changed from.
+  - Results are now `out/results/gwNN/<predictor>.json`, and `season.json` holds every predictor. `score` and `backtest` print a leaderboard, and fallbacks are counted per predictor.
+  - The backtest stays Dixon-Coles only. LLMs can't be backtested fairly, because their training data may include the real results.
+  - Refactor check: the backtest still scores 141, and the regenerated GW10 Dixon-Coles predictions match the old ones exactly.
+
 ## Tasks
 
-- [ ] `predictors/base.py`: `Predictor`, `FixtureContext`, `MatchPrediction` and shared JSON serialisation
-- [ ] Move the current logic into `DixonColesPredictor`, keeping the existing tests green
-- [ ] `llm/base.py`, `llm/anthropic.py`, `llm/openrouter.py`, tested against mocked HTTP
-- [ ] `predictors/llm.py`: prompt, schema, validation, retry and fallback, tested with a fake provider (including bad output)
-- [ ] Make the phase 1 results tracker and season table handle multiple predictors
-- [ ] `football-ml predict --predictors dixon-coles,claude,gpt`
+- [x] `predictors/base.py`: `Predictor`, `FixtureContext`, `MatchPrediction` and shared JSON serialisation
+- [x] Move the current logic into `DixonColesPredictor`, keeping the existing tests green
+- [x] `llm/base.py`, `llm/anthropic.py`, `llm/openrouter.py`, tested against mocked HTTP
+- [x] `predictors/llm.py`: prompt, schema, validation, retry and fallback, tested with a fake provider (including bad output)
+- [x] Make the phase 1 results tracker and season table handle multiple predictors
+- [x] `football-ml predict --predictors dixon-coles,claude,gpt`
+- [ ] Live run: GW10 with dixon-coles, claude, gpt and gemini before the first kickoff (needs API keys), then `score --gameweek 10`
 
 ## Done when
 

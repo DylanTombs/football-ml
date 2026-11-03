@@ -6,7 +6,9 @@ from pathlib import Path
 from football_ml.evaluate.points import score_prediction
 from football_ml.sources.results import ActualMatch
 
-_TOTAL_KEYS = ("points", "matches", "exact_scores", "correct_results", "scorer_hits", "minute_hits")
+_TOTAL_KEYS = (
+    "points", "matches", "exact_scores", "correct_results", "scorer_hits", "minute_hits", "fallbacks",
+)
 
 
 def _match_row(predicted: dict, actual: ActualMatch) -> dict:
@@ -30,7 +32,8 @@ def _match_row(predicted: dict, actual: ActualMatch) -> dict:
             "total": pts.total,
         },
         "_hits": {"exact": pts.exact, "result": pts.correct_result,
-                  "scorers": pts.scorer_hits, "minutes": pts.minute_hits},
+                  "scorers": pts.scorer_hits, "minutes": pts.minute_hits,
+                  "fallback": bool(predicted["prediction"].get("fallback", False))},
     }
 
 
@@ -48,6 +51,7 @@ def score_gameweek(report: dict, actual: tuple[ActualMatch, ...]) -> dict:
         "correct_results": sum(r["_hits"]["result"] for r in rows),
         "scorer_hits": sum(r["_hits"]["scorers"] for r in rows),
         "minute_hits": sum(r["_hits"]["minutes"] for r in rows),
+        "fallbacks": sum(r["_hits"]["fallback"] for r in rows),
     }
     return {
         "gameweek": report["gameweek"],
@@ -67,11 +71,16 @@ def season_table(gameweek_results: list[dict]) -> dict:
         table = {
             **table,
             name: {
-                **{k: previous[k] + result["totals"][k] for k in _TOTAL_KEYS},
+                **{k: previous[k] + result["totals"].get(k, 0) for k in _TOTAL_KEYS},
                 "by_gameweek": {**previous["by_gameweek"], str(result["gameweek"]): result["totals"]["points"]},
             },
         }
     return table
+
+
+def leaderboard(table: dict) -> list[tuple[str, dict]]:
+    """Predictors best first: points, then exact scores as the tie-break."""
+    return sorted(table.items(), key=lambda item: (-item[1]["points"], -item[1]["exact_scores"]))
 
 
 def _write_json(path: Path, data: dict) -> None:
@@ -80,9 +89,9 @@ def _write_json(path: Path, data: dict) -> None:
 
 
 def write_gameweek_results(result: dict, results_dir: Path) -> Path:
-    """Write gwNN.json and rebuild season.json from every gameweek file on disk."""
-    path = results_dir / f"gw{result['gameweek']:02d}.json"
+    """Write gwNN/<predictor>.json and rebuild season.json from every result on disk."""
+    path = results_dir / f"gw{result['gameweek']:02d}" / f"{result['predictor']}.json"
     _write_json(path, result)
-    all_results = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(results_dir.glob("gw*.json"))]
+    all_results = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(results_dir.glob("gw*/*.json"))]
     _write_json(results_dir / "season.json", season_table(all_results))
     return path

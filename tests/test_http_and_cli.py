@@ -1,3 +1,5 @@
+import json
+
 import pytest
 import requests
 
@@ -68,7 +70,7 @@ def test_cli_rejects_bad_gameweek():
 
 
 def test_cli_reports_failure(monkeypatch, capsys):
-    def fail(_):
+    def fail(*_):
         raise http.DataSourceError("FPL down")
     monkeypatch.setattr(cli, "run_gameweek", fail)
     assert cli.main(["predict"]) == 1
@@ -76,9 +78,52 @@ def test_cli_reports_failure(monkeypatch, capsys):
 
 
 def test_cli_prints_report(monkeypatch, capsys):
-    monkeypatch.setattr(cli, "run_gameweek", lambda _: {"gameweek": 10, "matches": [MATCH], "path": "p"})
+    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors: [
+        {"gameweek": 10, "predictor": p.name, "matches": [MATCH], "path": "p"} for p in predictors])
     assert cli.main(["predict", "--gameweek", "10"]) == 0
-    assert "Gameweek 10" in capsys.readouterr().out
+    assert "Gameweek 10: dixon-coles" in capsys.readouterr().out
+
+
+def test_cli_predict_checks_keys_before_running(monkeypatch, capsys):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setattr(cli, "run_gameweek", lambda *a: pytest.fail("ran without a key"))
+    assert cli.main(["predict", "--predictors", "dixon-coles,claude"]) == 1
+    assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
+
+
+def test_cli_rejects_unknown_predictor():
+    with pytest.raises(SystemExit):
+        cli.main(["predict", "--predictors", "dixon-coles,oracle"])
+
+
+def _report(predictor, home, away):
+    return {"gameweek": 3, "predictor": predictor, "matches": [
+        {"fixture_id": 1, "home": "Arsenal", "away": "Hull",
+         "prediction": {"score": {"home": home, "away": away}, "goals": []}}]}
+
+
+def test_cli_scores_every_predictor_into_one_leaderboard(monkeypatch, tmp_path, capsys):
+    from football_ml.sources.results import ActualMatch
+    preds, results = tmp_path / "predictions", tmp_path / "results"
+    (preds / "gw03").mkdir(parents=True)
+    (preds / "gw03" / "dixon-coles.json").write_text(json.dumps(_report("dixon-coles", 1, 0)))
+    (preds / "gw03" / "claude.json").write_text(json.dumps(_report("claude", 2, 0)))
+    monkeypatch.setattr(cli, "PREDICTIONS_DIR", preds)
+    monkeypatch.setattr(cli, "RESULTS_DIR", results)
+    monkeypatch.setattr(cli, "load_season_inputs", lambda: type("I", (), {
+        "raw_fixtures": [], "bootstrap": {}, "goal_events": ()})())
+    monkeypatch.setattr(cli, "build_actual_matches",
+                        lambda *a: (ActualMatch(1, 3, "Arsenal", "Hull", 2, 0, ()),))
+    assert cli.main(["score", "--gameweek", "3"]) == 0
+    out = capsys.readouterr().out
+    assert out.index("1. claude") < out.index("2. dixon-coles")
+    assert (results / "gw03" / "claude.json").exists()
+
+
+def test_cli_score_without_predictions(monkeypatch, tmp_path, capsys):
+    monkeypatch.setattr(cli, "PREDICTIONS_DIR", tmp_path)
+    assert cli.main(["score", "--gameweek", "4"]) == 1
+    assert "No predictions" in capsys.readouterr().err
 
 
 def _fake_inputs():

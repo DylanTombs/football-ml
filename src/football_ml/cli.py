@@ -3,17 +3,22 @@
 import argparse
 import json
 import logging
+import os
 import sys
 
 from football_ml.backtest import run_backtest
 from football_ml.config import (
     AVAILABILITY_PROXIES,
     DEFAULT_BACKTEST_PROXY,
+    DEFAULT_PREDICTORS,
     INJURY_IMPACT,
+    PREDICTIONS_DIR,
     RESULTS_DIR,
 )
-from football_ml.evaluate.season import score_gameweek, write_gameweek_results
-from football_ml.pipeline import load_season_inputs, prediction_path, run_gameweek
+from football_ml.evaluate.season import leaderboard, score_gameweek, season_table, write_gameweek_results
+from football_ml.llm.base import LLMError
+from football_ml.pipeline import load_season_inputs, run_gameweek
+from football_ml.predictors.registry import build_predictors, parse_predictor_names
 from football_ml.sources import fpl
 from football_ml.sources.http import DataSourceError
 from football_ml.sources.results import build_actual_matches
@@ -43,34 +48,47 @@ def _totals_line(t: dict) -> str:
     return (
         f"{t['points']} pts | {t['exact_scores']} exact, {t['correct_results']}/{t['matches']} results,"
         f" {t['scorer_hits']} scorers, {t['minute_hits']} minutes"
+        + (f", {t['fallbacks']} fallbacks" if t.get("fallbacks") else "")
     )
 
 
+def _leaderboard_lines(table: dict) -> list[str]:
+    return [f"{rank}. {name:<12} {_totals_line(row)}" for rank, (name, row) in enumerate(leaderboard(table), 1)]
+
+
 def _predict(args) -> int:
-    report = run_gameweek(args.gameweek)
-    print(f"\nGameweek {report['gameweek']} predictions\n")
-    for match in report["matches"]:
-        print(_format_match(match))
-    print(f"\nSaved to {report['path']}")
+    predictors = build_predictors(args.predictors, env=os.environ)
+    for report in run_gameweek(args.gameweek, predictors):
+        print(f"\nGameweek {report['gameweek']}: {report['predictor']}\n")
+        for match in report["matches"]:
+            print(_format_match(match))
+        print(f"\nSaved to {report['path']}")
     return 0
 
 
 def _score(args) -> int:
-    path = prediction_path(args.gameweek)
-    if not path.exists():
-        print(f"No predictions saved for GW{args.gameweek} ({path})", file=sys.stderr)
+    paths = sorted((PREDICTIONS_DIR / f"gw{args.gameweek:02d}").glob("*.json"))
+    if not paths:
+        print(f"No predictions saved for GW{args.gameweek} in {PREDICTIONS_DIR}", file=sys.stderr)
         return 1
-    report = json.loads(path.read_text(encoding="utf-8"))
     inputs = load_season_inputs()
     actual = build_actual_matches(inputs.raw_fixtures, inputs.bootstrap, inputs.goal_events, args.gameweek)
-    result = score_gameweek(report, actual)
-    out = write_gameweek_results(result, RESULTS_DIR)
 
-    status = "complete" if result["complete"] else "partial — some matches not finished"
-    print(f"\nGameweek {args.gameweek} results ({status})\n")
-    for row in result["matches"]:
-        print(_format_result(row))
-    print(f"\n{_totals_line(result['totals'])}\nSaved to {out}")
+    results = []
+    for path in paths:
+        result = score_gameweek(json.loads(path.read_text(encoding="utf-8")), actual)
+        write_gameweek_results(result, RESULTS_DIR)
+        results.append(result)
+        status = "complete" if result["complete"] else "partial — some matches not finished"
+        print(f"\nGameweek {args.gameweek}: {result['predictor']} ({status})\n")
+        for row in result["matches"]:
+            print(_format_result(row))
+
+    print(f"\nGW{args.gameweek} leaderboard")
+    print("\n".join(_leaderboard_lines(season_table(results))))
+    season = json.loads((RESULTS_DIR / "season.json").read_text(encoding="utf-8"))
+    print("\nSeason leaderboard")
+    print("\n".join(_leaderboard_lines(season)))
     return 0
 
 
@@ -90,8 +108,7 @@ def _backtest(args) -> int:
     )
     for gw in summary["gameweeks"]:
         print(f"GW{gw['gameweek']:>2}: {_totals_line(gw['totals'])}")
-    for name, row in summary["season"].items():
-        print(f"\n{name}: {_totals_line(row)}")
+    print("\n" + "\n".join(_leaderboard_lines(summary["season"])))
     return 0
 
 
@@ -100,6 +117,13 @@ def _gameweek_arg(value: str) -> int:
     if not 1 <= gw <= 38:
         raise argparse.ArgumentTypeError("gameweek must be between 1 and 38")
     return gw
+
+
+def _predictors_arg(value: str) -> tuple[str, ...]:
+    try:
+        return parse_predictor_names(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(str(exc)) from exc
 
 
 def _impact_arg(value: str) -> float:
@@ -115,6 +139,8 @@ def _parser() -> argparse.ArgumentParser:
 
     predict = sub.add_parser("predict", help="Predict every fixture in a gameweek")
     predict.add_argument("--gameweek", type=_gameweek_arg, help="defaults to the next gameweek")
+    predict.add_argument("--predictors", type=_predictors_arg, default=DEFAULT_PREDICTORS,
+                         help=f"comma-separated, e.g. dixon-coles,claude,gpt (default {','.join(DEFAULT_PREDICTORS)})")
     predict.set_defaults(handler=_predict)
 
     score = sub.add_parser("score", help="Score saved predictions against actual results")
@@ -137,7 +163,7 @@ def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     try:
         return args.handler(args)
-    except (DataSourceError, KeyError, ValueError, RuntimeError) as exc:
+    except (DataSourceError, LLMError, KeyError, ValueError, RuntimeError) as exc:
         print(f"{args.command} failed: {exc}", file=sys.stderr)
         return 1
 

@@ -4,10 +4,10 @@
 
 ```
 football-data.co.uk ─┐ results (PL + Championship, 6 seasons)
-FPL API ─────────────┼─► load_season_inputs() ─► SeasonInputs ─► predict_gameweek(gw) ─► out/predictions/gwNN.json
+FPL API ─────────────┼─► load_season_inputs() ─► SeasonInputs ─► gameweek_context(gw) ─► each predictor ─► out/predictions/gwNN/<predictor>.json
 ESPN scoreboard ─────┘ fixtures, squads,                                │
                        availability, goal events                         ▼
-                                       build_actual_matches(gw) ─► score_gameweek ─► out/results/gwNN.json + season.json
+                                       build_actual_matches(gw) ─► score_gameweek ─► out/results/gwNN/<predictor>.json + season.json
 ```
 
 Per fixture: Dixon-Coles rates λ, μ → injury adjustment (`INJURY_IMPACT`, off by default) → score matrix → headline score (likeliest result, then the likeliest score within it) → scorers (greedy by xG + goals, with less weight for players already given a goal) → minutes (stratified sample of this season's real goal times, seeded by fixture id).
@@ -21,7 +21,9 @@ Per fixture: Dixon-Coles rates λ, μ → injury adjustment (`INJURY_IMPACT`, of
 | `model/dixon_coles.py` | Fit (time decay, ridge penalty, ρ correction) and score matrix |
 | `predict/` | `scoreline`, `scorers`, `timing`, `availability` (missing xG share per team) |
 | `evaluate/` | `points` (one match), `season` (gameweek totals + season table) |
-| `pipeline.py` | `SeasonInputs`, `predict_gameweek`, `run_gameweek` |
+| `predictors/` | `base` (`Predictor`, `FixtureContext`, `MatchPrediction`, JSON), `context` (Dixon-Coles baseline + form per fixture), `dixon_coles`, `llm` + `llm_prompt` (validation, retry, fallback), `registry` (names → predictors, API key checks) |
+| `llm/` | `LLMProvider` protocol, `anthropic` (SDK, structured outputs), `openrouter` (GPT, Gemini…), `cache` |
+| `pipeline.py` | `SeasonInputs`, `gameweek_context`, `predictor_report`, `run_gameweek` |
 | `backtest.py` | Replays past gameweeks without access to later results |
 | `historical_availability.py` | Who was missing in a past gameweek, from FPL minutes (`lagged` / `oracle` / `live`) |
 | `cli.py` | `predict`, `score`, `backtest` |
@@ -38,4 +40,12 @@ Per fixture: Dixon-Coles rates λ, μ → injury adjustment (`INJURY_IMPACT`, of
 
 ## Prediction JSON (key fields)
 
-`gameweek`, `predictor`, `model{trained_until, injury_impact, …}`, `matches[]{fixture_id, home, away, prediction{score, goals[]{minute, team, scorer, scorer_id}}, probabilities, expected_goals, top_scorelines, missing{home[], away[]}{name, xg_share}}`
+`gameweek`, `predictor`, `predictor_config{type, model}`, `model{trained_until, injury_impact, …}`, `matches[]{fixture_id, home, away, prediction{score, goals[]{minute, team, scorer, scorer_id}, fallback, reasoning?}, baseline_score, probabilities, expected_goals, top_scorelines, missing{home[], away[]}{name, xg_share}}`
+
+`probabilities` / `expected_goals` / `top_scorelines` / `missing` are always the Dixon-Coles model's, whichever predictor wrote the file.
+
+## LLM predictors
+
+- Keys come from `ANTHROPIC_API_KEY` and `OPENROUTER_API_KEY`, checked up front for the enabled predictors only. Models live in `PREDICTOR_SPECS` in `config.py`.
+- One call per fixture. Validated responses are cached in `data/cache/llm/`, so reruns are free.
+- Never backtested: the models may have seen the real results.

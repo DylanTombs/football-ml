@@ -3,7 +3,8 @@
 Premier League predictions: exact scoreline, goalscorers and goal minutes for every fixture in a gameweek.
 
 ```bash
-uv run football-ml predict              # next gameweek
+uv run football-ml predict              # next gameweek, Dixon-Coles only
+uv run football-ml predict --predictors dixon-coles,claude,gpt,gemini   # needs ANTHROPIC_API_KEY / OPENROUTER_API_KEY
 uv run football-ml predict --gameweek 12
 uv run football-ml score --gameweek 10   # after the gameweek: points vs actual results
 uv run football-ml backtest --from 1 --to 9   # [--injury-impact 0.25] [--availability lagged|oracle|live]
@@ -11,7 +12,7 @@ uv run pytest --cov=football_ml
 ```
 
 Output:
-- `out/predictions/gwNN.json`: predictions, committed before kickoff
+- `out/predictions/gwNN/<predictor>.json`: predictions, committed before kickoff
 - `out/results/`: points per gameweek, plus `season.json`
 - `out/backtest/`: replayed past gameweeks
 

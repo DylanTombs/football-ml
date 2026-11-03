@@ -6,6 +6,7 @@
     "correct_results": 45,
     "scorer_hits": 67,
     "minute_hits": 15,
+    "fallbacks": 0,
     "by_gameweek": {
       "1": 16,
       "2": 16,

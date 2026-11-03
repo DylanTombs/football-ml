@@ -6,7 +6,7 @@ Build in this order. Each phase relies on the one before it.
 |---|---|---|---|
 | 1 | [Results tracker + backtest](01-results-tracker.md) | Without a score we can't tell whether any later change helps | done: baseline 141 pts |
 | 2 | [Injury-adjusted team strength](02-injury-adjusted-strength.md) | Injuries currently change only who scores, not the scoreline | done: off by default (every impact < 141 pts); `missing` in JSON |
-| 3 | [Predictor interface + LLM adapters](03-predictors-and-llm.md) | Claude / OpenRouter models compete against Dixon-Coles | todo |
+| 3 | [Predictor interface + LLM adapters](03-predictors-and-llm.md) | Claude / OpenRouter models compete against Dixon-Coles | built; waiting on the GW10 live run + scoring |
 | 4 | [Weekly command + automation](04-weekly-command.md) | One command (later a schedule) each gameweek | todo |
 
 Rules that apply to every phase:

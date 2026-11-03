@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from football_ml.evaluate.season import score_gameweek, season_table, write_gameweek_results
+from football_ml.evaluate.season import leaderboard, score_gameweek, season_table, write_gameweek_results
 from football_ml.sources.results import ActualMatch
 
 REPORT = {
@@ -51,9 +51,42 @@ def test_season_table_aggregates_by_predictor():
 def test_write_gameweek_results_rebuilds_season(tmp_path):
     result = score_gameweek(REPORT, ACTUAL)
     write_gameweek_results(result, tmp_path)
-    assert (tmp_path / "gw03.json").exists()
+    assert (tmp_path / "gw03" / "dixon-coles.json").exists()
     season = json.loads((tmp_path / "season.json").read_text())
     assert season["dixon-coles"]["points"] == 3
+
+
+def _claude_report(home, away, fallback=False):
+    return {**REPORT, "predictor": "claude", "matches": [
+        {**REPORT["matches"][0], "prediction": {"score": {"home": home, "away": away}, "goals": [],
+                                                "fallback": fallback}},
+    ]}
+
+
+def test_multiple_predictors_share_one_season_table(tmp_path):
+    write_gameweek_results(score_gameweek(REPORT, ACTUAL), tmp_path)
+    write_gameweek_results(score_gameweek(_claude_report(1, 0), ACTUAL), tmp_path)
+    season = json.loads((tmp_path / "season.json").read_text())
+    assert season["dixon-coles"]["points"] == 3
+    assert season["claude"]["points"] == 1
+
+
+def test_fallbacks_are_counted():
+    result = score_gameweek(_claude_report(2, 0, fallback=True), ACTUAL)
+    assert result["totals"]["fallbacks"] == 1
+    assert season_table([result])["claude"]["fallbacks"] == 1
+
+
+def test_season_table_tolerates_results_written_before_fallbacks_existed():
+    old = {"gameweek": 1, "predictor": "dixon-coles", "totals": {
+        "points": 5, "matches": 10, "exact_scores": 1, "correct_results": 4, "scorer_hits": 0, "minute_hits": 0}}
+    assert season_table([old])["dixon-coles"]["fallbacks"] == 0
+
+
+def test_leaderboard_ranks_by_points_then_exact_scores():
+    row = lambda pts, exact: {"points": pts, "exact_scores": exact}  # noqa: E731
+    table = {"a": row(10, 1), "b": row(12, 0), "c": row(10, 2)}
+    assert [name for name, _ in leaderboard(table)] == ["b", "c", "a"]
 
 
 def test_score_gameweek_rejects_report_without_matches():

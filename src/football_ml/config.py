@@ -40,6 +40,7 @@ RATING_L2_PENALTY = 0.5
 RHO_BOUNDS = (-0.2, 0.2)
 MAX_GOALS = 10
 TOP_SCORELINES = 3
+FORM_MATCHES = 5  # recent results given to predictors as context
 
 # --- Injuries --------------------------------------------------------------
 # λ_adj = λ × (1 − INJURY_IMPACT × missing_share). Below 1 because
@@ -61,6 +62,30 @@ DEFAULT_BACKTEST_PROXY = "lagged"
 MIN_CHANCE_OF_PLAYING = 75
 SCORER_XG_WEIGHT = 0.7  # remainder goes to actual goals scored
 SCORER_REPEAT_DECAY = 1.0  # weight / (1 + decay * goals_already_given)
+
+# --- Predictors ------------------------------------------------------------
+# name -> (provider, model). Dixon-Coles has no provider.
+PREDICTOR_SPECS = {
+    "dixon-coles": None,
+    "claude": ("anthropic", "claude-opus-5-5"),
+    "gpt": ("openrouter", "openai/gpt-6.1-sol"),
+    "gemini": ("openrouter", "google/gemini-4-argon"),
+}
+DEFAULT_PREDICTORS = ("dixon-coles",)
+PROVIDER_API_KEY_ENV = {"anthropic": "ANTHROPIC_API_KEY", "openrouter": "OPENROUTER_API_KEY"}
+
+# --- LLM calls -------------------------------------------------------------
+LLM_CACHE_DIR = CACHE_DIR / "llm"
+LLM_MAX_ATTEMPTS = 2  # first try + one retry, then fall back to Dixon-Coles
+LLM_MAX_TOKENS = 16000
+LLM_TIMEOUT_SECONDS = 300
+ANTHROPIC_EFFORT = "high"
+# Server-side refusal fallback: the API re-runs a declined request on another model.
+ANTHROPIC_FALLBACK_BETA = "server-side-fallback-2026-07-01"
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+# Valid predicted goal clocks: regulation minute 1-90, stoppage only after 45 or 90.
+MAX_STOPPAGE_MINUTES = 15
+STOPPAGE_MINUTES = (45, 90)
 
 # --- Team names: FPL name -> football-data.co.uk name (canonical) ---------
 FPL_TO_CANONICAL_TEAM = {
