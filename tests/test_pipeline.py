@@ -52,3 +52,28 @@ def test_predict_fixture_without_squad_marks_unknown_scorer():
     pred = predict_fixture(FIXTURE, PARAMS, (), DISTRIBUTION)
     for goal in pred["prediction"]["goals"]:
         assert goal["scorer"] is None
+
+
+SAKA_OUT = (
+    Player(1, "Saka", "Arsenal", xg=4.0, goals=5, minutes=800, available=False, availability=0.0),
+    *PLAYERS[1:],
+)
+
+
+def test_predict_fixture_lists_missing_players():
+    pred = predict_fixture(FIXTURE, PARAMS, SAKA_OUT, DISTRIBUTION, injury_impact=0.5)
+    assert pred["missing"]["home"] == [{"name": "Saka", "xg_share": round(4 / 7, 3)}]
+    assert pred["missing"]["away"] == []
+
+
+def test_injury_lowers_expected_goals():
+    full = predict_fixture(FIXTURE, PARAMS, PLAYERS, DISTRIBUTION, injury_impact=0.5)
+    hurt = predict_fixture(FIXTURE, PARAMS, SAKA_OUT, DISTRIBUTION, injury_impact=0.5)
+    assert hurt["expected_goals"]["home"] < full["expected_goals"]["home"]
+    assert hurt["expected_goals"]["away"] == full["expected_goals"]["away"]
+
+
+def test_zero_injury_impact_matches_unadjusted_model():
+    full = predict_fixture(FIXTURE, PARAMS, PLAYERS, DISTRIBUTION, injury_impact=0.0)
+    hurt = predict_fixture(FIXTURE, PARAMS, SAKA_OUT, DISTRIBUTION, injury_impact=0.0)
+    assert hurt["probabilities"] == full["probabilities"]

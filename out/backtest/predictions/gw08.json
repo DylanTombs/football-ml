@@ -1,13 +1,14 @@
 {
   "gameweek": 8,
   "predictor": "dixon-coles",
-  "generated_at": "2026-11-03T14:50:17.659560+00:00",
+  "generated_at": "2026-11-03T15:20:17.020484+00:00",
   "model": {
     "name": "dixon-coles",
     "trained_until": "2026-10-23",
     "home_advantage": 0.201,
     "rho": -0.043,
-    "goal_time_samples": 203
+    "goal_time_samples": 203,
+    "injury_impact": 0.0
   },
   "matches": [
     {
@@ -67,7 +68,49 @@
           "score": "0-1",
           "probability": 0.0884
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Philogene",
+            "xg_share": 0.017
+          },
+          {
+            "name": "Walle Egeli",
+            "xg_share": 0.008
+          },
+          {
+            "name": "McAteer",
+            "xg_share": 0.004
+          },
+          {
+            "name": "Núñez",
+            "xg_share": 0.002
+          },
+          {
+            "name": "Lukić",
+            "xg_share": 0.002
+          }
+        ],
+        "away": [
+          {
+            "name": "Gibbs-White",
+            "xg_share": 0.17
+          },
+          {
+            "name": "Igor Jesus",
+            "xg_share": 0.084
+          },
+          {
+            "name": "Milenković",
+            "xg_share": 0.014
+          },
+          {
+            "name": "Aina",
+            "xg_share": 0.004
+          }
+        ]
+      }
     },
     {
       "fixture_id": 72,
@@ -126,7 +169,45 @@
           "score": "0-1",
           "probability": 0.091
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Maatsen",
+            "xg_share": 0.037
+          },
+          {
+            "name": "Garnacho",
+            "xg_share": 0.008
+          },
+          {
+            "name": "George Hemmings",
+            "xg_share": 0.006
+          },
+          {
+            "name": "Ruggeri",
+            "xg_share": 0.003
+          }
+        ],
+        "away": [
+          {
+            "name": "Cherki",
+            "xg_share": 0.095
+          },
+          {
+            "name": "Lewis",
+            "xg_share": 0.009
+          },
+          {
+            "name": "McAidoo",
+            "xg_share": 0.005
+          },
+          {
+            "name": "Allan",
+            "xg_share": 0.001
+          }
+        ]
+      }
     },
     {
       "fixture_id": 71,
@@ -171,7 +252,49 @@
           "score": "1-1",
           "probability": 0.1018
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Lewis-Skelly",
+            "xg_share": 0.015
+          },
+          {
+            "name": "Tzolis",
+            "xg_share": 0.015
+          },
+          {
+            "name": "Zubimendi",
+            "xg_share": 0.014
+          }
+        ],
+        "away": [
+          {
+            "name": "O'Brien",
+            "xg_share": 0.016
+          },
+          {
+            "name": "Dibling",
+            "xg_share": 0.014
+          },
+          {
+            "name": "Alcaraz",
+            "xg_share": 0.011
+          },
+          {
+            "name": "Beto",
+            "xg_share": 0.007
+          },
+          {
+            "name": "Hackney",
+            "xg_share": 0.006
+          },
+          {
+            "name": "Keane",
+            "xg_share": 0.001
+          }
+        ]
+      }
     },
     {
       "fixture_id": 74,
@@ -216,7 +339,49 @@
           "score": "1-2",
           "probability": 0.0865
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Simms",
+            "xg_share": 0.048
+          },
+          {
+            "name": "Mfuni",
+            "xg_share": 0.039
+          },
+          {
+            "name": "Tchaouna",
+            "xg_share": 0.027
+          },
+          {
+            "name": "Torp",
+            "xg_share": 0.004
+          },
+          {
+            "name": "Amenda",
+            "xg_share": 0.002
+          }
+        ],
+        "away": [
+          {
+            "name": "Muniz",
+            "xg_share": 0.033
+          },
+          {
+            "name": "Kevin",
+            "xg_share": 0.016
+          },
+          {
+            "name": "Larsson",
+            "xg_share": 0.014
+          },
+          {
+            "name": "Smith Rowe",
+            "xg_share": 0.004
+          }
+        ]
+      }
     },
     {
       "fixture_id": 73,
@@ -275,7 +440,57 @@
           "score": "2-0",
           "probability": 0.0786
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Barco",
+            "xg_share": 0.043
+          },
+          {
+            "name": "Estêvão",
+            "xg_share": 0.028
+          },
+          {
+            "name": "James",
+            "xg_share": 0.025
+          },
+          {
+            "name": "Fofana",
+            "xg_share": 0.01
+          },
+          {
+            "name": "Gusto",
+            "xg_share": 0.006
+          },
+          {
+            "name": "Chavarria",
+            "xg_share": 0.003
+          }
+        ],
+        "away": [
+          {
+            "name": "Pedro Porro",
+            "xg_share": 0.048
+          },
+          {
+            "name": "Sávio",
+            "xg_share": 0.046
+          },
+          {
+            "name": "Moore",
+            "xg_share": 0.034
+          },
+          {
+            "name": "Bergvall",
+            "xg_share": 0.01
+          },
+          {
+            "name": "Bentancur",
+            "xg_share": 0.002
+          }
+        ]
+      }
     },
     {
       "fixture_id": 75,
@@ -334,7 +549,53 @@
           "score": "2-1",
           "probability": 0.082
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Disasi",
+            "xg_share": 0.029
+          },
+          {
+            "name": "Chilwell",
+            "xg_share": 0.024
+          },
+          {
+            "name": "Osorio",
+            "xg_share": 0.015
+          },
+          {
+            "name": "Guessand",
+            "xg_share": 0.003
+          }
+        ],
+        "away": [
+          {
+            "name": "Elanga",
+            "xg_share": 0.074
+          },
+          {
+            "name": "J.Murphy",
+            "xg_share": 0.028
+          },
+          {
+            "name": "J.Ramsey",
+            "xg_share": 0.018
+          },
+          {
+            "name": "Dedić",
+            "xg_share": 0.017
+          },
+          {
+            "name": "Schär",
+            "xg_share": 0.012
+          },
+          {
+            "name": "Woltemade",
+            "xg_share": 0.002
+          }
+        ]
+      }
     },
     {
       "fixture_id": 76,
@@ -379,7 +640,53 @@
           "score": "0-2",
           "probability": 0.1005
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Cho",
+            "xg_share": 0.092
+          },
+          {
+            "name": "Mendy",
+            "xg_share": 0.068
+          },
+          {
+            "name": "Millar",
+            "xg_share": 0.063
+          },
+          {
+            "name": "Stroud",
+            "xg_share": 0.007
+          },
+          {
+            "name": "Drameh",
+            "xg_share": 0.005
+          },
+          {
+            "name": "Gourna-Douath",
+            "xg_share": 0.003
+          }
+        ],
+        "away": [
+          {
+            "name": "Collins",
+            "xg_share": 0.036
+          },
+          {
+            "name": "Carvalho",
+            "xg_share": 0.03
+          },
+          {
+            "name": "Wilson",
+            "xg_share": 0.008
+          },
+          {
+            "name": "Schuster",
+            "xg_share": 0.007
+          }
+        ]
+      }
     },
     {
       "fixture_id": 78,
@@ -438,7 +745,49 @@
           "score": "1-0",
           "probability": 0.0722
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Gakpo",
+            "xg_share": 0.094
+          },
+          {
+            "name": "Gravenberch",
+            "xg_share": 0.013
+          },
+          {
+            "name": "Tsimikas",
+            "xg_share": 0.003
+          }
+        ],
+        "away": [
+          {
+            "name": "David",
+            "xg_share": 0.024
+          },
+          {
+            "name": "Struijk",
+            "xg_share": 0.018
+          },
+          {
+            "name": "O'Riley",
+            "xg_share": 0.016
+          },
+          {
+            "name": "Costinha",
+            "xg_share": 0.01
+          },
+          {
+            "name": "Wieffer",
+            "xg_share": 0.007
+          },
+          {
+            "name": "Osman",
+            "xg_share": 0.003
+          }
+        ]
+      }
     },
     {
       "fixture_id": 79,
@@ -497,7 +846,53 @@
           "score": "1-0",
           "probability": 0.0846
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Dorgu",
+            "xg_share": 0.054
+          },
+          {
+            "name": "Rashford",
+            "xg_share": 0.054
+          },
+          {
+            "name": "Šeško",
+            "xg_share": 0.027
+          },
+          {
+            "name": "Mainoo",
+            "xg_share": 0.021
+          },
+          {
+            "name": "Zirkzee",
+            "xg_share": 0.018
+          },
+          {
+            "name": "Heaven",
+            "xg_share": 0.008
+          },
+          {
+            "name": "Shaw",
+            "xg_share": 0.002
+          },
+          {
+            "name": "Lacey",
+            "xg_share": 0.002
+          }
+        ],
+        "away": [
+          {
+            "name": "Scott",
+            "xg_share": 0.04
+          },
+          {
+            "name": "Jebbison",
+            "xg_share": 0.006
+          }
+        ]
+      }
     },
     {
       "fixture_id": 80,
@@ -542,7 +937,73 @@
           "score": "0-0",
           "probability": 0.1141
         }
-      ]
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Brobbey",
+            "xg_share": 0.261
+          },
+          {
+            "name": "Isidor",
+            "xg_share": 0.127
+          },
+          {
+            "name": "N.Angulo",
+            "xg_share": 0.059
+          },
+          {
+            "name": "Meunier",
+            "xg_share": 0.037
+          },
+          {
+            "name": "Fofana",
+            "xg_share": 0.032
+          },
+          {
+            "name": "Ballard",
+            "xg_share": 0.023
+          },
+          {
+            "name": "Talbi",
+            "xg_share": 0.017
+          },
+          {
+            "name": "Mundle",
+            "xg_share": 0.013
+          },
+          {
+            "name": "Methalie",
+            "xg_share": 0.002
+          }
+        ],
+        "away": [
+          {
+            "name": "James",
+            "xg_share": 0.031
+          },
+          {
+            "name": "Wilson",
+            "xg_share": 0.012
+          },
+          {
+            "name": "Bijol",
+            "xg_share": 0.011
+          },
+          {
+            "name": "Rodon",
+            "xg_share": 0.003
+          },
+          {
+            "name": "Bahoya",
+            "xg_share": 0.002
+          },
+          {
+            "name": "Aaronson",
+            "xg_share": 0.001
+          }
+        ]
+      }
     }
   ]
 }

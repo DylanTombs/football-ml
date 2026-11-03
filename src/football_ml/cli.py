@@ -6,9 +6,15 @@ import logging
 import sys
 
 from football_ml.backtest import run_backtest
-from football_ml.config import RESULTS_DIR
+from football_ml.config import (
+    AVAILABILITY_PROXIES,
+    DEFAULT_BACKTEST_PROXY,
+    INJURY_IMPACT,
+    RESULTS_DIR,
+)
 from football_ml.evaluate.season import score_gameweek, write_gameweek_results
 from football_ml.pipeline import load_season_inputs, prediction_path, run_gameweek
+from football_ml.sources import fpl
 from football_ml.sources.http import DataSourceError
 from football_ml.sources.results import build_actual_matches
 
@@ -69,8 +75,19 @@ def _score(args) -> int:
 
 
 def _backtest(args) -> int:
-    summary = run_backtest(args.first, args.last, load_season_inputs())
-    print("\nBacktest (scorer points optimistic: live FPL stats)\n")
+    inputs = load_season_inputs()
+    minutes = None
+    if args.availability != "live":
+        finished = tuple(gw for gw in fpl.finished_gameweeks(inputs.bootstrap) if gw <= args.last)
+        minutes = fpl.fetch_gameweek_minutes(finished)
+    summary = run_backtest(
+        args.first, args.last, inputs,
+        injury_impact=args.injury_impact, gameweek_minutes=minutes, proxy=args.availability,
+    )
+    print(
+        f"\nBacktest (scorer points optimistic: live FPL stats;"
+        f" injury impact {summary['injury_impact']}, availability {summary['availability_proxy']})\n"
+    )
     for gw in summary["gameweeks"]:
         print(f"GW{gw['gameweek']:>2}: {_totals_line(gw['totals'])}")
     for name, row in summary["season"].items():
@@ -83,6 +100,13 @@ def _gameweek_arg(value: str) -> int:
     if not 1 <= gw <= 38:
         raise argparse.ArgumentTypeError("gameweek must be between 1 and 38")
     return gw
+
+
+def _impact_arg(value: str) -> float:
+    impact = float(value)
+    if not 0 <= impact <= 1:
+        raise argparse.ArgumentTypeError("injury impact must be between 0 and 1")
+    return impact
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -100,6 +124,10 @@ def _parser() -> argparse.ArgumentParser:
     backtest = sub.add_parser("backtest", help="Re-predict and score past gameweeks")
     backtest.add_argument("--from", dest="first", type=_gameweek_arg, required=True)
     backtest.add_argument("--to", dest="last", type=_gameweek_arg, required=True)
+    backtest.add_argument("--injury-impact", type=_impact_arg, default=INJURY_IMPACT,
+                          help=f"0 = ignore injuries (default {INJURY_IMPACT})")
+    backtest.add_argument("--availability", choices=AVAILABILITY_PROXIES, default=DEFAULT_BACKTEST_PROXY,
+                          help="how to tell who was missing in past gameweeks")
     backtest.set_defaults(handler=_backtest)
     return parser
 

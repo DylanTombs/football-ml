@@ -14,6 +14,7 @@ PREDICTOR_NAME = "dixon-coles"
 FOOTBALL_DATA_URL = "https://football-data.co.uk/mmz4281/{season}/{league}.csv"
 FPL_BOOTSTRAP_URL = "https://fantasy.premierleague.com/api/bootstrap-static/"
 FPL_FIXTURES_URL = "https://fantasy.premierleague.com/api/fixtures/"
+FPL_EVENT_LIVE_URL = "https://fantasy.premierleague.com/api/event/{gameweek}/live/"
 ESPN_SCOREBOARD_URL = (
     "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates={date}"
 )
@@ -39,6 +40,22 @@ RATING_L2_PENALTY = 0.5
 RHO_BOUNDS = (-0.2, 0.2)
 MAX_GOALS = 10
 TOP_SCORELINES = 3
+
+# --- Injuries --------------------------------------------------------------
+# λ_adj = λ × (1 − INJURY_IMPACT × missing_share). Below 1 because
+# replacements still score some of the missing goals. Off (0.0): every value
+# swept in plan 02 (0.25 / 0.5 / 0.75) scored fewer backtest points.
+INJURY_IMPACT = 0.0
+# FPL statuses meaning the player is gone (u = left / loaned out, n = ineligible).
+FPL_DEPARTED_STATUSES = ("u", "n")
+FPL_OUT_STATUSES = ("i", "s")
+# How the backtest decides who was missing in a past gameweek (FPL has no
+# history of injury news):
+#   lagged — 0 minutes in the team's previous match after playing before (no leak)
+#   oracle — 0 minutes in that gameweek itself (uses the real line-up: ceiling only)
+#   live   — today's injury list (only meaningful for the next gameweek)
+AVAILABILITY_PROXIES = ("lagged", "oracle", "live")
+DEFAULT_BACKTEST_PROXY = "lagged"
 
 # --- Goalscorers -----------------------------------------------------------
 MIN_CHANCE_OF_PLAYING = 75

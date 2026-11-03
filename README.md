@@ -6,7 +6,7 @@ Premier League predictions: exact scoreline, goalscorers and goal minutes for ev
 uv run football-ml predict              # next gameweek
 uv run football-ml predict --gameweek 12
 uv run football-ml score --gameweek 10   # after the gameweek: points vs actual results
-uv run football-ml backtest --from 1 --to 9
+uv run football-ml backtest --from 1 --to 9   # [--injury-impact 0.25] [--availability lagged|oracle|live]
 uv run pytest --cov=football_ml
 ```
 

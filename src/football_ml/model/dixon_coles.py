@@ -112,12 +112,17 @@ def fit(
     )
 
 
-def score_matrix(params: DixonColesParams, home: str, away: str, max_goals: int) -> np.ndarray:
-    """P(home scores i, away scores j) for i, j in 0..max_goals."""
-    lam, mu = params.expected_goals(home, away)
+def matrix_from_rates(lam: float, mu: float, rho: float, max_goals: int) -> np.ndarray:
+    """P(home scores i, away scores j) for i, j in 0..max_goals, given the two
+    expected-goal rates. Kept separate so rates can be adjusted (e.g. injuries)."""
     goals = np.arange(max_goals + 1)
     independent = np.outer(poisson.pmf(goals, lam), poisson.pmf(goals, mu))
     x, y = np.meshgrid(goals, goals, indexing="ij")
-    correction = _tau(x, y, np.full(x.shape, lam), np.full(x.shape, mu), params.rho)
-    matrix = independent * correction
+    correction = _tau(x, y, np.full(x.shape, lam), np.full(x.shape, mu), rho)
+    matrix = np.clip(independent * correction, 0.0, None)
     return matrix / matrix.sum()  # renormalise mass lost by truncating at max_goals
+
+
+def score_matrix(params: DixonColesParams, home: str, away: str, max_goals: int) -> np.ndarray:
+    lam, mu = params.expected_goals(home, away)
+    return matrix_from_rates(lam, mu, params.rho, max_goals)

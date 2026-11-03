@@ -34,8 +34,25 @@ BOOTSTRAP = {
          "minutes": 300, "status": "i", "chance_of_playing_next_round": 0},
         {"id": 12, "web_name": "Doubt", "team": 2, "expected_goals": "1.0", "goals_scored": 1,
          "minutes": 300, "status": "d", "chance_of_playing_next_round": 75},
+        {"id": 13, "web_name": "Loanee", "team": 2, "expected_goals": "0.5", "goals_scored": 0,
+         "minutes": 90, "status": "u", "chance_of_playing_next_round": 0},
+        {"id": 14, "web_name": "Banned", "team": 2, "expected_goals": "0.5", "goals_scored": 0,
+         "minutes": 90, "status": "s", "chance_of_playing_next_round": None},
+        {"id": 15, "web_name": "Fit", "team": 2, "expected_goals": "0.5", "goals_scored": 0,
+         "minutes": 90, "status": "a", "chance_of_playing_next_round": 100},
     ],
 }
+
+
+def test_parse_players_availability_fraction():
+    players = {p.name: p for p in parse_players(BOOTSTRAP)}
+    assert players["Saka"].availability == 1.0
+    assert players["Fit"].availability == 1.0
+    assert players["Hurt"].availability == 0.0
+    assert players["Doubt"].availability == 0.75
+    assert players["Banned"].availability == 0.0  # suspended with no chance given
+    assert players["Loanee"].departed
+    assert not players["Hurt"].departed
 
 
 def test_parse_players_maps_names_and_availability():

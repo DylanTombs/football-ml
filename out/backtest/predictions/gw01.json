@@ -1,13 +1,14 @@
 {
   "gameweek": 1,
   "predictor": "dixon-coles",
-  "generated_at": "2026-11-03T14:50:03.730592+00:00",
+  "generated_at": "2026-11-03T15:20:03.359920+00:00",
   "model": {
     "name": "dixon-coles",
     "trained_until": "2026-08-21",
     "home_advantage": 0.199,
     "rho": -0.056,
-    "goal_time_samples": 90
+    "goal_time_samples": 90,
+    "injury_impact": 0.0
   },
   "matches": [
     {
@@ -60,7 +61,11 @@
           "score": "1-0",
           "probability": 0.0967
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     },
     {
       "fixture_id": 4,
@@ -112,7 +117,11 @@
           "score": "1-1",
           "probability": 0.0973
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     },
     {
       "fixture_id": 3,
@@ -157,7 +166,11 @@
           "score": "0-0",
           "probability": 0.1143
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     },
     {
       "fixture_id": 5,
@@ -202,7 +215,11 @@
           "score": "0-0",
           "probability": 0.0961
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     },
     {
       "fixture_id": 6,
@@ -247,7 +264,11 @@
           "score": "2-1",
           "probability": 0.0915
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     },
     {
       "fixture_id": 2,
@@ -306,7 +327,11 @@
           "score": "2-0",
           "probability": 0.0714
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     },
     {
       "fixture_id": 7,
@@ -365,7 +390,11 @@
           "score": "1-0",
           "probability": 0.0805
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     },
     {
       "fixture_id": 8,
@@ -417,7 +446,11 @@
           "score": "1-1",
           "probability": 0.093
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     },
     {
       "fixture_id": 9,
@@ -476,7 +509,11 @@
           "score": "2-1",
           "probability": 0.0805
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     },
     {
       "fixture_id": 10,
@@ -535,7 +572,11 @@
           "score": "1-2",
           "probability": 0.083
         }
-      ]
+      ],
+      "missing": {
+        "home": [],
+        "away": []
+      }
     }
   ]
 }

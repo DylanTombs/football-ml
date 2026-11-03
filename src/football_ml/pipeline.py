@@ -8,13 +8,15 @@ from pathlib import Path
 import pandas as pd
 
 from football_ml.config import (
+    INJURY_IMPACT,
     MAX_GOALS,
     PREDICTIONS_DIR,
     PREDICTOR_NAME,
     TOP_SCORELINES,
     TRAINING_SEASONS,
 )
-from football_ml.model.dixon_coles import DixonColesParams, fit, score_matrix
+from football_ml.model.dixon_coles import DixonColesParams, fit, matrix_from_rates
+from football_ml.predict.availability import TeamAvailability, adjust_rate, team_availability
 from football_ml.predict.scoreline import summarise
 from football_ml.predict.scorers import Player, assign_scorers
 from football_ml.predict.timing import GoalTime, goal_times, order_goals, parse_clock
@@ -69,16 +71,31 @@ def _goal_timeline(fixture, summary, home_scorers, away_scorers, distribution) -
     return [goal(k, side) for k, side in enumerate(sides)]
 
 
+def _missing_json(availability: TeamAvailability) -> list[dict]:
+    return [{"name": m.name, "xg_share": round(m.xg_share, 3)} for m in availability.missing]
+
+
 def predict_fixture(
     fixture: fpl.Fixture,
     params: DixonColesParams,
     players: tuple[Player, ...],
     distribution: tuple[GoalTime, ...],
+    injury_impact: float = INJURY_IMPACT,
 ) -> dict:
-    summary = summarise(score_matrix(params, fixture.home, fixture.away, MAX_GOALS), TOP_SCORELINES)
     squad = lambda team: tuple(p for p in players if p.team == team)  # noqa: E731
-    home_scorers = assign_scorers(squad(fixture.home), summary.home_goals)
-    away_scorers = assign_scorers(squad(fixture.away), summary.away_goals)
+    home_squad, away_squad = squad(fixture.home), squad(fixture.away)
+    home_avail, away_avail = team_availability(home_squad), team_availability(away_squad)
+
+    lam, mu = params.expected_goals(fixture.home, fixture.away)
+    matrix = matrix_from_rates(
+        adjust_rate(lam, home_avail.missing_share, injury_impact),
+        adjust_rate(mu, away_avail.missing_share, injury_impact),
+        params.rho,
+        MAX_GOALS,
+    )
+    summary = summarise(matrix, TOP_SCORELINES)
+    home_scorers = assign_scorers(home_squad, summary.home_goals)
+    away_scorers = assign_scorers(away_squad, summary.away_goals)
 
     return {
         "fixture_id": fixture.id,
@@ -103,6 +120,7 @@ def predict_fixture(
             {"score": f"{s.home_goals}-{s.away_goals}", "probability": round(s.probability, 4)}
             for s in summary.top_scorelines
         ],
+        "missing": {"home": _missing_json(home_avail), "away": _missing_json(away_avail)},
     }
 
 
@@ -122,7 +140,7 @@ def goal_distribution(events: tuple[GoalEvent, ...], before: pd.Timestamp) -> tu
     return tuple(parsed)
 
 
-def predict_gameweek(gameweek: int, inputs: SeasonInputs) -> dict:
+def predict_gameweek(gameweek: int, inputs: SeasonInputs, injury_impact: float = INJURY_IMPACT) -> dict:
     fixtures = fpl.parse_fixtures(inputs.raw_fixtures, inputs.bootstrap, gameweek)
     if not fixtures:
         raise ValueError(f"No fixtures with kickoff times found for gameweek {gameweek}")
@@ -142,9 +160,10 @@ def predict_gameweek(gameweek: int, inputs: SeasonInputs) -> dict:
             "home_advantage": round(params.home_advantage, 3),
             "rho": round(params.rho, 3),
             "goal_time_samples": len(distribution),
+            "injury_impact": injury_impact,
         },
         "matches": [
-            predict_fixture(f, params, inputs.players, distribution)
+            predict_fixture(f, params, inputs.players, distribution, injury_impact)
             for f in sorted(fixtures, key=lambda f: f.kickoff)
         ],
     }

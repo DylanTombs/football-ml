@@ -79,3 +79,42 @@ def test_cli_prints_report(monkeypatch, capsys):
     monkeypatch.setattr(cli, "run_gameweek", lambda _: {"gameweek": 10, "matches": [MATCH], "path": "p"})
     assert cli.main(["predict", "--gameweek", "10"]) == 0
     assert "Gameweek 10" in capsys.readouterr().out
+
+
+def _fake_inputs():
+    return type("Inputs", (), {"bootstrap": {"events": [{"id": 1, "finished": True},
+                                                         {"id": 2, "finished": False}]}})()
+
+
+def test_cli_backtest_passes_flags_and_fetches_minutes(monkeypatch, capsys):
+    seen = {}
+
+    def fake_backtest(first, last, inputs, **kwargs):
+        seen.update(kwargs, first=first, last=last)
+        return {"gameweeks": [], "season": {}, "availability_proxy": kwargs["proxy"],
+                "injury_impact": kwargs["injury_impact"]}
+
+    monkeypatch.setattr(cli, "load_season_inputs", _fake_inputs)
+    monkeypatch.setattr(cli.fpl, "fetch_gameweek_minutes", lambda gws: {gw: {} for gw in gws})
+    monkeypatch.setattr(cli, "run_backtest", fake_backtest)
+    argv = ["backtest", "--from", "1", "--to", "1", "--injury-impact", "0.25", "--availability", "oracle"]
+    assert cli.main(argv) == 0
+    assert seen["injury_impact"] == 0.25
+    assert seen["proxy"] == "oracle"
+    assert seen["gameweek_minutes"] == {1: {}}
+    assert "oracle" in capsys.readouterr().out
+
+
+def test_cli_backtest_live_proxy_skips_minutes(monkeypatch):
+    seen = {}
+    monkeypatch.setattr(cli, "load_season_inputs", _fake_inputs)
+    monkeypatch.setattr(cli.fpl, "fetch_gameweek_minutes", lambda gws: pytest.fail("fetched"))
+    monkeypatch.setattr(cli, "run_backtest", lambda f, l, i, **kw: seen.update(kw) or
+                        {"gameweeks": [], "season": {}, "availability_proxy": "live", "injury_impact": 0.5})
+    assert cli.main(["backtest", "--from", "1", "--to", "1", "--availability", "live"]) == 0
+    assert seen["gameweek_minutes"] is None
+
+
+def test_cli_rejects_bad_injury_impact():
+    with pytest.raises(SystemExit):
+        cli.main(["backtest", "--from", "1", "--to", "2", "--injury-impact", "1.5"])

@@ -15,6 +15,8 @@ class Player:
     minutes: int
     available: bool
     full_name: str = ""
+    availability: float = 1.0  # chance of playing next match, 0..1
+    departed: bool = False  # left the club / loaned out: not part of the team
 
 
 def scoring_weight(player: Player) -> float:

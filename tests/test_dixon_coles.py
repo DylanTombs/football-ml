@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from football_ml.model.dixon_coles import fit, score_matrix
+from football_ml.model.dixon_coles import fit, matrix_from_rates, score_matrix
 
 
 def _synthetic_results(n_rounds: int = 12) -> pd.DataFrame:
@@ -70,3 +70,23 @@ def test_fit_rejects_empty_results():
     empty = pd.DataFrame(columns=["date", "home", "away", "home_goals", "away_goals"])
     with pytest.raises(ValueError, match="no matches"):
         fit(empty, reference_date=pd.Timestamp("2026-01-01"))
+
+
+def test_score_matrix_equals_matrix_from_its_rates(params):
+    lam, mu = params.expected_goals("Strong", "Weak")
+    expected = matrix_from_rates(lam, mu, params.rho, max_goals=10)
+    np.testing.assert_allclose(score_matrix(params, "Strong", "Weak", max_goals=10), expected)
+
+
+def test_matrix_from_lower_rate_shifts_mass_to_fewer_goals():
+    high = matrix_from_rates(2.0, 1.0, 0.0, max_goals=10)
+    low = matrix_from_rates(1.0, 1.0, 0.0, max_goals=10)
+    goals = np.arange(11)
+    assert (low.sum(axis=1) @ goals) < (high.sum(axis=1) @ goals)
+    assert low.sum() == pytest.approx(1.0)
+
+
+def test_matrix_from_zero_rate_is_valid():
+    matrix = matrix_from_rates(0.0, 1.2, -0.05, max_goals=10)
+    assert np.all(matrix >= 0)
+    assert matrix[1:, :].sum() == pytest.approx(0.0)

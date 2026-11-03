@@ -7,7 +7,10 @@ import pandas as pd
 
 from football_ml.config import (
     FPL_BOOTSTRAP_URL,
+    FPL_DEPARTED_STATUSES,
+    FPL_EVENT_LIVE_URL,
     FPL_FIXTURES_URL,
+    FPL_OUT_STATUSES,
     FPL_TO_CANONICAL_TEAM,
     LIVE_CACHE_MAX_AGE_HOURS,
     MIN_CHANCE_OF_PLAYING,
@@ -39,6 +42,14 @@ def _is_available(element: dict) -> bool:
     return chance >= MIN_CHANCE_OF_PLAYING
 
 
+def _availability(element: dict) -> float:
+    """Chance of playing next round as 0..1; injured/suspended with no chance given → 0."""
+    chance = element.get("chance_of_playing_next_round")
+    if chance is not None:
+        return max(0.0, min(1.0, float(chance) / 100))
+    return 0.0 if element.get("status") in FPL_OUT_STATUSES else 1.0
+
+
 def parse_players(bootstrap: dict) -> tuple[Player, ...]:
     teams = team_names(bootstrap)
     return tuple(
@@ -51,6 +62,8 @@ def parse_players(bootstrap: dict) -> tuple[Player, ...]:
             minutes=int(e.get("minutes") or 0),
             available=_is_available(e),
             full_name=f"{e.get('first_name', '')} {e.get('second_name', '')}".strip(),
+            availability=_availability(e),
+            departed=e.get("status") in FPL_DEPARTED_STATUSES,
         )
         for e in bootstrap["elements"]
     )
@@ -96,3 +109,28 @@ def fetch_bootstrap() -> dict:
 
 def fetch_raw_fixtures() -> list[dict]:
     return _fetch_json(FPL_FIXTURES_URL, "fpl_fixtures.json")
+
+
+def parse_gameweek_minutes(live: dict) -> dict[int, int]:
+    """Minutes per player id from an `event/{gw}/live/` payload."""
+    try:
+        return {int(e["id"]): int(e["stats"]["minutes"]) for e in live["elements"]}
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError(f"Unexpected FPL live payload: {exc!r}") from exc
+
+
+def fetch_gameweek_minutes(gameweeks: tuple[int, ...]) -> dict[int, dict[int, int]]:
+    """Per-gameweek minutes for finished gameweeks (cached for good)."""
+    minutes = {}
+    for gw in gameweeks:
+        url = FPL_EVENT_LIVE_URL.format(gameweek=gw)
+        text = fetch_text(url, cache_name=f"fpl_live/gw{gw:02d}.json", max_age_hours=None)
+        try:
+            minutes[gw] = parse_gameweek_minutes(json.loads(text))
+        except (json.JSONDecodeError, ValueError) as exc:
+            raise DataSourceError(f"FPL returned unusable data from {url}: {exc}") from exc
+    return minutes
+
+
+def finished_gameweeks(bootstrap: dict) -> tuple[int, ...]:
+    return tuple(e["id"] for e in bootstrap["events"] if e.get("finished"))
