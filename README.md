@@ -20,8 +20,6 @@ Output: `out/predictions/gwNN.json` (one file per gameweek). Downloads are cache
 
 All tunable values live in `src/football_ml/config.py`.
 
-## Next
+## Roadmap
 
-- Results tracker: compare each gameweek's predictions against the actual results
-- Better scorer model (minutes-adjusted, penalties, opponent strength)
-- Backtest Dixon-Coles against bookmaker odds
+See [docs/plans](docs/plans/README.md): results tracker → injury-adjusted strength → LLM predictors → weekly automation.
