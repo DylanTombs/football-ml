@@ -31,4 +31,4 @@ All tunable values live in `src/football_ml/config.py`.
 
 ## Roadmap
 
-See [docs/plans](docs/plans/README.md): results tracker → injury-adjusted strength → LLM predictors → weekly automation.
+See [docs/plans](docs/plans/README.md): results tracker → injury-adjusted strength → LLM predictors → weekly automation. Architecture and data source quirks: [docs/overview.md](docs/overview.md).
