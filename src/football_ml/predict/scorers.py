@@ -14,6 +14,7 @@ class Player:
     goals: int
     minutes: int
     available: bool
+    full_name: str = ""
 
 
 def scoring_weight(player: Player) -> float:

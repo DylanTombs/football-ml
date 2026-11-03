@@ -1,6 +1,5 @@
 import pytest
 
-from football_ml.sources.espn import parse_goal_clocks
 from football_ml.sources.football_data import parse_results
 from football_ml.sources.fpl import parse_fixtures, parse_players
 
@@ -59,14 +58,20 @@ def test_parse_fixtures_filters_gameweek():
     assert (fixtures[0].home, fixtures[0].away) == ("Arsenal", "Tottenham")
 
 
-def test_parse_goal_clocks_only_scoring_plays():
-    payload = {"events": [{"competitions": [{"details": [
-        {"scoringPlay": True, "clock": {"displayValue": "15'"}},
-        {"scoringPlay": False, "clock": {"displayValue": "27'"}},
-        {"scoringPlay": True, "clock": {"displayValue": "90'+3'"}},
-    ]}]}]}
-    assert parse_goal_clocks(payload) == ("15'", "90'+3'")
+def test_fetch_results_combines_leagues_and_seasons(monkeypatch):
+    from football_ml.sources import football_data
 
+    requested = []
 
-def test_parse_goal_clocks_handles_no_events():
-    assert parse_goal_clocks({}) == ()
+    def fake_fetch(url, cache_name, max_age_hours):
+        requested.append(cache_name)
+        return CSV
+
+    monkeypatch.setattr(football_data, "fetch_text", fake_fetch)
+    df = football_data.fetch_results(("2526", "2627"), leagues=("E0", "E1"))
+    assert sorted(requested) == sorted([
+        "football_data_E0_2526.csv", "football_data_E1_2526.csv",
+        "football_data_E0_2627.csv", "football_data_E1_2627.csv",
+    ])
+    assert len(df) == 8
+    assert df["date"].is_monotonic_increasing

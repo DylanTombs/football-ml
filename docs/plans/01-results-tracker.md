@@ -22,14 +22,27 @@
   - `football-ml backtest --from 1 --to N` re-predicts each past gameweek with the model trained only on results before that gameweek.
   - The FPL API only gives season-to-date player stats, so the scorer part of the backtest uses future information. Mark it `"scorer_leak": true` in the output until weekly snapshots exist (phase 4).
 
+- **Added while building:**
+  - Championship (E1) results are now in the training data, so newly promoted teams get a rating; GW1 couldn't be predicted without it.
+  - ESPN credits an own goal to the team that benefits from it.
+  - Scorer names are matched loosely (accents, ß, compound or full legal names), which is safe because we only compare against one team's scorers in one match.
+
 ## Tasks
 
-- [ ] `sources/results.py`: fetch and parse actual results (FPL + ESPN), with tests on fixture payloads
-- [ ] `evaluate/points.py`: pure scoring function, with tests for every points rule and edge case (0-0, own goals, scorer not predicted)
-- [ ] Add `scorer_id` and `predictor` to the prediction JSON
-- [ ] `football-ml score --gameweek N` writes the gameweek and season results
-- [ ] `football-ml backtest --from --to`
-- [ ] Run the backtest for GW1–9 and record the baseline in this file
+- [x] `sources/results.py`: fetch and parse actual results (FPL + ESPN), with tests on fixture payloads
+- [x] `evaluate/points.py`: pure scoring function, with tests for every points rule and edge case (0-0, own goals, scorer not predicted)
+- [x] Add `scorer_id` and `predictor` to the prediction JSON
+- [x] `football-ml score --gameweek N` writes the gameweek and season results
+- [x] `football-ml backtest --from --to`
+- [x] Run the backtest for GW1–9 and record the baseline in this file
+
+## Baseline (GW1–9, 90 matches, run 2026-11-03)
+
+| Points | Exact scores | Correct results | Scorer hits* | Minute hits* |
+|---|---|---|---|---|
+| **141** | 7 (8%) | 45 (50%) | 67 | 15 |
+
+\*Optimistic, because player stats come from the live FPL feed. 243/243 actual goals were matched to a minute.
 
 ## Done when
 

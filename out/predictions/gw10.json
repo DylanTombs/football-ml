@@ -1,11 +1,12 @@
 {
   "gameweek": 10,
-  "generated_at": "2026-11-03T12:59:06.713918+00:00",
+  "predictor": "dixon-coles",
+  "generated_at": "2026-11-03T14:50:28.826186+00:00",
   "model": {
     "name": "dixon-coles",
     "trained_until": "2026-11-06",
-    "home_advantage": 0.188,
-    "rho": -0.068,
+    "home_advantage": 0.209,
+    "rho": -0.041,
     "goal_time_samples": 243
   },
   "matches": [
@@ -19,37 +20,38 @@
           "home": 1,
           "away": 0
         },
-        "probability": 0.133,
+        "probability": 0.1247,
         "goals": [
           {
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Everton",
-            "scorer": "Barry"
+            "scorer": "Barry",
+            "scorer_id": 249
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.4986,
-        "draw": 0.2834,
-        "away_win": 0.2179
+        "home_win": 0.5032,
+        "draw": 0.2686,
+        "away_win": 0.2282
       },
       "expected_goals": {
-        "home": 1.46,
-        "away": 0.88
+        "home": 1.52,
+        "away": 0.94
       },
       "top_scorelines": [
         {
-          "score": "1-0",
-          "probability": 0.133
-        },
-        {
           "score": "1-1",
-          "probability": 0.1323
+          "probability": 0.127
         },
         {
-          "score": "0-0",
-          "probability": 0.1056
+          "score": "1-0",
+          "probability": 0.1247
+        },
+        {
+          "score": "2-0",
+          "probability": 0.0987
         }
       ]
     },
@@ -63,37 +65,38 @@
           "home": 1,
           "away": 0
         },
-        "probability": 0.0907,
+        "probability": 0.0968,
         "goals": [
           {
             "minute": "23'",
             "sort_key": 23.0,
             "team": "Leeds",
-            "scorer": "Calvert-Lewin"
+            "scorer": "Calvert-Lewin",
+            "scorer_id": 346
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.4155,
-        "draw": 0.2734,
-        "away_win": 0.3111
+        "home_win": 0.4469,
+        "draw": 0.2634,
+        "away_win": 0.2896
       },
       "expected_goals": {
-        "home": 1.46,
-        "away": 1.23
+        "home": 1.52,
+        "away": 1.18
       },
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1302
+          "probability": 0.1253
         },
         {
           "score": "1-0",
-          "probability": 0.0907
+          "probability": 0.0968
         },
         {
           "score": "2-1",
-          "probability": 0.0889
+          "probability": 0.0917
         }
       ]
     },
@@ -104,40 +107,48 @@
       "away": "Hull",
       "prediction": {
         "score": {
-          "home": 1,
+          "home": 2,
           "away": 0
         },
-        "probability": 0.1707,
+        "probability": 0.1547,
         "goals": [
           {
-            "minute": "9'",
-            "sort_key": 9.0,
+            "minute": "6'",
+            "sort_key": 6.0,
             "team": "Arsenal",
-            "scorer": "Havertz"
+            "scorer": "Havertz",
+            "scorer_id": 26
+          },
+          {
+            "minute": "58'",
+            "sort_key": 58.0,
+            "team": "Arsenal",
+            "scorer": "Ødegaard",
+            "scorer_id": 15
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.6331,
-        "draw": 0.2496,
-        "away_win": 0.1173
+        "home_win": 0.8371,
+        "draw": 0.1213,
+        "away_win": 0.0417
       },
       "expected_goals": {
-        "home": 1.66,
-        "away": 0.57
+        "home": 2.67,
+        "away": 0.47
       },
       "top_scorelines": [
         {
-          "score": "1-0",
-          "probability": 0.1707
-        },
-        {
           "score": "2-0",
-          "probability": 0.1477
+          "probability": 0.1547
         },
         {
-          "score": "0-0",
-          "probability": 0.1137
+          "score": "3-0",
+          "probability": 0.1378
+        },
+        {
+          "score": "1-0",
+          "probability": 0.1135
         }
       ]
     },
@@ -151,49 +162,52 @@
           "home": 2,
           "away": 1
         },
-        "probability": 0.0846,
+        "probability": 0.0857,
         "goals": [
           {
             "minute": "31'",
             "sort_key": 31.0,
             "team": "Fulham",
-            "scorer": "Gonzalo"
+            "scorer": "Gonzalo",
+            "scorer_id": 569
           },
           {
             "minute": "52'",
             "sort_key": 52.0,
             "team": "Newcastle",
-            "scorer": "Wissa"
+            "scorer": "Wissa",
+            "scorer_id": 464
           },
           {
             "minute": "90+9'",
             "sort_key": 90.09,
             "team": "Fulham",
-            "scorer": "King"
+            "scorer": "King",
+            "scorer_id": 268
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.3749,
-        "draw": 0.2704,
-        "away_win": 0.3547
+        "home_win": 0.3871,
+        "draw": 0.2639,
+        "away_win": 0.3489
       },
       "expected_goals": {
-        "home": 1.41,
-        "away": 1.37
+        "home": 1.43,
+        "away": 1.34
       },
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1282
+          "probability": 0.125
         },
         {
           "score": "2-1",
-          "probability": 0.0846
+          "probability": 0.0857
         },
         {
-          "score": "1-2",
-          "probability": 0.0819
+          "score": "1-0",
+          "probability": 0.0843
         }
       ]
     },
@@ -207,37 +221,38 @@
           "home": 0,
           "away": 1
         },
-        "probability": 0.1082,
+        "probability": 0.1108,
         "goals": [
           {
             "minute": "45+1'",
             "sort_key": 45.01,
             "team": "Man City",
-            "scorer": "Haaland"
+            "scorer": "Haaland",
+            "scorer_id": 411
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.1931,
-        "draw": 0.2474,
-        "away_win": 0.5595
+        "home_win": 0.2018,
+        "draw": 0.2439,
+        "away_win": 0.5543
       },
       "expected_goals": {
-        "home": 0.95,
-        "away": 1.78
+        "home": 0.97,
+        "away": 1.75
       },
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.118
+          "probability": 0.1162
         },
         {
           "score": "0-1",
-          "probability": 0.1082
+          "probability": 0.1108
         },
         {
           "score": "0-2",
-          "probability": 0.1028
+          "probability": 0.1013
         }
       ]
     },
@@ -251,49 +266,52 @@
           "home": 2,
           "away": 1
         },
-        "probability": 0.0956,
+        "probability": 0.0963,
         "goals": [
           {
             "minute": "15'",
             "sort_key": 15.0,
             "team": "Brighton",
-            "scorer": "Hinshelwood"
+            "scorer": "Hinshelwood",
+            "scorer_id": 123
           },
           {
             "minute": "54'",
             "sort_key": 54.0,
             "team": "Brentford",
-            "scorer": "Thiago"
+            "scorer": "Thiago",
+            "scorer_id": 106
           },
           {
             "minute": "82'",
             "sort_key": 82.0,
             "team": "Brighton",
-            "scorer": "Kostoulas"
+            "scorer": "Kostoulas",
+            "scorer_id": 138
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.4897,
-        "draw": 0.2473,
-        "away_win": 0.2629
+        "home_win": 0.503,
+        "draw": 0.2405,
+        "away_win": 0.2566
       },
       "expected_goals": {
-        "home": 1.78,
-        "away": 1.26
+        "home": 1.8,
+        "away": 1.23
       },
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1147
+          "probability": 0.1117
         },
         {
           "score": "2-1",
-          "probability": 0.0956
+          "probability": 0.0963
         },
         {
           "score": "1-0",
-          "probability": 0.0783
+          "probability": 0.0829
         }
       ]
     },
@@ -307,49 +325,52 @@
           "home": 1,
           "away": 2
         },
-        "probability": 0.0974,
+        "probability": 0.097,
         "goals": [
           {
             "minute": "35'",
             "sort_key": 35.0,
             "team": "Liverpool",
-            "scorer": "Isak"
+            "scorer": "Isak",
+            "scorer_id": 379
           },
           {
             "minute": "52'",
             "sort_key": 52.0,
             "team": "Crystal Palace",
-            "scorer": "Strand Larsen"
+            "scorer": "Strand Larsen",
+            "scorer_id": 222
           },
           {
             "minute": "82'",
             "sort_key": 82.0,
             "team": "Liverpool",
-            "scorer": "Isak"
+            "scorer": "Isak",
+            "scorer_id": 379
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.2339,
-        "draw": 0.2491,
-        "away_win": 0.517
+        "home_win": 0.243,
+        "draw": 0.2453,
+        "away_win": 0.5117
       },
       "expected_goals": {
-        "home": 1.12,
-        "away": 1.77
+        "home": 1.14,
+        "away": 1.74
       },
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1177
+          "probability": 0.1158
         },
         {
           "score": "1-2",
-          "probability": 0.0974
+          "probability": 0.097
         },
         {
           "score": "0-1",
-          "probability": 0.0904
+          "probability": 0.0933
         }
       ]
     },
@@ -363,49 +384,52 @@
           "home": 1,
           "away": 2
         },
-        "probability": 0.095,
+        "probability": 0.0935,
         "goals": [
           {
             "minute": "14'",
             "sort_key": 14.0,
             "team": "Bournemouth",
-            "scorer": "Tavernier"
+            "scorer": "Tavernier",
+            "scorer_id": 68
           },
           {
             "minute": "61'",
             "sort_key": 61.0,
             "team": "Ipswich",
-            "scorer": "Emersonn"
+            "scorer": "Emersonn",
+            "scorer_id": 316
           },
           {
             "minute": "77'",
             "sort_key": 77.0,
             "team": "Bournemouth",
-            "scorer": "Evanilson"
+            "scorer": "Evanilson",
+            "scorer_id": 79
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.2484,
-        "draw": 0.2293,
-        "away_win": 0.5223
+        "home_win": 0.2882,
+        "draw": 0.2413,
+        "away_win": 0.4705
       },
       "expected_goals": {
         "home": 1.34,
-        "away": 2.0
+        "away": 1.77
       },
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1013
+          "probability": 0.1103
         },
         {
           "score": "1-2",
-          "probability": 0.095
+          "probability": 0.0935
         },
         {
-          "score": "0-2",
-          "probability": 0.071
+          "score": "0-1",
+          "probability": 0.0745
         }
       ]
     },
@@ -419,37 +443,38 @@
           "home": 0,
           "away": 1
         },
-        "probability": 0.098,
+        "probability": 0.1126,
         "goals": [
           {
             "minute": "16'",
             "sort_key": 16.0,
             "team": "Chelsea",
-            "scorer": "Rogers"
+            "scorer": "Rogers",
+            "scorer_id": 40
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.2777,
-        "draw": 0.2717,
-        "away_win": 0.4505
+        "home_win": 0.2416,
+        "draw": 0.2627,
+        "away_win": 0.4958
       },
       "expected_goals": {
-        "home": 1.14,
-        "away": 1.52
+        "home": 1.02,
+        "away": 1.57
       },
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1296
+          "probability": 0.1251
         },
         {
           "score": "0-1",
-          "probability": 0.098
+          "probability": 0.1126
         },
         {
           "score": "1-2",
-          "probability": 0.092
+          "probability": 0.0943
         }
       ]
     },
@@ -463,49 +488,52 @@
           "home": 2,
           "away": 1
         },
-        "probability": 0.0895,
+        "probability": 0.0903,
         "goals": [
           {
             "minute": "12'",
             "sort_key": 12.0,
             "team": "Man United",
-            "scorer": "Mbeumo"
+            "scorer": "Mbeumo",
+            "scorer_id": 427
           },
           {
             "minute": "59'",
             "sort_key": 59.0,
             "team": "Aston Villa",
-            "scorer": "N.Jackson"
+            "scorer": "N.Jackson",
+            "scorer_id": 166
           },
           {
             "minute": "75'",
             "sort_key": 75.0,
             "team": "Man United",
-            "scorer": "B.Fernandes"
+            "scorer": "B.Fernandes",
+            "scorer_id": 426
           }
         ]
       },
       "probabilities": {
-        "home_win": 0.4158,
-        "draw": 0.2619,
-        "away_win": 0.3224
+        "home_win": 0.4267,
+        "draw": 0.2556,
+        "away_win": 0.3177
       },
       "expected_goals": {
-        "home": 1.56,
-        "away": 1.35
+        "home": 1.57,
+        "away": 1.32
       },
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1229
+          "probability": 0.1199
         },
         {
           "score": "2-1",
-          "probability": 0.0895
+          "probability": 0.0903
         },
         {
           "score": "1-0",
-          "probability": 0.0776
+          "probability": 0.0821
         }
       ]
     }

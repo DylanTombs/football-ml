@@ -40,6 +40,7 @@ def test_predict_fixture_scorers_come_from_right_team():
     for goal in pred["prediction"]["goals"]:
         expected = {"Arsenal": {"Saka", "Havertz"}, "Coventry": {"Simms"}}[goal["team"]]
         assert goal["scorer"] in expected
+        assert goal["scorer_id"] in {1, 2, 3}
 
 
 def test_predict_fixture_probabilities_sum_to_one():

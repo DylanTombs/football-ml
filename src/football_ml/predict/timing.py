@@ -4,7 +4,7 @@ import random
 import re
 from dataclasses import dataclass
 
-_CLOCK = re.compile(r"^(\d+)'(?:\+(\d+)')?$")
+_CLOCK = re.compile(r"^(\d+)'?(?:\+(\d+)'?)?$")
 
 
 @dataclass(frozen=True)
@@ -12,9 +12,14 @@ class GoalTime:
     sort_key: float  # 45+2' -> 45.02 so it sorts before 46'
     label: str
 
+    def elapsed(self) -> int:
+        """Minutes played including stoppage time: 90+4' -> 94."""
+        base = int(self.sort_key)
+        return base + round((self.sort_key - base) * 100)
+
 
 def parse_clock(raw: str) -> GoalTime:
-    """Parse ESPN clocks like "15'" or "90'+4'"."""
+    """Parse clocks like "15'", ESPN's "90'+4'" or our own "90+4'"."""
     match = _CLOCK.match(raw.strip())
     if not match:
         raise ValueError(f"Unrecognised match clock: {raw!r}")

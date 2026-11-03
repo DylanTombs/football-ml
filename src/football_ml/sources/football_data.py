@@ -1,4 +1,4 @@
-"""Historical Premier League results from football-data.co.uk."""
+"""Historical English league results from football-data.co.uk."""
 
 import io
 
@@ -8,6 +8,7 @@ from football_ml.config import (
     CURRENT_SEASON,
     FOOTBALL_DATA_URL,
     LIVE_CACHE_MAX_AGE_HOURS,
+    TRAINING_LEAGUES,
 )
 from football_ml.sources.http import fetch_text
 
@@ -35,16 +36,17 @@ def parse_results(csv_text: str) -> pd.DataFrame:
     ).reset_index(drop=True)
 
 
-def fetch_results(seasons: tuple[str, ...]) -> pd.DataFrame:
-    """Fetch and combine results for the given season codes (e.g. '2526')."""
+def fetch_results(seasons: tuple[str, ...], leagues: tuple[str, ...] = TRAINING_LEAGUES) -> pd.DataFrame:
+    """Fetch and combine results for the given season codes (e.g. '2526') and leagues."""
     frames = [
         parse_results(
             fetch_text(
-                FOOTBALL_DATA_URL.format(season=season),
-                cache_name=f"football_data_{season}.csv",
+                FOOTBALL_DATA_URL.format(season=season, league=league),
+                cache_name=f"football_data_{league}_{season}.csv",
                 max_age_hours=LIVE_CACHE_MAX_AGE_HOURS if season == CURRENT_SEASON else None,
             )
         )
         for season in seasons
+        for league in leagues
     ]
     return pd.concat(frames, ignore_index=True).sort_values("date").reset_index(drop=True)

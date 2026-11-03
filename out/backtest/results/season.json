@@ -1,0 +1,21 @@
+{
+  "dixon-coles": {
+    "points": 141,
+    "matches": 90,
+    "exact_scores": 7,
+    "correct_results": 45,
+    "scorer_hits": 67,
+    "minute_hits": 15,
+    "by_gameweek": {
+      "1": 16,
+      "2": 16,
+      "3": 14,
+      "4": 11,
+      "5": 15,
+      "6": 12,
+      "7": 24,
+      "8": 14,
+      "9": 19
+    }
+  }
+}

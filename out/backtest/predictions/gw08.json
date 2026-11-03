@@ -1,0 +1,548 @@
+{
+  "gameweek": 8,
+  "predictor": "dixon-coles",
+  "generated_at": "2026-11-03T14:50:17.659560+00:00",
+  "model": {
+    "name": "dixon-coles",
+    "trained_until": "2026-10-23",
+    "home_advantage": 0.201,
+    "rho": -0.043,
+    "goal_time_samples": 203
+  },
+  "matches": [
+    {
+      "fixture_id": 77,
+      "kickoff": "2026-10-23T19:00:00+00:00",
+      "home": "Ipswich",
+      "away": "Nott'm Forest",
+      "prediction": {
+        "score": {
+          "home": 1,
+          "away": 2
+        },
+        "probability": 0.0897,
+        "goals": [
+          {
+            "minute": "33'",
+            "sort_key": 33.0,
+            "team": "Nott'm Forest",
+            "scorer": "Ndoye",
+            "scorer_id": 483
+          },
+          {
+            "minute": "48'",
+            "sort_key": 48.0,
+            "team": "Ipswich",
+            "scorer": "Emersonn",
+            "scorer_id": 316
+          },
+          {
+            "minute": "73'",
+            "sort_key": 73.0,
+            "team": "Nott'm Forest",
+            "scorer": "Delap",
+            "scorer_id": 167
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.3155,
+        "draw": 0.2621,
+        "away_win": 0.4225
+      },
+      "expected_goals": {
+        "home": 1.27,
+        "away": 1.51
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1241
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0897
+        },
+        {
+          "score": "0-1",
+          "probability": 0.0884
+        }
+      ]
+    },
+    {
+      "fixture_id": 72,
+      "kickoff": "2026-10-24T11:30:00+00:00",
+      "home": "Aston Villa",
+      "away": "Man City",
+      "prediction": {
+        "score": {
+          "home": 1,
+          "away": 2
+        },
+        "probability": 0.0978,
+        "goals": [
+          {
+            "minute": "3'",
+            "sort_key": 3.0,
+            "team": "Man City",
+            "scorer": "Haaland",
+            "scorer_id": 411
+          },
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Aston Villa",
+            "scorer": "N.Jackson",
+            "scorer_id": 166
+          },
+          {
+            "minute": "90+9'",
+            "sort_key": 90.09,
+            "team": "Man City",
+            "scorer": "Haaland",
+            "scorer_id": 411
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.2322,
+        "draw": 0.24,
+        "away_win": 0.5278
+      },
+      "expected_goals": {
+        "home": 1.13,
+        "away": 1.81
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1128
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0978
+        },
+        {
+          "score": "0-1",
+          "probability": 0.091
+        }
+      ]
+    },
+    {
+      "fixture_id": 71,
+      "kickoff": "2026-10-24T14:00:00+00:00",
+      "home": "Arsenal",
+      "away": "Everton",
+      "prediction": {
+        "score": {
+          "home": 1,
+          "away": 0
+        },
+        "probability": 0.1618,
+        "goals": [
+          {
+            "minute": "37'",
+            "sort_key": 37.0,
+            "team": "Arsenal",
+            "scorer": "Havertz",
+            "scorer_id": 26
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.6606,
+        "draw": 0.2277,
+        "away_win": 0.1117
+      },
+      "expected_goals": {
+        "home": 1.79,
+        "away": 0.59
+      },
+      "top_scorelines": [
+        {
+          "score": "1-0",
+          "probability": 0.1618
+        },
+        {
+          "score": "2-0",
+          "probability": 0.1486
+        },
+        {
+          "score": "1-1",
+          "probability": 0.1018
+        }
+      ]
+    },
+    {
+      "fixture_id": 74,
+      "kickoff": "2026-10-24T14:00:00+00:00",
+      "home": "Coventry",
+      "away": "Fulham",
+      "prediction": {
+        "score": {
+          "home": 0,
+          "away": 1
+        },
+        "probability": 0.0912,
+        "goals": [
+          {
+            "minute": "84'",
+            "sort_key": 84.0,
+            "team": "Fulham",
+            "scorer": "Gonzalo",
+            "scorer_id": 569
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.3339,
+        "draw": 0.2691,
+        "away_win": 0.397
+      },
+      "expected_goals": {
+        "home": 1.27,
+        "away": 1.41
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.128
+        },
+        {
+          "score": "0-1",
+          "probability": 0.0912
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0865
+        }
+      ]
+    },
+    {
+      "fixture_id": 73,
+      "kickoff": "2026-10-24T16:30:00+00:00",
+      "home": "Chelsea",
+      "away": "Tottenham",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "probability": 0.0971,
+        "goals": [
+          {
+            "minute": "9'",
+            "sort_key": 9.0,
+            "team": "Chelsea",
+            "scorer": "Rogers",
+            "scorer_id": 40
+          },
+          {
+            "minute": "53'",
+            "sort_key": 53.0,
+            "team": "Tottenham",
+            "scorer": "Van Hecke",
+            "scorer_id": 112
+          },
+          {
+            "minute": "84'",
+            "sort_key": 84.0,
+            "team": "Chelsea",
+            "scorer": "Palmer",
+            "scorer_id": 154
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.5571,
+        "draw": 0.2204,
+        "away_win": 0.2225
+      },
+      "expected_goals": {
+        "home": 2.05,
+        "away": 1.24
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.099
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0971
+        },
+        {
+          "score": "2-0",
+          "probability": 0.0786
+        }
+      ]
+    },
+    {
+      "fixture_id": 75,
+      "kickoff": "2026-10-25T14:00:00+00:00",
+      "home": "Crystal Palace",
+      "away": "Newcastle",
+      "prediction": {
+        "score": {
+          "home": 1,
+          "away": 2
+        },
+        "probability": 0.0858,
+        "goals": [
+          {
+            "minute": "15'",
+            "sort_key": 15.0,
+            "team": "Newcastle",
+            "scorer": "Wissa",
+            "scorer_id": 464
+          },
+          {
+            "minute": "51'",
+            "sort_key": 51.0,
+            "team": "Crystal Palace",
+            "scorer": "Strand Larsen",
+            "scorer_id": 222
+          },
+          {
+            "minute": "67'",
+            "sort_key": 67.0,
+            "team": "Newcastle",
+            "scorer": "Barnes",
+            "scorer_id": 453
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.357,
+        "draw": 0.2558,
+        "away_win": 0.3872
+      },
+      "expected_goals": {
+        "home": 1.43,
+        "away": 1.5
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1193
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0858
+        },
+        {
+          "score": "2-1",
+          "probability": 0.082
+        }
+      ]
+    },
+    {
+      "fixture_id": 76,
+      "kickoff": "2026-10-25T14:00:00+00:00",
+      "home": "Hull",
+      "away": "Brentford",
+      "prediction": {
+        "score": {
+          "home": 0,
+          "away": 1
+        },
+        "probability": 0.1031,
+        "goals": [
+          {
+            "minute": "42'",
+            "sort_key": 42.0,
+            "team": "Brentford",
+            "scorer": "Thiago",
+            "scorer_id": 106
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.1916,
+        "draw": 0.2332,
+        "away_win": 0.5752
+      },
+      "expected_goals": {
+        "home": 0.99,
+        "away": 1.87
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1108
+        },
+        {
+          "score": "0-1",
+          "probability": 0.1031
+        },
+        {
+          "score": "0-2",
+          "probability": 0.1005
+        }
+      ]
+    },
+    {
+      "fixture_id": 78,
+      "kickoff": "2026-10-25T14:00:00+00:00",
+      "home": "Liverpool",
+      "away": "Brighton",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "probability": 0.094,
+        "goals": [
+          {
+            "minute": "34'",
+            "sort_key": 34.0,
+            "team": "Liverpool",
+            "scorer": "Isak",
+            "scorer_id": 379
+          },
+          {
+            "minute": "42'",
+            "sort_key": 42.0,
+            "team": "Brighton",
+            "scorer": "Hinshelwood",
+            "scorer_id": 123
+          },
+          {
+            "minute": "90+6'",
+            "sort_key": 90.06,
+            "team": "Liverpool",
+            "scorer": "Isak",
+            "scorer_id": 379
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4827,
+        "draw": 0.2376,
+        "away_win": 0.2797
+      },
+      "expected_goals": {
+        "home": 1.82,
+        "away": 1.35
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1076
+        },
+        {
+          "score": "2-1",
+          "probability": 0.094
+        },
+        {
+          "score": "1-0",
+          "probability": 0.0722
+        }
+      ]
+    },
+    {
+      "fixture_id": 79,
+      "kickoff": "2026-10-25T14:00:00+00:00",
+      "home": "Man United",
+      "away": "Bournemouth",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "probability": 0.0951,
+        "goals": [
+          {
+            "minute": "6'",
+            "sort_key": 6.0,
+            "team": "Man United",
+            "scorer": "Mbeumo",
+            "scorer_id": 427
+          },
+          {
+            "minute": "49'",
+            "sort_key": 49.0,
+            "team": "Bournemouth",
+            "scorer": "Tavernier",
+            "scorer_id": 68
+          },
+          {
+            "minute": "70'",
+            "sort_key": 70.0,
+            "team": "Man United",
+            "scorer": "B.Fernandes",
+            "scorer_id": 426
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.4819,
+        "draw": 0.247,
+        "away_win": 0.2712
+      },
+      "expected_goals": {
+        "home": 1.72,
+        "away": 1.24
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1154
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0951
+        },
+        {
+          "score": "1-0",
+          "probability": 0.0846
+        }
+      ]
+    },
+    {
+      "fixture_id": 80,
+      "kickoff": "2026-10-25T16:30:00+00:00",
+      "home": "Sunderland",
+      "away": "Leeds",
+      "prediction": {
+        "score": {
+          "home": 0,
+          "away": 1
+        },
+        "probability": 0.1296,
+        "goals": [
+          {
+            "minute": "34'",
+            "sort_key": 34.0,
+            "team": "Leeds",
+            "scorer": "Calvert-Lewin",
+            "scorer_id": 346
+          }
+        ]
+      },
+      "probabilities": {
+        "home_win": 0.2831,
+        "draw": 0.2974,
+        "away_win": 0.4195
+      },
+      "expected_goals": {
+        "home": 0.97,
+        "away": 1.25
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1375
+        },
+        {
+          "score": "0-1",
+          "probability": 0.1296
+        },
+        {
+          "score": "0-0",
+          "probability": 0.1141
+        }
+      ]
+    }
+  ]
+}

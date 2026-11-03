@@ -25,7 +25,7 @@ class Fixture:
     away: str
 
 
-def _team_names(bootstrap: dict) -> dict[int, str]:
+def team_names(bootstrap: dict) -> dict[int, str]:
     return {
         t["id"]: FPL_TO_CANONICAL_TEAM.get(t["name"], t["name"])
         for t in bootstrap["teams"]
@@ -40,7 +40,7 @@ def _is_available(element: dict) -> bool:
 
 
 def parse_players(bootstrap: dict) -> tuple[Player, ...]:
-    teams = _team_names(bootstrap)
+    teams = team_names(bootstrap)
     return tuple(
         Player(
             id=e["id"],
@@ -50,13 +50,14 @@ def parse_players(bootstrap: dict) -> tuple[Player, ...]:
             goals=int(e.get("goals_scored") or 0),
             minutes=int(e.get("minutes") or 0),
             available=_is_available(e),
+            full_name=f"{e.get('first_name', '')} {e.get('second_name', '')}".strip(),
         )
         for e in bootstrap["elements"]
     )
 
 
 def parse_fixtures(raw: list[dict], bootstrap: dict, gameweek: int) -> tuple[Fixture, ...]:
-    teams = _team_names(bootstrap)
+    teams = team_names(bootstrap)
     return tuple(
         Fixture(
             id=f["id"],

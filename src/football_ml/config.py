@@ -5,9 +5,13 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 CACHE_DIR = PROJECT_ROOT / "data" / "cache"
 PREDICTIONS_DIR = PROJECT_ROOT / "out" / "predictions"
+RESULTS_DIR = PROJECT_ROOT / "out" / "results"
+BACKTEST_DIR = PROJECT_ROOT / "out" / "backtest"
+
+PREDICTOR_NAME = "dixon-coles"
 
 # --- Sources ---------------------------------------------------------------
-FOOTBALL_DATA_URL = "https://football-data.co.uk/mmz4281/{season}/E0.csv"
+FOOTBALL_DATA_URL = "https://football-data.co.uk/mmz4281/{season}/{league}.csv"
 FPL_BOOTSTRAP_URL = "https://fantasy.premierleague.com/api/bootstrap-static/"
 FPL_FIXTURES_URL = "https://fantasy.premierleague.com/api/fixtures/"
 ESPN_SCOREBOARD_URL = (
@@ -22,6 +26,9 @@ LIVE_CACHE_MAX_AGE_HOURS = 6
 # football-data.co.uk season codes, oldest first. Last entry = current season.
 TRAINING_SEASONS = ("2122", "2223", "2324", "2425", "2526", "2627")
 CURRENT_SEASON = TRAINING_SEASONS[-1]
+# E0 = Premier League, E1 = Championship. The Championship lets the model rate
+# promoted teams; teams moving between leagues link the two on one scale.
+TRAINING_LEAGUES = ("E0", "E1")
 
 # --- Dixon-Coles model -----------------------------------------------------
 # Per-day exponential time decay; ln(2)/365 ≈ 0.0019 → matches lose half
@@ -50,3 +57,28 @@ FPL_TO_CANONICAL_TEAM = {
     "Spurs": "Tottenham",
     "West Brom": "West Brom",
 }
+
+# --- ESPN team name -> football-data.co.uk name (canonical) ---------------
+ESPN_TO_CANONICAL_TEAM = {
+    "AFC Bournemouth": "Bournemouth",
+    "Brighton & Hove Albion": "Brighton",
+    "Coventry City": "Coventry",
+    "Hull City": "Hull",
+    "Ipswich Town": "Ipswich",
+    "Leeds United": "Leeds",
+    "Leicester City": "Leicester",
+    "Manchester City": "Man City",
+    "Manchester United": "Man United",
+    "Newcastle United": "Newcastle",
+    "Nottingham Forest": "Nott'm Forest",
+    "Tottenham Hotspur": "Tottenham",
+    "West Ham United": "West Ham",
+    "Wolverhampton Wanderers": "Wolves",
+}
+
+# --- Points for scoring predictions ---------------------------------------
+POINTS_EXACT_SCORE = 3
+POINTS_CORRECT_RESULT = 1
+POINTS_PER_SCORER = 1
+POINTS_PER_MINUTE = 1
+MINUTE_TOLERANCE = 10

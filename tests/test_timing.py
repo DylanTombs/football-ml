@@ -7,6 +7,7 @@ from football_ml.predict.timing import GoalTime, goal_times, order_goals, parse_
     ("15'", "15'", 15.0),
     ("45'+2'", "45+2'", 45.02),
     ("90'+4'", "90+4'", 90.04),
+    ("90+4'", "90+4'", 90.04),
 ])
 def test_parse_clock(raw, label, key):
     t = parse_clock(raw)
@@ -55,3 +56,9 @@ def test_order_goals_interleaves_teams():
     assert order_goals(0, 2) == ("away", "away")
     assert order_goals(1, 1) == ("home", "away")
     assert order_goals(0, 0) == ()
+
+
+def test_elapsed_adds_stoppage_time():
+    assert parse_clock("90'+4'").elapsed() == 94
+    assert parse_clock("45+2'").elapsed() == 47
+    assert parse_clock("15'").elapsed() == 15
