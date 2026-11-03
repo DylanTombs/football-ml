@@ -7,8 +7,18 @@ CACHE_DIR = PROJECT_ROOT / "data" / "cache"
 PREDICTIONS_DIR = PROJECT_ROOT / "out" / "predictions"
 RESULTS_DIR = PROJECT_ROOT / "out" / "results"
 BACKTEST_DIR = PROJECT_ROOT / "out" / "backtest"
+# Pre-deadline FPL player state, one file per gameweek; committed because the
+# FPL API has no history of it.
+SNAPSHOTS_DIR = PROJECT_ROOT / "data" / "snapshots"
+SNAPSHOT_FIELDS = (
+    "id", "web_name", "first_name", "second_name", "team", "element_type",
+    "expected_goals", "goals_scored", "minutes", "starts", "status",
+    "chance_of_playing_next_round", "chance_of_playing_this_round", "news", "news_added",
+    "penalties_order", "direct_freekicks_order", "corners_and_indirect_freekicks_order",
+)
 
 PREDICTOR_NAME = "dixon-coles"
+NAIVE_FAVOURITE_NAME = "naive-favourite"
 
 # --- Sources ---------------------------------------------------------------
 FOOTBALL_DATA_URL = "https://football-data.co.uk/mmz4281/{season}/{league}.csv"
@@ -30,6 +40,13 @@ CURRENT_SEASON = TRAINING_SEASONS[-1]
 # E0 = Premier League, E1 = Championship. The Championship lets the model rate
 # promoted teams; teams moving between leagues link the two on one scale.
 TRAINING_LEAGUES = ("E0", "E1")
+
+# Pre-closing market-average odds (closing "C" columns would leak late news).
+# Pre-closing odds are collected Friday afternoon (Tuesday for midweek games).
+ODDS_COLUMNS = {"AvgH": "odds_home", "AvgD": "odds_draw", "AvgA": "odds_away",
+                "Avg>2.5": "odds_over", "Avg<2.5": "odds_under"}
+ODDS_LEAGUE = "E0"
+ODDS_MATCH_DAYS = 3  # an odds row matches a fixture kicking off within this many days
 
 # --- Dixon-Coles model -----------------------------------------------------
 # Per-day exponential time decay; ln(2)/365 ≈ 0.0019 → matches lose half
@@ -62,6 +79,23 @@ DEFAULT_BACKTEST_PROXY = "lagged"
 MIN_CHANCE_OF_PLAYING = 75
 SCORER_XG_WEIGHT = 0.7  # remainder goes to actual goals scored
 SCORER_REPEAT_DECAY = 1.0  # weight / (1 + decay * goals_already_given)
+
+# --- Picks (plan 04) -------------------------------------------------------
+# modal: likeliest result, then likeliest score in it; scorers by weight decay;
+#        minutes sampled from this season's goal times.
+# expected-points: the plausible scoreline worth the most expected points;
+#        k-th pick of a player worth P(scores ≥ k); fixed minutes.
+PICK_STRATEGIES = ("modal", "expected-points")
+DEFAULT_PICK_STRATEGY = "expected-points"  # beat modal by +39 pts on GW1-9 (plan 04)
+# Only scorelines at least this likely may be picked (keeps picks reel-worthy;
+# without it the best pick is about 6-5 every match).
+MIN_SCORELINE_PROBABILITY = 0.05
+# Fixed elapsed minutes for a player picked k times, with non-overlapping
+# ±MINUTE_TOLERANCE windows. Tuned with `best_minutes` on 3,284 ESPN goal times
+# from 2023-24 to 2025-26 (out of sample for the 2026-27 backtest).
+REPEAT_PICK_MINUTES = {1: (56,), 2: (56, 86), 3: (41, 64, 86)}
+# Share of goals inside a fixed ±10 window (56' covers 26%; repeat windows 23-24%).
+MINUTE_HIT_RATE = 0.25
 
 # --- Predictors ------------------------------------------------------------
 # name -> (provider, model). Dixon-Coles has no provider.
@@ -124,3 +158,8 @@ POINTS_CORRECT_RESULT = 1
 POINTS_PER_SCORER = 1
 POINTS_PER_MINUTE = 1
 MINUTE_TOLERANCE = 10
+
+# --- Comparing predictors (paired block bootstrap over gameweeks) -----------
+BOOTSTRAP_RESAMPLES = 10_000
+BOOTSTRAP_SEED = 0
+POINT_COMPONENTS = ("total", "outcome", "scorers", "minutes")

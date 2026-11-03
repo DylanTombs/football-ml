@@ -9,6 +9,7 @@ from football_ml.predict.scoreline import summarise
 from football_ml.predict.scorers import Player, assign_scorers
 from football_ml.predict.timing import GoalTime, goal_times, order_goals
 from football_ml.predictors.base import FixtureContext, FormResult, MatchPrediction, PredictedGoal
+from football_ml.sources.football_data import MatchOdds
 from football_ml.sources.fpl import Fixture
 
 
@@ -58,6 +59,7 @@ def fixture_context(
     distribution: tuple[GoalTime, ...],
     injury_impact: float,
     results: pd.DataFrame | None = None,
+    odds: MatchOdds | None = None,
 ) -> FixtureContext:
     home_squad = tuple(p for p in players if p.team == fixture.home)
     away_squad = tuple(p for p in players if p.team == fixture.away)
@@ -85,4 +87,6 @@ def fixture_context(
         away_availability=away_avail,
         home_form=form(fixture.home),
         away_form=form(fixture.away),
+        matrix=matrix,
+        odds=odds,
     )

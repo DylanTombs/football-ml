@@ -5,7 +5,13 @@ from pathlib import Path
 
 from anthropic import Anthropic
 
-from football_ml.config import LLM_CACHE_DIR, LLM_TIMEOUT_SECONDS, PREDICTOR_SPECS, PROVIDER_API_KEY_ENV
+from football_ml.config import (
+    DEFAULT_PICK_STRATEGY,
+    LLM_CACHE_DIR,
+    LLM_TIMEOUT_SECONDS,
+    PREDICTOR_SPECS,
+    PROVIDER_API_KEY_ENV,
+)
 from football_ml.llm.anthropic import AnthropicProvider
 from football_ml.llm.cache import JsonFileCache
 from football_ml.llm.openrouter import OpenRouterProvider
@@ -40,9 +46,13 @@ def _provider(provider: str, model: str, key: str):
 
 
 def build_predictors(
-    names: tuple[str, ...], env: Mapping[str, str], cache_dir: Path = LLM_CACHE_DIR
+    names: tuple[str, ...],
+    env: Mapping[str, str],
+    cache_dir: Path = LLM_CACHE_DIR,
+    pick_strategy: str = DEFAULT_PICK_STRATEGY,
 ) -> tuple[Predictor, ...]:
-    """Check every needed API key first, so a run never half-finishes for a missing key."""
+    """Check every needed API key first, so a run never half-finishes for a missing key.
+    `pick_strategy` applies to the Dixon-Coles predictor."""
     specs = {name: PREDICTOR_SPECS[name] for name in parse_predictor_names(",".join(names))}
     missing = sorted({
         PROVIDER_API_KEY_ENV[spec[0]] for spec in specs.values() if spec and not _api_key(env, spec[0])
@@ -52,7 +62,7 @@ def build_predictors(
 
     cache = JsonFileCache(cache_dir)
     return tuple(
-        DixonColesPredictor() if spec is None
+        DixonColesPredictor(pick_strategy) if spec is None
         else LLMPredictor(name, _provider(spec[0], spec[1], _api_key(env, spec[0])), cache)
         for name, spec in specs.items()
     )

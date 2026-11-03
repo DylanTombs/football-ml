@@ -1,0 +1,84 @@
+[
+  {
+    "reference": "dixon-coles-modal",
+    "challenger": "dixon-coles-expected-points",
+    "matches": 90,
+    "gameweeks": 9,
+    "changed_scorelines": 87,
+    "components": {
+      "total": {
+        "difference": 39,
+        "per_match": 0.4333,
+        "ci95": [
+          0.1444,
+          0.7333
+        ]
+      },
+      "outcome": {
+        "difference": 0,
+        "per_match": 0.0,
+        "ci95": [
+          -0.2222,
+          0.2111
+        ]
+      },
+      "scorers": {
+        "difference": 26,
+        "per_match": 0.2889,
+        "ci95": [
+          0.2333,
+          0.3556
+        ]
+      },
+      "minutes": {
+        "difference": 13,
+        "per_match": 0.1444,
+        "ci95": [
+          0.0556,
+          0.2444
+        ]
+      }
+    }
+  },
+  {
+    "reference": "dixon-coles-modal",
+    "challenger": "naive-favourite",
+    "matches": 90,
+    "gameweeks": 9,
+    "changed_scorelines": 44,
+    "components": {
+      "total": {
+        "difference": 15,
+        "per_match": 0.1667,
+        "ci95": [
+          0.0,
+          0.3333
+        ]
+      },
+      "outcome": {
+        "difference": -4,
+        "per_match": -0.0444,
+        "ci95": [
+          -0.2,
+          0.1
+        ]
+      },
+      "scorers": {
+        "difference": 10,
+        "per_match": 0.1111,
+        "ci95": [
+          0.0778,
+          0.1444
+        ]
+      },
+      "minutes": {
+        "difference": 9,
+        "per_match": 0.1,
+        "ci95": [
+          0.0,
+          0.1889
+        ]
+      }
+    }
+  }
+]

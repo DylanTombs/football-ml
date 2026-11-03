@@ -1,0 +1,235 @@
+{
+  "gameweek": 9,
+  "predictor": "naive-favourite",
+  "complete": true,
+  "totals": {
+    "points": 17,
+    "matches": 10,
+    "exact_scores": 0,
+    "correct_results": 5,
+    "scorer_hits": 9,
+    "minute_hits": 3,
+    "fallbacks": 0
+  },
+  "matches": [
+    {
+      "fixture_id": 84,
+      "home": "Chelsea",
+      "away": "Man United",
+      "predicted": "2-1",
+      "actual": "2-0",
+      "predicted_scorers": [
+        "Mbeumo",
+        "Rogers",
+        "Palmer"
+      ],
+      "actual_scorers": [
+        "Rogers 50'",
+        "Palmer 64'"
+      ],
+      "points": {
+        "outcome": 1,
+        "scorers": 2,
+        "minutes": 2,
+        "total": 5
+      }
+    },
+    {
+      "fixture_id": 82,
+      "home": "Bournemouth",
+      "away": "Leeds",
+      "predicted": "2-1",
+      "actual": "2-0",
+      "predicted_scorers": [
+        "Calvert-Lewin",
+        "Tavernier",
+        "Evanilson"
+      ],
+      "actual_scorers": [
+        "Evanilson 31'",
+        "Adli 90+4'"
+      ],
+      "points": {
+        "outcome": 1,
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
+      }
+    },
+    {
+      "fixture_id": 83,
+      "home": "Brentford",
+      "away": "Nott'm Forest",
+      "predicted": "2-1",
+      "actual": "2-0",
+      "predicted_scorers": [
+        "Ndoye",
+        "Thiago",
+        "Schade"
+      ],
+      "actual_scorers": [
+        "Milenković (og) 30'",
+        "Thiago 76'"
+      ],
+      "points": {
+        "outcome": 1,
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
+      }
+    },
+    {
+      "fixture_id": 85,
+      "home": "Coventry",
+      "away": "Sunderland",
+      "predicted": "0-1",
+      "actual": "3-1",
+      "predicted_scorers": [
+        "Brobbey"
+      ],
+      "actual_scorers": [
+        "Sakamoto 17'",
+        "Awoniyi 37'",
+        "Rudoni 52'",
+        "E.Le Fée 67'"
+      ],
+      "points": {
+        "outcome": 0,
+        "scorers": 0,
+        "minutes": 0,
+        "total": 0
+      }
+    },
+    {
+      "fixture_id": 86,
+      "home": "Hull",
+      "away": "Ipswich",
+      "predicted": "2-1",
+      "actual": "2-2",
+      "predicted_scorers": [
+        "Emersonn",
+        "McBurnie",
+        "Belloumi"
+      ],
+      "actual_scorers": [
+        "Florentino 22'",
+        "Iroegbunam 58'",
+        "McBurnie 68'",
+        "Enciso 74'"
+      ],
+      "points": {
+        "outcome": 0,
+        "scorers": 1,
+        "minutes": 0,
+        "total": 1
+      }
+    },
+    {
+      "fixture_id": 88,
+      "home": "Man City",
+      "away": "Brighton",
+      "predicted": "2-1",
+      "actual": "0-1",
+      "predicted_scorers": [
+        "Hinshelwood",
+        "Haaland",
+        "Cherki"
+      ],
+      "actual_scorers": [
+        "Ayari 11'"
+      ],
+      "points": {
+        "outcome": 0,
+        "scorers": 0,
+        "minutes": 0,
+        "total": 0
+      }
+    },
+    {
+      "fixture_id": 90,
+      "home": "Tottenham",
+      "away": "Crystal Palace",
+      "predicted": "2-1",
+      "actual": "2-0",
+      "predicted_scorers": [
+        "Strand Larsen",
+        "Van Hecke",
+        "Solanke"
+      ],
+      "actual_scorers": [
+        "Gray 25'",
+        "Van Hecke 73'"
+      ],
+      "points": {
+        "outcome": 1,
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
+      }
+    },
+    {
+      "fixture_id": 81,
+      "home": "Aston Villa",
+      "away": "Fulham",
+      "predicted": "2-1",
+      "actual": "1-1",
+      "predicted_scorers": [
+        "Gonzalo",
+        "N.Jackson",
+        "McGinn"
+      ],
+      "actual_scorers": [
+        "N.Jackson 39'",
+        "Suzuki (og) 64'"
+      ],
+      "points": {
+        "outcome": 0,
+        "scorers": 1,
+        "minutes": 0,
+        "total": 1
+      }
+    },
+    {
+      "fixture_id": 87,
+      "home": "Liverpool",
+      "away": "Arsenal",
+      "predicted": "1-2",
+      "actual": "0-1",
+      "predicted_scorers": [
+        "Ødegaard",
+        "Isak",
+        "Havertz"
+      ],
+      "actual_scorers": [
+        "Havertz 16'"
+      ],
+      "points": {
+        "outcome": 1,
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
+      }
+    },
+    {
+      "fixture_id": 89,
+      "home": "Newcastle",
+      "away": "Everton",
+      "predicted": "2-1",
+      "actual": "0-1",
+      "predicted_scorers": [
+        "Barry",
+        "Wissa",
+        "Barnes"
+      ],
+      "actual_scorers": [
+        "Barry 49'"
+      ],
+      "points": {
+        "outcome": 0,
+        "scorers": 1,
+        "minutes": 1,
+        "total": 2
+      }
+    }
+  ]
+}

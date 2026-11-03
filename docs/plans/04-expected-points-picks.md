@@ -22,13 +22,40 @@ Why this comes first: the model's expected goals over GW1–9 total 256, against
 
 ## Tasks
 
-- [ ] `predict/picks.py`: expected points of a pick, plausibility floor, best-pick search, with tests (hand-checked matrices, floor respected, falls back to modal when nothing beats it)
-- [ ] Repeat-pick maths and fixed minutes, with tests
-- [ ] `--pick-strategy` on `predict` and `backtest`
-- [ ] `naive-favourite` predictor (odds from the cached football-data CSVs, pre-closing columns only)
-- [ ] Paired-bootstrap comparison in the backtest output
-- [ ] `snapshots.py` plus writing a snapshot on every `predict`, tested by a round-trip
-- [ ] Backtest GW1–9: modal vs expected-points vs naive-favourite, with results recorded here
+- [x] `predict/picks.py`: expected points of a pick, plausibility floor, best-pick search, with tests (hand-checked matrices, floor respected, falls back to modal when nothing beats it)
+- [x] Repeat-pick maths and fixed minutes, with tests
+- [x] `--pick-strategy` on `predict` and `backtest`
+- [x] `naive-favourite` predictor (odds from the cached football-data CSVs, pre-closing columns only)
+- [x] Paired-bootstrap comparison in the backtest output
+- [x] `snapshots.py` plus writing a snapshot on every `predict`, tested by a round-trip
+- [x] Backtest GW1–9: modal vs expected-points vs naive-favourite, with results recorded here
+
+## Results (GW1–9, 90 matches, run 2026-11-03, availability `lagged`)
+
+| Predictor | Points | Exact | Results | Scorer hits* | Minute hits* | Goals picked |
+|---|---|---|---|---|---|---|
+| dixon-coles-modal | 141 | 7 | 45 | 67 | 15 | 188 |
+| **dixon-coles-expected-points** | **180** | 7 | 45 | 93 | 28 | 341 |
+| naive-favourite | 156 | 6 | 43 | 77 | 24 | 242 |
+
+Paired block bootstrap over gameweeks, per match vs modal (95% interval):
+
+| | Total | Outcome | Scorers* | Minutes* |
+|---|---|---|---|---|
+| expected-points | **+0.43** [+0.14, +0.73] | 0.00 [−0.22, +0.21] | +0.29 [+0.23, +0.36] | +0.14 [+0.06, +0.24] |
+| naive-favourite | +0.17 [0.00, +0.33] | −0.04 [−0.20, +0.10] | +0.11 [+0.08, +0.14] | +0.10 [0.00, +0.19] |
+
+\*Still optimistic (live FPL stats). Expected-points picks more goals, so it gains more from the leak than modal does; the outcome column has no leak.
+
+- **Expected-points is now the default** (`DEFAULT_PICK_STRATEGY`): +39 pts with an interval clear of zero. Modal reproduces the 141 baseline exactly.
+- The gain is all scorers and minutes; outcome points are unchanged (87/90 scorelines changed, same 45 correct results). Picks are mostly 3-1 (33), 2-2 (20), 1-3, 2-1, 1-2; the floor held (lowest pick 5.0%).
+- Picks total 341 goals against 243 actual (3.8 a match). The 5% floor is what keeps it there.
+- Fixed minutes, tuned on 3,284 ESPN goals from 2023-24 to 2025-26: one pick 56' (26% within ±10, against about 21% for a random draw), two picks 56' + 86', three 41' + 64' + 86'. Goals by different players are nudged one minute apart, so a 3-1 reads 55', 56', 57', 58'.
+- Player goals are Poisson with mean = share of the eligible squad's scoring weight × the side's expected goals. There's no own-goal or "other" bucket yet (plan 05).
+- naive-favourite: 2-1 when the de-margined Avg>2.5 price says over is more likely, else 1-0. It only works in the backtest, because the current-season CSV has no odds for unplayed matches (live odds come in plan 06). Its outcome points (0.61 a match) trail modal here, unlike the 0.70–0.83 seen over five past seasons.
+- LLM predictors still fall back to the modal pick (`ctx.baseline`).
+- Backtest output is now named per strategy (`dixon-coles-modal.json`, `dixon-coles-expected-points.json`, `naive-favourite.json`) plus `out/backtest/comparisons.json`.
+- First snapshot: `data/snapshots/gw10.json`. `predict` refreshes it on every run before the deadline and never writes one after.
 
 ## Done when
 

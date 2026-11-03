@@ -10,8 +10,10 @@ from football_ml.backtest import run_backtest
 from football_ml.config import (
     AVAILABILITY_PROXIES,
     DEFAULT_BACKTEST_PROXY,
+    DEFAULT_PICK_STRATEGY,
     DEFAULT_PREDICTORS,
     INJURY_IMPACT,
+    PICK_STRATEGIES,
     PREDICTIONS_DIR,
     RESULTS_DIR,
 )
@@ -57,12 +59,14 @@ def _leaderboard_lines(table: dict) -> list[str]:
 
 
 def _predict(args) -> int:
-    predictors = build_predictors(args.predictors, env=os.environ)
+    predictors = build_predictors(args.predictors, env=os.environ, pick_strategy=args.pick_strategy)
     for report in run_gameweek(args.gameweek, predictors):
         print(f"\nGameweek {report['gameweek']}: {report['predictor']}\n")
         for match in report["matches"]:
             print(_format_match(match))
         print(f"\nSaved to {report['path']}")
+        if report.get("snapshot"):
+            print(f"Player snapshot: {report['snapshot']}")
     return 0
 
 
@@ -92,6 +96,18 @@ def _score(args) -> int:
     return 0
 
 
+def _comparison_lines(c: dict) -> list[str]:
+    def part(name: str) -> str:
+        d = c["components"][name]
+        lo, hi = d["ci95"]
+        return f"{name} {d['difference']:+d} ({d['per_match']:+.3f}/match, 95% [{lo:+.2f}, {hi:+.2f}])"
+
+    return [
+        f"{c['challenger']} vs {c['reference']}: {c['matches']} matches, {c['changed_scorelines']} scorelines changed",
+        "  " + " | ".join(part(name) for name in ("total", "outcome", "scorers", "minutes")),
+    ]
+
+
 def _backtest(args) -> int:
     inputs = load_season_inputs()
     minutes = None
@@ -101,14 +117,17 @@ def _backtest(args) -> int:
     summary = run_backtest(
         args.first, args.last, inputs,
         injury_impact=args.injury_impact, gameweek_minutes=minutes, proxy=args.availability,
+        pick_strategy=args.pick_strategy,
     )
     print(
         f"\nBacktest (scorer points optimistic: live FPL stats;"
         f" injury impact {summary['injury_impact']}, availability {summary['availability_proxy']})\n"
     )
     for gw in summary["gameweeks"]:
-        print(f"GW{gw['gameweek']:>2}: {_totals_line(gw['totals'])}")
+        print(f"GW{gw['gameweek']:>2} {gw['predictor']:<28} {_totals_line(gw['totals'])}")
     print("\n" + "\n".join(_leaderboard_lines(summary["season"])))
+    for comparison in summary.get("comparisons", []):
+        print("\n" + "\n".join(_comparison_lines(comparison)))
     return 0
 
 
@@ -141,6 +160,8 @@ def _parser() -> argparse.ArgumentParser:
     predict.add_argument("--gameweek", type=_gameweek_arg, help="defaults to the next gameweek")
     predict.add_argument("--predictors", type=_predictors_arg, default=DEFAULT_PREDICTORS,
                          help=f"comma-separated, e.g. dixon-coles,claude,gpt (default {','.join(DEFAULT_PREDICTORS)})")
+    predict.add_argument("--pick-strategy", choices=PICK_STRATEGIES, default=DEFAULT_PICK_STRATEGY,
+                         help=f"how Dixon-Coles picks its scoreline (default {DEFAULT_PICK_STRATEGY})")
     predict.set_defaults(handler=_predict)
 
     score = sub.add_parser("score", help="Score saved predictions against actual results")
@@ -154,6 +175,8 @@ def _parser() -> argparse.ArgumentParser:
                           help=f"0 = ignore injuries (default {INJURY_IMPACT})")
     backtest.add_argument("--availability", choices=AVAILABILITY_PROXIES, default=DEFAULT_BACKTEST_PROXY,
                           help="how to tell who was missing in past gameweeks")
+    backtest.add_argument("--pick-strategy", choices=PICK_STRATEGIES, default=DEFAULT_PICK_STRATEGY,
+                          help="strategy compared against modal picks and the naive-favourite benchmark")
     backtest.set_defaults(handler=_backtest)
     return parser
 

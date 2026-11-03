@@ -53,7 +53,7 @@ def test_context_baseline_matches_dixon_coles_summary():
 
 def test_dixon_coles_predictor_returns_the_baseline():
     ctx = _context()
-    assert DixonColesPredictor().predict(ctx) == ctx.baseline
+    assert DixonColesPredictor("modal").predict(ctx) == ctx.baseline
 
 
 def test_match_json_shape():

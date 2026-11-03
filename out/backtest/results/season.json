@@ -1,5 +1,25 @@
 {
-  "dixon-coles": {
+  "dixon-coles-expected-points": {
+    "points": 180,
+    "matches": 90,
+    "exact_scores": 7,
+    "correct_results": 45,
+    "scorer_hits": 93,
+    "minute_hits": 28,
+    "fallbacks": 0,
+    "by_gameweek": {
+      "1": 27,
+      "2": 19,
+      "3": 18,
+      "4": 22,
+      "5": 14,
+      "6": 19,
+      "7": 24,
+      "8": 12,
+      "9": 25
+    }
+  },
+  "dixon-coles-modal": {
     "points": 141,
     "matches": 90,
     "exact_scores": 7,
@@ -17,6 +37,26 @@
       "7": 24,
       "8": 14,
       "9": 19
+    }
+  },
+  "naive-favourite": {
+    "points": 156,
+    "matches": 90,
+    "exact_scores": 6,
+    "correct_results": 43,
+    "scorer_hits": 77,
+    "minute_hits": 24,
+    "fallbacks": 0,
+    "by_gameweek": {
+      "1": 21,
+      "2": 19,
+      "3": 15,
+      "4": 16,
+      "5": 16,
+      "6": 16,
+      "7": 23,
+      "8": 13,
+      "9": 17
     }
   }
 }

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from football_ml.config import INJURY_IMPACT, PREDICTIONS_DIR, TRAINING_SEASONS
+from football_ml.config import CURRENT_SEASON, INJURY_IMPACT, PREDICTIONS_DIR, SNAPSHOTS_DIR, TRAINING_SEASONS
 from football_ml.model.dixon_coles import DixonColesParams, fit
 from football_ml.predict.scorers import Player
 from football_ml.predict.timing import GoalTime, parse_clock
@@ -16,7 +16,8 @@ from football_ml.predictors.context import fixture_context
 from football_ml.predictors.dixon_coles import DixonColesPredictor
 from football_ml.sources import espn, fpl
 from football_ml.sources.espn import GoalEvent
-from football_ml.sources.football_data import fetch_results
+from football_ml.snapshots import write_snapshot
+from football_ml.sources.football_data import fetch_odds, fetch_results, odds_for
 
 log = logging.getLogger(__name__)
 
@@ -31,6 +32,7 @@ class SeasonInputs:
     results: pd.DataFrame
     players: tuple[Player, ...]
     goal_events: tuple[GoalEvent, ...]
+    odds: pd.DataFrame | None = None  # pre-closing odds of played matches (none for upcoming yet)
 
 
 def load_season_inputs() -> SeasonInputs:
@@ -42,6 +44,7 @@ def load_season_inputs() -> SeasonInputs:
         results=fetch_results(TRAINING_SEASONS),
         players=fpl.parse_players(bootstrap),
         goal_events=espn.fetch_goal_events(fpl.season_start(bootstrap), now + pd.Timedelta(days=1)),
+        odds=fetch_odds((CURRENT_SEASON,)),
     )
 
 
@@ -98,7 +101,10 @@ def gameweek_context(gameweek: int, inputs: SeasonInputs, injury_impact: float =
         "injury_impact": injury_impact,
     }
     contexts = tuple(
-        fixture_context(gameweek, f, params, inputs.players, distribution, injury_impact, inputs.results)
+        fixture_context(
+            gameweek, f, params, inputs.players, distribution, injury_impact, inputs.results,
+            odds=odds_for(inputs.odds, f.home, f.away, f.kickoff),
+        )
         for f in sorted(fixtures, key=lambda f: f.kickoff)
     )
     return GameweekContext(gameweek, model, contexts)
@@ -136,14 +142,25 @@ def write_report(report: dict, predictions_dir: Path = PREDICTIONS_DIR) -> Path:
     return path
 
 
-def run_gameweek(gameweek: int | None, predictors: tuple[Predictor, ...]) -> list[dict]:
-    """Predict a gameweek with every predictor, building the shared context once."""
+def run_gameweek(
+    gameweek: int | None,
+    predictors: tuple[Predictor, ...],
+    predictions_dir: Path = PREDICTIONS_DIR,
+    snapshots_dir: Path = SNAPSHOTS_DIR,
+    now: pd.Timestamp | None = None,
+) -> list[dict]:
+    """Snapshot FPL player state (before the deadline only), then predict the
+    gameweek with every predictor, building the shared context once."""
     inputs = load_season_inputs()
-    gw = gameweek_context(gameweek or fpl.next_gameweek(inputs.bootstrap), inputs)
+    number = gameweek or fpl.next_gameweek(inputs.bootstrap)
+    snapshot = write_snapshot(inputs.bootstrap, number, now or pd.Timestamp.now(tz="UTC"), snapshots_dir)
+    if snapshot:
+        log.info("Wrote %s", snapshot)
+    gw = gameweek_context(number, inputs)
     reports = []
     for predictor in predictors:
         report = predictor_report(gw, predictor)
-        path = write_report(report)
+        path = write_report(report, predictions_dir)
         log.info("Wrote %s", path)
-        reports.append({**report, "path": str(path)})
+        reports.append({**report, "path": str(path), "snapshot": str(snapshot) if snapshot else None})
     return reports

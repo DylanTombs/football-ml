@@ -1,12 +1,15 @@
 """What every predictor takes in and gives back, and how it's written to JSON."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Protocol
+
+import numpy as np
 
 from football_ml.predict.availability import TeamAvailability
 from football_ml.predict.scoreline import ScorelineSummary
 from football_ml.predict.scorers import Player
 from football_ml.predict.timing import GoalTime
+from football_ml.sources.football_data import MatchOdds
 from football_ml.sources.fpl import Fixture
 
 SIDES = ("home", "away")
@@ -60,6 +63,9 @@ class FixtureContext:
     away_availability: TeamAvailability
     home_form: tuple[FormResult, ...] = ()
     away_form: tuple[FormResult, ...] = ()
+    # P(home i, away j) behind `summary`; None only in hand-built contexts
+    matrix: np.ndarray | None = field(default=None, compare=False, repr=False)
+    odds: MatchOdds | None = None  # pre-closing market odds, when known
 
 
 class Predictor(Protocol):
@@ -80,6 +86,10 @@ def _goal_json(ctx: FixtureContext, goal: PredictedGoal) -> dict:
     }
 
 
+def _rounded(value: float | None) -> float | None:
+    return None if value is None else round(value, 4)
+
+
 def _missing_json(availability: TeamAvailability) -> list[dict]:
     return [{"name": m.name, "xg_share": round(m.xg_share, 3)} for m in availability.missing]
 
@@ -94,6 +104,16 @@ def prediction_json(ctx: FixtureContext, prediction: MatchPrediction) -> dict:
     return {**data, "reasoning": prediction.reasoning} if prediction.reasoning else data
 
 
+def scoreline_probability(ctx: FixtureContext, home_goals: int, away_goals: int) -> float | None:
+    """Model probability of a scoreline (0 beyond the matrix, None without one)."""
+    if ctx.matrix is None:
+        return None
+    rows, cols = ctx.matrix.shape
+    if not (0 <= home_goals < rows and 0 <= away_goals < cols):
+        return 0.0
+    return float(ctx.matrix[home_goals, away_goals])
+
+
 def match_json(ctx: FixtureContext, prediction: MatchPrediction) -> dict:
     """One match of a report. probabilities / expected_goals / top_scorelines are
     always the Dixon-Coles model's, whichever predictor made the prediction."""
@@ -104,6 +124,7 @@ def match_json(ctx: FixtureContext, prediction: MatchPrediction) -> dict:
         "home": ctx.fixture.home,
         "away": ctx.fixture.away,
         "prediction": prediction_json(ctx, prediction),
+        "prediction_probability": _rounded(scoreline_probability(ctx, prediction.home_goals, prediction.away_goals)),
         "baseline_score": {"home": s.home_goals, "away": s.away_goals},
         "probabilities": {
             "home_win": round(s.home_win, 4), "draw": round(s.draw, 4), "away_win": round(s.away_win, 4),

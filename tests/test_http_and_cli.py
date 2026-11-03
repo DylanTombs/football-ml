@@ -136,14 +136,16 @@ def test_cli_backtest_passes_flags_and_fetches_minutes(monkeypatch, capsys):
 
     def fake_backtest(first, last, inputs, **kwargs):
         seen.update(kwargs, first=first, last=last)
-        return {"gameweeks": [], "season": {}, "availability_proxy": kwargs["proxy"],
+        return {"gameweeks": [], "season": {}, "comparisons": [], "availability_proxy": kwargs["proxy"],
                 "injury_impact": kwargs["injury_impact"]}
 
     monkeypatch.setattr(cli, "load_season_inputs", _fake_inputs)
     monkeypatch.setattr(cli.fpl, "fetch_gameweek_minutes", lambda gws: {gw: {} for gw in gws})
     monkeypatch.setattr(cli, "run_backtest", fake_backtest)
-    argv = ["backtest", "--from", "1", "--to", "1", "--injury-impact", "0.25", "--availability", "oracle"]
+    argv = ["backtest", "--from", "1", "--to", "1", "--injury-impact", "0.25", "--availability", "oracle",
+            "--pick-strategy", "expected-points"]
     assert cli.main(argv) == 0
+    assert seen["pick_strategy"] == "expected-points"
     assert seen["injury_impact"] == 0.25
     assert seen["proxy"] == "oracle"
     assert seen["gameweek_minutes"] == {1: {}}
@@ -163,3 +165,29 @@ def test_cli_backtest_live_proxy_skips_minutes(monkeypatch):
 def test_cli_rejects_bad_injury_impact():
     with pytest.raises(SystemExit):
         cli.main(["backtest", "--from", "1", "--to", "2", "--injury-impact", "1.5"])
+
+
+def test_cli_predict_passes_pick_strategy(monkeypatch):
+    seen = {}
+    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors: seen.update(p=predictors) or [])
+    assert cli.main(["predict", "--pick-strategy", "expected-points"]) == 0
+    assert seen["p"][0].pick_strategy == "expected-points"
+
+
+def test_cli_rejects_unknown_pick_strategy():
+    with pytest.raises(SystemExit):
+        cli.main(["predict", "--pick-strategy", "vibes"])
+
+
+def test_cli_backtest_prints_comparisons(monkeypatch, capsys):
+    comparison = {"reference": "dixon-coles-modal", "challenger": "naive-favourite", "matches": 90,
+                  "gameweeks": 9, "changed_scorelines": 30,
+                  "components": {c: {"difference": 5, "per_match": 0.0556, "ci95": [-0.1, 0.2]}
+                                 for c in ("total", "outcome", "scorers", "minutes")}}
+    monkeypatch.setattr(cli, "load_season_inputs", _fake_inputs)
+    monkeypatch.setattr(cli, "run_backtest", lambda f, l, i, **kw: {
+        "gameweeks": [], "season": {}, "comparisons": [comparison],
+        "availability_proxy": "live", "injury_impact": 0.0})
+    assert cli.main(["backtest", "--from", "1", "--to", "1", "--availability", "live"]) == 0
+    out = capsys.readouterr().out
+    assert "naive-favourite vs dixon-coles-modal" in out and "+5" in out and "[-0.10, +0.20]" in out
