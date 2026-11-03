@@ -12,7 +12,7 @@ Build in this order. Each phase relies on the one before it. The research behind
 | 6 | [Multi-season test bench + bookmaker odds](06-test-bench-and-odds.md) | 90 matches can't rank changes; odds are the strongest input for λ and μ | todo |
 | 7 | [Dixon-Coles structure tweaks](07-model-structure.md) | Small model gains, measurable only on the plan 06 bench | todo |
 | 8 | [Availability and LLM adjustments](08-llm-adjustments.md) | Team news via fitted, capped adjustments; the LLM only extracts facts | todo |
-| 9 | [Weekly command + automation](09-weekly-command.md) | One command (later a schedule) each gameweek | todo |
+| 9 | [Weekly command](09-weekly-command.md) | One command, run by hand each gameweek: score, snapshot, predict, summary | todo |
 
 Rules that apply to every phase:
 - Any change to how we predict is judged by backtest, not by how plausible it looks. From plan 06, use the multi-season bench and a paired comparison. 90 matches carries about ±13 points of noise.
