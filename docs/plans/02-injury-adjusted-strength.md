@@ -39,9 +39,10 @@
 
 - **Decision: `INJURY_IMPACT = 0.0` (off).** Every value scores fewer points, even with the oracle's perfect line-up knowledge.
 - Almost all of the loss is scorer and minute points. Results and exact scores barely move (oracle 0.25: 46 results vs 45; exact scores 6–7 throughout).
-- Why: the model already predicts too few goals (188 predicted vs 243 actual over GW1–9). Lowering λ drops that to 155, so there are fewer scorer guesses, and a wrong scorer guess costs nothing. Any change that lowers goal counts loses points under these rules.
+- Why: the *headline* scores add up to too few goals (188 predicted vs 243 actual over GW1–9). Lowering λ drops that to 155, so there are fewer scorer guesses, and a wrong scorer guess costs nothing. Any change that lowers headline goal counts loses points under these rules.
+  - Correction (2026-11-03): the model's expected goals add up to 256, against 243 actual, so the rates aren't too low. The shortfall comes from picking each match's single most likely score, which favours low scores. The fix is choosing picks to maximise expected points, not calibrating the rates.
 - Ratings already absorb long injuries partly, because recent results reflect the weaker side.
-- Worth trying later: calibrating total goals (the model predicts low), or using injuries to shift *who wins* while keeping goal counts.
+- Worth trying later: choosing scorelines and scorers to maximise expected points, or using injuries to shift *who wins* while keeping goal counts.
 
 ## Done when
 

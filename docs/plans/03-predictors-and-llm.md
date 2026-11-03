@@ -49,8 +49,14 @@
 - [x] `predictors/llm.py`: prompt, schema, validation, retry and fallback, tested with a fake provider (including bad output)
 - [x] Make the phase 1 results tracker and season table handle multiple predictors
 - [x] `football-ml predict --predictors dixon-coles,claude,gpt`
-- [ ] Live run: GW10 with dixon-coles, claude, gpt and gemini before the first kickoff (needs API keys), then `score --gameweek 10`
+- [x] ~~Live run: GW10 with dixon-coles, claude, gpt and gemini~~ dropped (see below)
+
+## Outcome (2026-11-03)
+
+- **Scope change:** Dylan doesn't want an "AI vs AI" comparison. The series is about how well *our* pipeline predicts. So LLM predictors stay in the code but aren't run each week, and the live run was dropped.
+- What carries forward: the `Predictor` interface, `FixtureContext`, per-predictor outputs and leaderboard (useful for benchmarks like the naive favourite rule in plan 04), and the LLM providers, cache and validation, which plan 08 reuses to extract facts.
+- Research behind the new roadmap: `reports/Improving our match prediction model.md`.
 
 ## Done when
 
-- One gameweek is predicted by at least 3 predictors and scored on the same leaderboard
+- ~~One gameweek is predicted by at least 3 predictors and scored on the same leaderboard~~ Superseded by the scope change above. Done when the interface and providers are in place and tested, which they are.
