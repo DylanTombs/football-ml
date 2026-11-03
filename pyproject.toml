@@ -1,0 +1,31 @@
+[project]
+name = "football-ml"
+version = "0.1.0"
+description = "Premier League exact-score, goalscorer and goal-time predictions"
+readme = "README.md"
+authors = [
+    { name = "DylanTombs", email = "dylantombs2006@icloud.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.4",
+    "pandas>=3.1.0",
+    "requests>=2.34.2",
+    "scipy>=1.18.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
+]
+
+[project.scripts]
+football-ml = "football_ml.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
