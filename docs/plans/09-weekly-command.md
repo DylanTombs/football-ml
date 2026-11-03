@@ -1,4 +1,4 @@
-# 09 — Weekly command + automation
+# 09 — Weekly command
 
 **Goal:** one command, run by hand each gameweek, that scores the last round, saves snapshots of player data and odds, and predicts the next round.
 
