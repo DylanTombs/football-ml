@@ -2,8 +2,11 @@
 
 import pandas as pd
 
-from football_ml.config import FORM_MATCHES, MAX_GOALS, TOP_SCORELINES
+import logging
+
+from football_ml.config import FORM_MATCHES, MAX_GOALS, ODDS_MODEL_WEIGHT, TOP_SCORELINES
 from football_ml.model.dixon_coles import DixonColesParams, matrix_from_rates
+from football_ml.model.market import rates_from_odds
 from football_ml.predict.availability import adjust_rate, team_availability
 from football_ml.predict.scoreline import summarise
 from football_ml.predict.scorers import Player, assign_scorers
@@ -12,6 +15,8 @@ from football_ml.predict.timing import GoalTime, goal_times, order_goals
 from football_ml.predictors.base import FixtureContext, FormResult, MatchPrediction, PredictedGoal
 from football_ml.sources.football_data import MatchOdds
 from football_ml.sources.fpl import Fixture
+
+log = logging.getLogger(__name__)
 
 
 def recent_form(results: pd.DataFrame, team: str, before: pd.Timestamp, n: int = FORM_MATCHES) -> tuple[FormResult, ...]:
@@ -52,6 +57,23 @@ def _baseline(fixture, summary, home_squad, away_squad, distribution) -> MatchPr
     )
 
 
+def _market_rates(odds: MatchOdds | None, rho: float, fixture: Fixture) -> tuple[float, float] | None:
+    if odds is None:
+        return None
+    try:
+        return rates_from_odds(odds, rho)
+    except (ValueError, RuntimeError) as exc:
+        log.warning("Ignoring odds for %s v %s: %s", fixture.home, fixture.away, exc)
+        return None
+
+
+def blend_rates(model: tuple[float, float], market: tuple[float, float] | None, model_weight: float) -> tuple[float, float]:
+    """λ = w × model + (1 − w) × market (plan 06); the model alone without odds."""
+    if market is None:
+        return model
+    return tuple(model_weight * a + (1 - model_weight) * b for a, b in zip(model, market))
+
+
 def fixture_context(
     gameweek: int,
     fixture: Fixture,
@@ -62,12 +84,15 @@ def fixture_context(
     results: pd.DataFrame | None = None,
     odds: MatchOdds | None = None,
     scorer_model: ScorerModel | None = None,
+    model_weight: float = ODDS_MODEL_WEIGHT,
 ) -> FixtureContext:
     home_squad = tuple(p for p in players if p.team == fixture.home)
     away_squad = tuple(p for p in players if p.team == fixture.away)
     home_avail, away_avail = team_availability(home_squad), team_availability(away_squad)
 
-    lam, mu = params.expected_goals(fixture.home, fixture.away)
+    model_rates = params.expected_goals(fixture.home, fixture.away)
+    market_rates = _market_rates(odds, params.rho, fixture) if model_weight < 1 else None
+    lam, mu = blend_rates(model_rates, market_rates, model_weight)
     matrix = matrix_from_rates(
         adjust_rate(lam, home_avail.missing_share, injury_impact),
         adjust_rate(mu, away_avail.missing_share, injury_impact),
@@ -92,6 +117,8 @@ def fixture_context(
         away_form=form(fixture.away),
         matrix=matrix,
         odds=odds,
+        model_rates=model_rates,
+        market_rates=market_rates,
         home_scoring_rates=rates(home_squad, fixture.home, summary.expected_home_goals),
         away_scoring_rates=rates(away_squad, fixture.away, summary.expected_away_goals),
     )

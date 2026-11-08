@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 12,
+    "points": 15,
     "matches": 10,
-    "exact_scores": 1,
-    "correct_results": 6,
-    "scorer_hits": 4,
-    "minute_hits": 0,
+    "exact_scores": 2,
+    "correct_results": 5,
+    "scorer_hits": 5,
+    "minute_hits": 1,
     "fallbacks": 0
   },
   "matches": [
@@ -58,10 +58,12 @@
       "fixture_id": 83,
       "home": "Brentford",
       "away": "Nott'm Forest",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "2-0",
       "predicted_scorers": [
-        "Thiago"
+        "Thiago",
+        "Ndoye",
+        "Schade"
       ],
       "actual_scorers": [
         "Milenković (og) 30'",
@@ -78,10 +80,10 @@
       "fixture_id": 85,
       "home": "Coventry",
       "away": "Sunderland",
-      "predicted": "1-0",
+      "predicted": "0-1",
       "actual": "3-1",
       "predicted_scorers": [
-        "Rudoni"
+        "Brobbey"
       ],
       "actual_scorers": [
         "Sakamoto 17'",
@@ -90,22 +92,22 @@
         "E.Le Fée 67'"
       ],
       "points": {
-        "outcome": 1,
-        "scorers": 1,
+        "outcome": 0,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 0
       }
     },
     {
       "fixture_id": 86,
       "home": "Hull",
       "away": "Ipswich",
-      "predicted": "1-2",
+      "predicted": "2-1",
       "actual": "2-2",
       "predicted_scorers": [
-        "Emersonn",
         "Belloumi",
-        "Davis"
+        "Emersonn",
+        "McBurnie"
       ],
       "actual_scorers": [
         "Florentino 22'",
@@ -115,9 +117,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 0,
+        "scorers": 1,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -145,11 +147,10 @@
       "fixture_id": 90,
       "home": "Tottenham",
       "away": "Crystal Palace",
-      "predicted": "2-1",
+      "predicted": "2-0",
       "actual": "2-0",
       "predicted_scorers": [
         "Solanke",
-        "Mateta",
         "Gallagher"
       ],
       "actual_scorers": [
@@ -157,20 +158,22 @@
         "Van Hecke 73'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 3,
         "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 3
       }
     },
     {
       "fixture_id": 81,
       "home": "Aston Villa",
       "away": "Fulham",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "N.Jackson"
+        "N.Jackson",
+        "Gonzalo",
+        "Manzambi"
       ],
       "actual_scorers": [
         "N.Jackson 39'",
@@ -206,19 +209,21 @@
       "fixture_id": 89,
       "home": "Newcastle",
       "away": "Everton",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Wissa"
+        "Wissa",
+        "Barry",
+        "Barnes"
       ],
       "actual_scorers": [
         "Barry 49'"
       ],
       "points": {
         "outcome": 0,
-        "scorers": 0,
-        "minutes": 0,
-        "total": 0
+        "scorers": 1,
+        "minutes": 1,
+        "total": 2
       }
     }
   ]

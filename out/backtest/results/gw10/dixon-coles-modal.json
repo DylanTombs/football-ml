@@ -3,10 +3,10 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 18,
+    "points": 15,
     "matches": 10,
-    "exact_scores": 2,
-    "correct_results": 6,
+    "exact_scores": 1,
+    "correct_results": 5,
     "scorer_hits": 6,
     "minute_hits": 2,
     "fallbacks": 0
@@ -38,19 +38,19 @@
       "fixture_id": 97,
       "home": "Leeds",
       "away": "Tottenham",
-      "predicted": "1-0",
+      "predicted": "0-1",
       "actual": "1-0",
       "predicted_scorers": [
-        "Calvert-Lewin"
+        "Van Hecke"
       ],
       "actual_scorers": [
         "Okafor 79'"
       ],
       "points": {
-        "outcome": 3,
+        "outcome": 0,
         "scorers": 0,
         "minutes": 0,
-        "total": 3
+        "total": 0
       }
     },
     {
@@ -99,9 +99,11 @@
       "fixture_id": 99,
       "home": "Nott'm Forest",
       "away": "Man City",
-      "predicted": "0-1",
+      "predicted": "1-2",
       "actual": "3-1",
       "predicted_scorers": [
+        "Haaland",
+        "Ndoye",
         "Haaland"
       ],
       "actual_scorers": [

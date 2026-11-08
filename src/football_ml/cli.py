@@ -7,8 +7,13 @@ import os
 import sys
 
 from football_ml.backtest import run_backtest
+from football_ml.bench import run_bench, tune
 from football_ml.config import (
     AVAILABILITY_PROXIES,
+    BENCH_DIR,
+    BENCH_L2_GRID,
+    BENCH_SEASON_SETS,
+    BENCH_XI_GRID,
     DEFAULT_BACKTEST_PROXY,
     DEFAULT_PICK_STRATEGY,
     DEFAULT_PREDICTORS,
@@ -16,14 +21,18 @@ from football_ml.config import (
     INJURY_IMPACT,
     PICK_STRATEGIES,
     PREDICTIONS_DIR,
+    RATING_L2_PENALTY,
     RESULTS_DIR,
     SCORER_MODELS,
+    TIME_DECAY_XI,
+    TRAINING_SEASONS,
 )
 from football_ml.evaluate.season import leaderboard, score_gameweek, season_table, write_gameweek_results
 from football_ml.llm.base import LLMError
 from football_ml.pipeline import load_season_inputs, run_gameweek
 from football_ml.predictors.registry import build_predictors, parse_predictor_names
 from football_ml.sources import fpl
+from football_ml.sources.football_data import fetch_results
 from football_ml.sources.http import DataSourceError
 from football_ml.sources.results import build_actual_matches
 
@@ -70,6 +79,11 @@ def _predict(args) -> int:
         print(f"\nSaved to {report['path']}")
         if report.get("snapshot"):
             print(f"Player snapshot: {report['snapshot']}")
+        if report.get("odds"):
+            print(f"Odds snapshot: {report['odds']}")
+        with_odds, total = report.get("model", {}).get("fixtures_with_odds"), len(report["matches"])
+        if with_odds is not None and with_odds < total:
+            print(f"Note: {total - with_odds} of {total} fixtures had no odds yet and use the model alone")
     return 0
 
 
@@ -135,6 +149,41 @@ def _backtest(args) -> int:
     return 0
 
 
+def _metrics_line(m: dict) -> str:
+    return (
+        f"{m['matches']} matches | exact log loss {m['exact_log_loss']:.4f} | 1X2 log loss {m['outcome_log_loss']:.4f}"
+        f" | RPS {m['rps']:.4f} | outcome pts {m['outcome_points']} | goals {m['predicted_goals']:.0f}"
+        f" vs {m['actual_goals']} | draws {m['predicted_draws']:.0f} vs {m['actual_draws']}"
+    )
+
+
+def _write_bench(name: str, data: dict) -> str:
+    path = BENCH_DIR / f"{name}.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    return str(path)
+
+
+def _bench(args) -> int:
+    seasons = BENCH_SEASON_SETS[args.seasons]
+    results = fetch_results(TRAINING_SEASONS)
+    if args.grid:
+        table = tune(results, seasons, BENCH_XI_GRID, BENCH_L2_GRID, current=(args.xi, args.l2))
+        for row in table["rows"]:
+            mark = "*" if row["within_one_se"] else " "
+            print(f"{mark} xi {row['xi']:<7} l2 {row['l2']:<5} {_metrics_line(row)}")
+        print(f"\nbest xi {table['best']['xi']} l2 {table['best']['l2']}; chosen xi {table['chosen']['xi']} l2 {table['chosen']['l2']}"
+              f" (* = within one SE of the best)")
+        print(f"Saved to {_write_bench(f'grid-{args.seasons}', table)}")
+        return 0
+    summary = run_bench(results, seasons, xi=args.xi, l2=args.l2)
+    print(f"\nBench {args.seasons} {', '.join(seasons)} (xi {args.xi}, l2 {args.l2})")
+    print(_metrics_line(summary["metrics"]))
+    path = _write_bench(f"{args.seasons}-{summary['label']}", summary)
+    print(f"Saved to {path}")
+    return 0
+
+
 def _gameweek_arg(value: str) -> int:
     gw = int(value)
     if not 1 <= gw <= 38:
@@ -184,6 +233,14 @@ def _parser() -> argparse.ArgumentParser:
     backtest.add_argument("--pick-strategy", choices=PICK_STRATEGIES, default=DEFAULT_PICK_STRATEGY,
                           help="strategy compared against modal picks and the naive-favourite benchmark")
     backtest.set_defaults(handler=_backtest)
+
+    bench = sub.add_parser("bench", help="Walk-forward over past seasons, scored by log loss (plan 06)")
+    bench.add_argument("--seasons", choices=sorted(BENCH_SEASON_SETS), default="tune",
+                       help="tune = 2021-22 to 2024-25; holdout = 2025-26 (test once)")
+    bench.add_argument("--xi", type=float, default=TIME_DECAY_XI, help="time decay per day")
+    bench.add_argument("--l2", type=float, default=RATING_L2_PENALTY, help="ridge penalty on ratings")
+    bench.add_argument("--grid", action="store_true", help="tune xi and l2 over the grid in config")
+    bench.set_defaults(handler=_bench)
     return parser
 
 

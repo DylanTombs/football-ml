@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 15,
+    "points": 16,
     "matches": 10,
     "exact_scores": 1,
-    "correct_results": 5,
-    "scorer_hits": 6,
-    "minute_hits": 2,
+    "correct_results": 4,
+    "scorer_hits": 7,
+    "minute_hits": 3,
     "fallbacks": 0
   },
   "matches": [
@@ -16,12 +16,12 @@
       "fixture_id": 41,
       "home": "Brentford",
       "away": "Chelsea",
-      "predicted": "2-1",
+      "predicted": "1-2",
       "actual": "3-0",
       "predicted_scorers": [
-        "Thiago",
         "João Pedro",
-        "Schade"
+        "Thiago",
+        "Rogers"
       ],
       "actual_scorers": [
         "Anthony 61'",
@@ -29,10 +29,10 @@
         "Carvalho 90+4'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 0,
         "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -64,9 +64,11 @@
       "fixture_id": 42,
       "home": "Brighton",
       "away": "Arsenal",
-      "predicted": "0-1",
+      "predicted": "1-2",
       "actual": "3-0",
       "predicted_scorers": [
+        "Saka",
+        "Groß",
         "Saka"
       ],
       "actual_scorers": [
@@ -76,38 +78,41 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 0,
-        "minutes": 0,
-        "total": 0
+        "scorers": 1,
+        "minutes": 1,
+        "total": 2
       }
     },
     {
       "fixture_id": 43,
       "home": "Everton",
       "away": "Ipswich",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "1-0",
       "predicted_scorers": [
+        "Barry",
+        "Emersonn",
         "Barry"
       ],
       "actual_scorers": [
         "Barry 11'"
       ],
       "points": {
-        "outcome": 3,
+        "outcome": 1,
         "scorers": 1,
         "minutes": 1,
-        "total": 5
+        "total": 3
       }
     },
     {
       "fixture_id": 46,
       "home": "Newcastle",
       "away": "Hull",
-      "predicted": "2-0",
+      "predicted": "2-1",
       "actual": "2-1",
       "predicted_scorers": [
         "Wissa",
+        "Belloumi",
         "Willock"
       ],
       "actual_scorers": [
@@ -116,20 +121,21 @@
         "Cho 67'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 3,
         "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 4
       }
     },
     {
       "fixture_id": 47,
       "home": "Nott'm Forest",
       "away": "Coventry",
-      "predicted": "1-0",
+      "predicted": "2-0",
       "actual": "0-1",
       "predicted_scorers": [
-        "Gibbs-White"
+        "Gibbs-White",
+        "Igor Jesus"
       ],
       "actual_scorers": [
         "Dasilva 55'"
@@ -166,10 +172,12 @@
       "fixture_id": 44,
       "home": "Leeds",
       "away": "Crystal Palace",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "0-0",
       "predicted_scorers": [
-        "Calvert-Lewin"
+        "Calvert-Lewin",
+        "Mitchell",
+        "Bogle"
       ],
       "actual_scorers": [],
       "points": {

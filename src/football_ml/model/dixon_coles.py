@@ -68,6 +68,33 @@ def _objective(theta, n, h_idx, a_idx, hg, ag, weights, l2):
     return -np.sum(weights * log_lik) + penalty
 
 
+def _tau_gradients(x, y, lam, mu, rho, tau):
+    """d log τ / d log λ, d log τ / d log μ and d log τ / dρ per match."""
+    zero_zero, zero_one, one_zero, one_one = (x == 0) & (y == 0), (x == 0) & (y == 1), (x == 1) & (y == 0), (x == 1) & (y == 1)
+    d_lam = np.select([zero_zero, zero_one], [-lam * mu * rho / tau, lam * rho / tau], default=0.0)
+    d_mu = np.select([zero_zero, one_zero], [-lam * mu * rho / tau, mu * rho / tau], default=0.0)
+    d_rho = np.select([zero_zero, zero_one, one_zero, one_one], [-lam * mu / tau, lam / tau, mu / tau, -1 / tau], default=0.0)
+    return d_lam, d_mu, d_rho
+
+
+def _gradient(theta, n, h_idx, a_idx, hg, ag, weights, l2):
+    """Exact gradient of `_objective`; makes each fit tens of times faster."""
+    attack, defence, home, rho = _unpack(theta, n)
+    lam = np.exp(attack[h_idx] + defence[a_idx] + home)
+    mu = np.exp(attack[a_idx] + defence[h_idx])
+    tau = np.clip(_tau(hg, ag, lam, mu, rho), _EPS, None)
+    t_lam, t_mu, t_rho = _tau_gradients(hg, ag, lam, mu, rho, tau)
+    g_lam = -weights * (hg - lam + t_lam)  # d(-weighted log-lik) / d log λ
+    g_mu = -weights * (ag - mu + t_mu)
+    g_attack = np.bincount(h_idx, g_lam, n) + np.bincount(a_idx, g_mu, n) + 2 * l2 * attack
+    g_defence = np.bincount(a_idx, g_lam, n) + np.bincount(h_idx, g_mu, n) + 2 * l2 * defence
+    return np.concatenate([
+        g_attack - g_attack.mean(),  # through the sum-to-zero centring
+        g_defence,
+        [g_lam.sum(), -np.sum(weights * t_rho)],
+    ])
+
+
 def time_weights(dates: pd.Series, reference_date: pd.Timestamp, xi: float) -> np.ndarray:
     days_ago = (reference_date - dates).dt.days.to_numpy()
     return np.exp(-xi * np.clip(days_ago, 0, None))
@@ -98,7 +125,7 @@ def fit(
     )
     theta0 = np.concatenate([np.zeros(2 * n), [0.25, 0.0]])
     bounds = [(None, None)] * (2 * n + 1) + [RHO_BOUNDS]
-    result = minimize(_objective, theta0, args=args, method="L-BFGS-B", bounds=bounds)
+    result = minimize(_objective, theta0, args=args, jac=_gradient, method="L-BFGS-B", bounds=bounds)
     if not result.success:
         raise RuntimeError(f"Dixon-Coles optimisation failed: {result.message}")
 

@@ -8,7 +8,15 @@ from pathlib import Path
 
 import pandas as pd
 
-from football_ml.config import CURRENT_SEASON, INJURY_IMPACT, PREDICTIONS_DIR, SNAPSHOTS_DIR, TRAINING_SEASONS
+from football_ml.config import (
+    CURRENT_SEASON,
+    INJURY_IMPACT,
+    ODDS_MODEL_WEIGHT,
+    ODDS_SNAPSHOTS_DIR,
+    PREDICTIONS_DIR,
+    SNAPSHOTS_DIR,
+    TRAINING_SEASONS,
+)
 from football_ml.model.dixon_coles import DixonColesParams, fit
 from football_ml.predict.scorers import Player
 from football_ml.predict.scoring_chance import ScorerModel, build_scorer_model, penalty_goals
@@ -20,6 +28,7 @@ from football_ml.sources import espn, fpl
 from football_ml.sources.espn import GoalEvent
 from football_ml.snapshots import write_snapshot
 from football_ml.sources.football_data import fetch_odds, fetch_results, odds_for
+from football_ml.sources.odds import fetch_upcoming_odds, write_odds_snapshot
 from football_ml.sources.player_history import Appearance, fetch_player_histories
 from football_ml.sources.results import build_actual_matches
 
@@ -41,6 +50,7 @@ class SeasonInputs:
     # current penalty order (None = infer takers from past penalties)
     histories: Mapping[int, tuple[Appearance, ...]] | None = None
     penalty_order: Mapping[int, int] | None = None
+    upcoming_odds: pd.DataFrame | None = None  # fixtures.csv rows, saved with each prediction (plan 06)
 
 
 def penalty_order(bootstrap: dict) -> dict[int, int]:
@@ -52,13 +62,15 @@ def load_season_inputs(with_histories: bool = False) -> SeasonInputs:
     bootstrap = fpl.fetch_bootstrap()
     raw_fixtures = fpl.fetch_raw_fixtures()
     now = pd.Timestamp.now(tz="UTC")
+    upcoming = fetch_upcoming_odds()
     return SeasonInputs(
         bootstrap=bootstrap,
         raw_fixtures=raw_fixtures,
         results=fetch_results(TRAINING_SEASONS),
         players=fpl.parse_players(bootstrap),
         goal_events=espn.fetch_goal_events(fpl.season_start(bootstrap), now + pd.Timedelta(days=1)),
-        odds=fetch_odds((CURRENT_SEASON,)),
+        odds=pd.concat([fetch_odds((CURRENT_SEASON,)), upcoming], ignore_index=True),
+        upcoming_odds=upcoming,
         histories=fetch_player_histories(bootstrap, raw_fixtures) if with_histories else None,
         penalty_order=penalty_order(bootstrap),
     )
@@ -136,6 +148,11 @@ def gameweek_context(gameweek: int, inputs: SeasonInputs, injury_impact: float =
         )
         for f in sorted(fixtures, key=lambda f: f.kickoff)
     )
+    with_odds = sum(c.market_rates is not None for c in contexts)
+    if with_odds < len(contexts):
+        log.warning("GW%d: %d of %d fixtures have no odds and use the model alone", gameweek,
+                    len(contexts) - with_odds, len(contexts))
+    model = {**model, "odds_model_weight": ODDS_MODEL_WEIGHT, "fixtures_with_odds": with_odds}
     return GameweekContext(gameweek, model, contexts)
 
 
@@ -177,20 +194,26 @@ def run_gameweek(
     predictions_dir: Path = PREDICTIONS_DIR,
     snapshots_dir: Path = SNAPSHOTS_DIR,
     now: pd.Timestamp | None = None,
+    odds_dir: Path = ODDS_SNAPSHOTS_DIR,
 ) -> list[dict]:
     """Snapshot FPL player state (before the deadline only), then predict the
     gameweek with every predictor, building the shared context once."""
     needs_histories = any(getattr(p, "scorer_model", None) == "chance" for p in predictors)
     inputs = load_season_inputs(with_histories=needs_histories)
     number = gameweek or fpl.next_gameweek(inputs.bootstrap)
-    snapshot = write_snapshot(inputs.bootstrap, number, now or pd.Timestamp.now(tz="UTC"), snapshots_dir)
+    now = now or pd.Timestamp.now(tz="UTC")
+    snapshot = write_snapshot(inputs.bootstrap, number, now, snapshots_dir)
     if snapshot:
         log.info("Wrote %s", snapshot)
+    fixtures = fpl.parse_fixtures(inputs.raw_fixtures, inputs.bootstrap, number)
+    odds = (write_odds_snapshot(inputs.upcoming_odds, inputs.bootstrap, fixtures, now, odds_dir)
+            if inputs.upcoming_odds is not None and fixtures else None)
     gw = gameweek_context(number, inputs)
     reports = []
     for predictor in predictors:
         report = predictor_report(gw, predictor)
         path = write_report(report, predictions_dir)
         log.info("Wrote %s", path)
-        reports.append({**report, "path": str(path), "snapshot": str(snapshot) if snapshot else None})
+        reports.append({**report, "path": str(path), "snapshot": str(snapshot) if snapshot else None,
+                        "odds": str(odds) if odds else None})
     return reports

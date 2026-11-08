@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 22,
+    "points": 14,
     "matches": 10,
-    "exact_scores": 3,
-    "correct_results": 8,
-    "scorer_hits": 6,
-    "minute_hits": 2,
+    "exact_scores": 1,
+    "correct_results": 7,
+    "scorer_hits": 5,
+    "minute_hits": 0,
     "fallbacks": 0
   },
   "matches": [
@@ -16,10 +16,12 @@
       "fixture_id": 64,
       "home": "Everton",
       "away": "Chelsea",
-      "predicted": "0-1",
+      "predicted": "1-2",
       "actual": "0-2",
       "predicted_scorers": [
-        "João Pedro"
+        "João Pedro",
+        "Barry",
+        "Rogers"
       ],
       "actual_scorers": [
         "Neto 46'",
@@ -36,12 +38,12 @@
       "fixture_id": 62,
       "home": "Brentford",
       "away": "Liverpool",
-      "predicted": "1-2",
+      "predicted": "2-1",
       "actual": "1-2",
       "predicted_scorers": [
-        "Wirtz",
         "Thiago",
-        "Munoz"
+        "Wirtz",
+        "Schade"
       ],
       "actual_scorers": [
         "Lewis-Potter 44'",
@@ -49,41 +51,42 @@
         "Isak 70'"
       ],
       "points": {
-        "outcome": 3,
-        "scorers": 1,
+        "outcome": 0,
+        "scorers": 0,
         "minutes": 0,
-        "total": 4
+        "total": 0
       }
     },
     {
       "fixture_id": 65,
       "home": "Fulham",
       "away": "Hull",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "1-0",
       "predicted_scorers": [
-        "Gonzalo"
+        "Gonzalo",
+        "Belloumi",
+        "King"
       ],
       "actual_scorers": [
         "Iwobi 33'"
       ],
       "points": {
-        "outcome": 3,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 3
+        "total": 1
       }
     },
     {
       "fixture_id": 67,
       "home": "Man City",
       "away": "Ipswich",
-      "predicted": "3-0",
+      "predicted": "2-0",
       "actual": "3-2",
       "predicted_scorers": [
         "Haaland",
-        "Haaland",
-        "Cherki"
+        "Haaland"
       ],
       "actual_scorers": [
         "Foden 19'",
@@ -95,8 +98,8 @@
       "points": {
         "outcome": 1,
         "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "minutes": 0,
+        "total": 3
       }
     },
     {
@@ -169,10 +172,12 @@
       "fixture_id": 66,
       "home": "Leeds",
       "away": "Man United",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "Calvert-Lewin"
+        "Calvert-Lewin",
+        "Mbeumo",
+        "Bogle"
       ],
       "actual_scorers": [
         "Mbeumo 35'",
@@ -180,9 +185,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 2,
         "minutes": 0,
-        "total": 1
+        "total": 2
       }
     },
     {
@@ -208,11 +213,10 @@
       "fixture_id": 70,
       "home": "Tottenham",
       "away": "Coventry",
-      "predicted": "2-1",
+      "predicted": "2-0",
       "actual": "3-1",
       "predicted_scorers": [
         "Solanke",
-        "Rudoni",
         "Gallagher"
       ],
       "actual_scorers": [
@@ -223,9 +227,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
-        "minutes": 1,
-        "total": 3
+        "scorers": 0,
+        "minutes": 0,
+        "total": 1
       }
     }
   ]

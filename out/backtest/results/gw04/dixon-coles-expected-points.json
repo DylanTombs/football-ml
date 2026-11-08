@@ -6,8 +6,8 @@
     "points": 24,
     "matches": 10,
     "exact_scores": 1,
-    "correct_results": 5,
-    "scorer_hits": 12,
+    "correct_results": 4,
+    "scorer_hits": 13,
     "minute_hits": 5,
     "fallbacks": 0
   },
@@ -16,12 +16,13 @@
       "fixture_id": 31,
       "home": "Aston Villa",
       "away": "Nott'm Forest",
-      "predicted": "2-1",
+      "predicted": "2-2",
       "actual": "1-2",
       "predicted_scorers": [
         "Gibbs-White",
         "Buendía",
-        "McGinn"
+        "McGinn",
+        "Igor Jesus"
       ],
       "actual_scorers": [
         "Delap 46'",
@@ -30,9 +31,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 0,
+        "scorers": 1,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -64,9 +65,10 @@
       "fixture_id": 33,
       "home": "Chelsea",
       "away": "Hull",
-      "predicted": "4-0",
+      "predicted": "4-1",
       "actual": "2-2",
       "predicted_scorers": [
+        "Ajayi",
         "Palmer",
         "João Pedro",
         "Rogers",
@@ -135,32 +137,32 @@
       "fixture_id": 37,
       "home": "Tottenham",
       "away": "Everton",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "0-0",
       "predicted_scorers": [
         "Barry",
         "Van de Ven",
-        "Solanke",
-        "Dewsbury-Hall"
+        "Solanke"
       ],
       "actual_scorers": [],
       "points": {
-        "outcome": 1,
+        "outcome": 0,
         "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
       "fixture_id": 36,
       "home": "Sunderland",
       "away": "Arsenal",
-      "predicted": "0-3",
+      "predicted": "1-3",
       "actual": "0-2",
       "predicted_scorers": [
-        "Havertz",
+        "Ødegaard",
+        "Isidor",
         "Saka",
-        "Ødegaard"
+        "Havertz"
       ],
       "actual_scorers": [
         "Bruno G. 58'",

@@ -48,3 +48,5 @@
 
 - GW10 can be scored automatically once it finishes
 - The GW1–9 baseline points are written down here
+
+> Superseded as the reference: score-model changes are now judged on plan 06's multi-season bench, and the GW1–10 leak-free backtest baseline is in plan 05/06.

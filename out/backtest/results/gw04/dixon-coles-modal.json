@@ -3,11 +3,11 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 11,
+    "points": 13,
     "matches": 10,
     "exact_scores": 0,
-    "correct_results": 3,
-    "scorer_hits": 8,
+    "correct_results": 4,
+    "scorer_hits": 9,
     "minute_hits": 0,
     "fallbacks": 0
   },
@@ -109,11 +109,10 @@
       "fixture_id": 35,
       "home": "Liverpool",
       "away": "Fulham",
-      "predicted": "2-1",
+      "predicted": "2-0",
       "actual": "0-0",
       "predicted_scorers": [
         "Isak",
-        "Gonzalo",
         "Isak"
       ],
       "actual_scorers": [],
@@ -211,12 +210,12 @@
       "fixture_id": 40,
       "home": "Leeds",
       "away": "Newcastle",
-      "predicted": "1-2",
+      "predicted": "2-1",
       "actual": "4-1",
       "predicted_scorers": [
-        "Wissa",
         "Calvert-Lewin",
-        "Elanga"
+        "Wissa",
+        "Bogle"
       ],
       "actual_scorers": [
         "L.Miley (og) 32'",
@@ -226,10 +225,10 @@
         "Touré 90'"
       ],
       "points": {
-        "outcome": 0,
-        "scorers": 1,
+        "outcome": 1,
+        "scorers": 2,
         "minutes": 0,
-        "total": 1
+        "total": 3
       }
     }
   ]

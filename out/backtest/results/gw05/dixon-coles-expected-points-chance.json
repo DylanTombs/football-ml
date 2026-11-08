@@ -6,9 +6,9 @@
     "points": 14,
     "matches": 10,
     "exact_scores": 0,
-    "correct_results": 6,
-    "scorer_hits": 6,
-    "minute_hits": 2,
+    "correct_results": 4,
+    "scorer_hits": 7,
+    "minute_hits": 3,
     "fallbacks": 0
   },
   "matches": [
@@ -16,12 +16,13 @@
       "fixture_id": 41,
       "home": "Brentford",
       "away": "Chelsea",
-      "predicted": "2-1",
+      "predicted": "2-2",
       "actual": "3-0",
       "predicted_scorers": [
         "João Pedro",
         "Thiago",
-        "Schade"
+        "Schade",
+        "Rogers"
       ],
       "actual_scorers": [
         "Anthony 61'",
@@ -29,23 +30,23 @@
         "Carvalho 90+4'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 0,
         "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
       "fixture_id": 48,
       "home": "Tottenham",
       "away": "Aston Villa",
-      "predicted": "2-2",
+      "predicted": "3-1",
       "actual": "2-3",
       "predicted_scorers": [
-        "N.Jackson",
+        "Tonali",
         "Marmoush",
         "Solanke",
-        "McGinn"
+        "N.Jackson"
       ],
       "actual_scorers": [
         "Manzambi 45+4'",
@@ -57,8 +58,8 @@
       "points": {
         "outcome": 0,
         "scorers": 1,
-        "minutes": 0,
-        "total": 1
+        "minutes": 1,
+        "total": 2
       }
     },
     {
@@ -157,12 +158,13 @@
       "fixture_id": 49,
       "home": "Bournemouth",
       "away": "Liverpool",
-      "predicted": "1-2",
+      "predicted": "1-3",
       "actual": "0-1",
       "predicted_scorers": [
         "Szoboszlai",
         "Evanilson",
-        "Isak"
+        "Isak",
+        "Wirtz"
       ],
       "actual_scorers": [
         "Isak 57'"
@@ -178,12 +180,13 @@
       "fixture_id": 44,
       "home": "Leeds",
       "away": "Crystal Palace",
-      "predicted": "2-1",
+      "predicted": "3-1",
       "actual": "0-0",
       "predicted_scorers": [
-        "Strand Larsen",
+        "Bogle",
         "Calvert-Lewin",
-        "Stach"
+        "Stach",
+        "Strand Larsen"
       ],
       "actual_scorers": [],
       "points": {
@@ -226,21 +229,21 @@
       "fixture_id": 50,
       "home": "Fulham",
       "away": "Man United",
-      "predicted": "2-2",
+      "predicted": "1-3",
       "actual": "1-1",
       "predicted_scorers": [
-        "B.Fernandes",
+        "Mbeumo",
         "Gonzalo",
-        "King",
-        "Mbeumo"
+        "B.Fernandes",
+        "Cunha"
       ],
       "actual_scorers": [
         "Martinez (og) 63'",
         "Cunha 89'"
       ],
       "points": {
-        "outcome": 1,
-        "scorers": 0,
+        "outcome": 0,
+        "scorers": 1,
         "minutes": 0,
         "total": 1
       }

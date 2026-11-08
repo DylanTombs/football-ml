@@ -41,8 +41,15 @@ def parse_results(csv_text: str) -> pd.DataFrame:
     ).reset_index(drop=True)
 
 
+# A UTF-8 byte-order mark, as text or as it reads when decoded as Latin-1
+# (football-data labels its files ISO-8859-1).
+_BOMS = ("\ufeff", "\u00ef\u00bb\u00bf")
+
+
 def _read_csv(csv_text: str) -> pd.DataFrame:
-    return pd.read_csv(io.StringIO(csv_text.lstrip("\ufeff")))
+    for bom in _BOMS:
+        csv_text = csv_text.removeprefix(bom)
+    return pd.read_csv(io.StringIO(csv_text))
 
 
 def _fetch_csv(season: str, league: str) -> str:
@@ -54,8 +61,12 @@ def _fetch_csv(season: str, league: str) -> str:
 
 
 def fetch_results(seasons: tuple[str, ...], leagues: tuple[str, ...] = TRAINING_LEAGUES) -> pd.DataFrame:
-    """Fetch and combine results for the given season codes (e.g. '2526') and leagues."""
-    frames = [parse_results(_fetch_csv(season, league)) for season in seasons for league in leagues]
+    """Fetch and combine results for the given season codes (e.g. '2526') and
+    leagues, tagged with `league` and `season`."""
+    frames = [
+        parse_results(_fetch_csv(season, league)).assign(league=league, season=season)
+        for season in seasons for league in leagues
+    ]
     return pd.concat(frames, ignore_index=True).sort_values("date").reset_index(drop=True)
 
 
@@ -88,10 +99,13 @@ _ODDS_KEYS = ("Date", "HomeTeam", "AwayTeam")
 _ODDS_FRAME = ("date", "home", "away", *ODDS_COLUMNS.values())
 
 
-def parse_odds(csv_text: str) -> pd.DataFrame:
+def parse_odds(csv_text: str, league: str | None = None) -> pd.DataFrame:
     """date/home/away + pre-closing odds. Rows without 1X2 odds are dropped; a
-    CSV without odds columns gives an empty frame."""
+    CSV without odds columns gives an empty frame. `league` keeps one `Div`
+    (for multi-league files such as fixtures.csv)."""
     raw = _read_csv(csv_text)
+    if league is not None and "Div" in raw.columns:
+        raw = raw[raw["Div"] == league]
     if not set(_ODDS_KEYS) | {"AvgH", "AvgD", "AvgA"} <= set(raw.columns):
         return pd.DataFrame(columns=list(_ODDS_FRAME))
     present = [c for c in ODDS_COLUMNS if c in raw.columns]

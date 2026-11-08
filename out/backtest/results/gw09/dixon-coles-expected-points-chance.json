@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-expected-points-chance",
   "complete": true,
   "totals": {
-    "points": 21,
+    "points": 25,
     "matches": 10,
-    "exact_scores": 0,
+    "exact_scores": 1,
     "correct_results": 6,
-    "scorer_hits": 11,
-    "minute_hits": 4,
+    "scorer_hits": 12,
+    "minute_hits": 5,
     "fallbacks": 0
   },
   "matches": [
@@ -84,12 +84,13 @@
       "fixture_id": 85,
       "home": "Coventry",
       "away": "Sunderland",
-      "predicted": "2-1",
+      "predicted": "2-2",
       "actual": "3-1",
       "predicted_scorers": [
         "Brobbey",
         "Rudoni",
-        "Thomas-Asante"
+        "Thomas-Asante",
+        "E.Le Fée"
       ],
       "actual_scorers": [
         "Sakamoto 17'",
@@ -98,22 +99,23 @@
         "E.Le Fée 67'"
       ],
       "points": {
-        "outcome": 1,
-        "scorers": 1,
-        "minutes": 1,
-        "total": 3
+        "outcome": 0,
+        "scorers": 2,
+        "minutes": 2,
+        "total": 4
       }
     },
     {
       "fixture_id": 86,
       "home": "Hull",
       "away": "Ipswich",
-      "predicted": "1-2",
+      "predicted": "2-2",
       "actual": "2-2",
       "predicted_scorers": [
-        "Enciso",
+        "Emersonn",
         "McBurnie",
-        "Emersonn"
+        "Belloumi",
+        "Enciso"
       ],
       "actual_scorers": [
         "Florentino 22'",
@@ -122,10 +124,10 @@
         "Enciso 74'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 3,
         "scorers": 2,
         "minutes": 0,
-        "total": 2
+        "total": 5
       }
     },
     {

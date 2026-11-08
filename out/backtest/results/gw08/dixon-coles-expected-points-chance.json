@@ -3,10 +3,10 @@
   "predictor": "dixon-coles-expected-points-chance",
   "complete": true,
   "totals": {
-    "points": 10,
+    "points": 11,
     "matches": 10,
     "exact_scores": 0,
-    "correct_results": 3,
+    "correct_results": 4,
     "scorer_hits": 5,
     "minute_hits": 2,
     "fallbacks": 0
@@ -44,7 +44,7 @@
         "Ndiaye",
         "N.Jackson",
         "Haaland",
-        "Enzo"
+        "Haaland"
       ],
       "actual_scorers": [
         "N.Jackson 6'",
@@ -66,8 +66,8 @@
       "actual": "2-0",
       "predicted_scorers": [
         "Ødegaard",
-        "Saka",
         "Havertz",
+        "Saka",
         "Barry"
       ],
       "actual_scorers": [
@@ -85,22 +85,21 @@
       "fixture_id": 74,
       "home": "Coventry",
       "away": "Fulham",
-      "predicted": "2-2",
+      "predicted": "1-2",
       "actual": "0-1",
       "predicted_scorers": [
-        "Gonzalo",
+        "King",
         "Rudoni",
-        "Thomas-Asante",
-        "King"
+        "Gonzalo"
       ],
       "actual_scorers": [
         "Bobb 80'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {

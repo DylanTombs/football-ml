@@ -178,3 +178,17 @@ def test_backtest_with_histories_is_leak_free_and_compares_scorer_models(tmp_pat
     # GW1: no history before kickoff, so nobody can be picked as a scorer
     gw1 = json.loads((tmp_path / "predictions" / "gw01" / "dixon-coles-expected-points-chance.json").read_text())
     assert all(g["scorer"] is None for m in gw1["matches"] for g in m["prediction"]["goals"])
+
+
+def test_run_gameweek_saves_upcoming_odds_and_reports_the_blend(monkeypatch, tmp_path):
+    from football_ml import pipeline
+    upcoming = pd.DataFrame([_odds(2, "Arsenal", "Hull", 1.5, 6.0)])
+    monkeypatch.setattr(pipeline, "load_season_inputs", lambda **_: replace(_inputs(), odds=upcoming, upcoming_odds=upcoming))
+    (report,) = run_gameweek(2, (DixonColesPredictor(),), predictions_dir=tmp_path / "predictions",
+                             snapshots_dir=tmp_path / "snapshots", odds_dir=tmp_path / "odds", now=START)
+    assert (tmp_path / "odds" / "gw02.csv").exists()
+    assert report["odds"] == str(tmp_path / "odds" / "gw02.csv")
+    assert report["model"]["fixtures_with_odds"] == 1
+    assert report["model"]["odds_model_weight"] == 0.0
+    arsenal = next(m for m in report["matches"] if m["home"] == "Arsenal")
+    assert arsenal["rates"]["market"] is not None

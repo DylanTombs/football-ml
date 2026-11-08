@@ -90,3 +90,45 @@ def test_matrix_from_zero_rate_is_valid():
     matrix = matrix_from_rates(0.0, 1.2, -0.05, max_goals=10)
     assert np.all(matrix >= 0)
     assert matrix[1:, :].sum() == pytest.approx(0.0)
+
+
+def _problem(seed=0, n_teams=6, n_matches=200):
+    rng = np.random.default_rng(seed)
+    h = rng.integers(0, n_teams, n_matches)
+    a = (h + rng.integers(1, n_teams, n_matches)) % n_teams
+    hg, ag = rng.poisson(1.5, n_matches), rng.poisson(1.1, n_matches)
+    w = rng.uniform(0.2, 1.0, n_matches)
+    return n_teams, h, a, hg, ag, w
+
+
+@pytest.mark.parametrize("seed", [0, 1, 2])
+def test_analytic_gradient_matches_finite_differences(seed):
+    from scipy.optimize import approx_fprime
+    from football_ml.model.dixon_coles import _gradient, _objective
+    n, h, a, hg, ag, w = _problem(seed)
+    rng = np.random.default_rng(seed + 10)
+    theta = np.concatenate([rng.normal(0, 0.3, 2 * n), [0.25, -0.08]])
+    args = (n, h, a, hg, ag, w, 0.5)
+    numeric = approx_fprime(theta, _objective, 1e-7, *args)
+    np.testing.assert_allclose(_gradient(theta, *args), numeric, rtol=1e-4, atol=1e-4)
+
+
+def test_fit_with_gradient_reaches_the_same_optimum():
+    """The exact gradient only makes fitting faster; the ratings stay the same."""
+    from scipy.optimize import minimize
+    from football_ml.model.dixon_coles import _objective
+    results = _synthetic_results()
+    fast = fit(results, pd.Timestamp(results["date"].max()) + pd.Timedelta(days=1))
+    teams = fast.teams
+    index = {t: i for i, t in enumerate(teams)}
+    n = len(teams)
+    ref = pd.Timestamp(results["date"].max()) + pd.Timedelta(days=1)
+    from football_ml.model.dixon_coles import time_weights
+    from football_ml.config import RATING_L2_PENALTY, TIME_DECAY_XI
+    args = (n, results["home"].map(index).to_numpy(), results["away"].map(index).to_numpy(),
+            results["home_goals"].to_numpy(), results["away_goals"].to_numpy(),
+            time_weights(results["date"], ref, TIME_DECAY_XI), RATING_L2_PENALTY)
+    slow = minimize(_objective, np.concatenate([np.zeros(2 * n), [0.25, 0.0]]), args=args, method="L-BFGS-B",
+                    bounds=[(None, None)] * (2 * n + 1) + [(-0.2, 0.2)])
+    assert _objective(np.concatenate([fast.attack, fast.defence, [fast.home_advantage, fast.rho]]), *args) \
+        <= slow.fun + 1e-6

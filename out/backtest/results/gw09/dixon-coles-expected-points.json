@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 23,
+    "points": 24,
     "matches": 10,
     "exact_scores": 1,
-    "correct_results": 7,
-    "scorer_hits": 10,
-    "minute_hits": 4,
+    "correct_results": 6,
+    "scorer_hits": 11,
+    "minute_hits": 5,
     "fallbacks": 0
   },
   "matches": [
@@ -84,12 +84,13 @@
       "fixture_id": 85,
       "home": "Coventry",
       "away": "Sunderland",
-      "predicted": "2-1",
+      "predicted": "2-2",
       "actual": "3-1",
       "predicted_scorers": [
         "Brobbey",
         "Rudoni",
-        "Awoniyi"
+        "Awoniyi",
+        "E.Le Fée"
       ],
       "actual_scorers": [
         "Sakamoto 17'",
@@ -98,10 +99,10 @@
         "E.Le Fée 67'"
       ],
       "points": {
-        "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "outcome": 0,
+        "scorers": 3,
+        "minutes": 2,
+        "total": 5
       }
     },
     {
@@ -222,12 +223,13 @@
       "fixture_id": 89,
       "home": "Newcastle",
       "away": "Everton",
-      "predicted": "2-1",
+      "predicted": "2-2",
       "actual": "0-1",
       "predicted_scorers": [
         "Barry",
         "Wissa",
-        "Barnes"
+        "Barnes",
+        "Dewsbury-Hall"
       ],
       "actual_scorers": [
         "Barry 49'"

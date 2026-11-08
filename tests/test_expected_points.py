@@ -150,3 +150,32 @@ def test_chance_scorer_model_needs_rates():
         DixonColesPredictor("expected-points").predict(_context())  # chance is the default
     with pytest.raises(ValueError, match="scorer model"):
         DixonColesPredictor("expected-points", scorer_model="vibes")
+
+
+ODDS = MatchOdds(home=1.30, draw=5.50, away=9.00, over_2_5=1.70, under_2_5=2.20)
+
+
+def test_market_rates_replace_the_model_rates_at_weight_zero():
+    from football_ml.model.market import rates_from_odds
+    ctx = fixture_context(10, FIXTURE, PARAMS, (SAKA, HAVERTZ, SIMMS), DISTRIBUTION, injury_impact=0.0,
+                          odds=ODDS, model_weight=0.0)
+    market = rates_from_odds(ODDS, PARAMS.rho)
+    assert ctx.market_rates == pytest.approx(market)
+    assert ctx.model_rates == pytest.approx(PARAMS.expected_goals("Arsenal", "Coventry"))
+    assert ctx.summary.expected_home_goals == pytest.approx(market[0], rel=1e-3)
+
+
+def test_model_rates_are_used_without_odds_or_at_weight_one():
+    plain = fixture_context(10, FIXTURE, PARAMS, (SAKA,), DISTRIBUTION, injury_impact=0.0, model_weight=0.0)
+    assert plain.market_rates is None
+    assert plain.model_rates == pytest.approx(PARAMS.expected_goals("Arsenal", "Coventry"))
+    assert plain.summary.expected_home_goals == pytest.approx(plain.model_rates[0], rel=1e-2)  # 0-10 goal grid
+    model_only = fixture_context(10, FIXTURE, PARAMS, (SAKA,), DISTRIBUTION, injury_impact=0.0, odds=ODDS, model_weight=1.0)
+    assert model_only.summary.expected_home_goals == pytest.approx(plain.summary.expected_home_goals)
+
+
+def test_match_json_reports_model_and_market_rates():
+    ctx = fixture_context(10, FIXTURE, PARAMS, (SAKA,), DISTRIBUTION, injury_impact=0.0, odds=ODDS, model_weight=0.0)
+    rates = match_json(ctx, ctx.baseline)["rates"]
+    assert set(rates) == {"model", "market"} and rates["market"]["home"] > rates["market"]["away"]
+    assert match_json(_context(), _context().baseline)["rates"]["market"] is None

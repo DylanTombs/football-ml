@@ -40,13 +40,13 @@
       "fixture_id": 48,
       "home": "Tottenham",
       "away": "Aston Villa",
-      "predicted": "2-2",
+      "predicted": "3-1",
       "actual": "2-3",
       "predicted_scorers": [
-        "Buendía",
+        "Marmoush",
         "Van de Ven",
         "Solanke",
-        "McGinn"
+        "Buendía"
       ],
       "actual_scorers": [
         "Manzambi 45+4'",
@@ -112,13 +112,13 @@
       "fixture_id": 46,
       "home": "Newcastle",
       "away": "Hull",
-      "predicted": "4-0",
+      "predicted": "3-1",
       "actual": "2-1",
       "predicted_scorers": [
         "Barnes",
         "Wissa",
         "Willock",
-        "Touré"
+        "Belloumi"
       ],
       "actual_scorers": [
         "Willock 3'",
@@ -158,42 +158,42 @@
       "fixture_id": 49,
       "home": "Bournemouth",
       "away": "Liverpool",
-      "predicted": "2-2",
+      "predicted": "1-3",
       "actual": "0-1",
       "predicted_scorers": [
-        "Isak",
+        "Szoboszlai",
         "Tavernier",
-        "Kluivert",
-        "Szoboszlai"
+        "Isak",
+        "Isak"
       ],
       "actual_scorers": [
         "Isak 57'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 1,
         "minutes": 1,
-        "total": 2
+        "total": 3
       }
     },
     {
       "fixture_id": 44,
       "home": "Leeds",
       "away": "Crystal Palace",
-      "predicted": "2-2",
+      "predicted": "3-1",
       "actual": "0-0",
       "predicted_scorers": [
-        "Mitchell",
+        "Stach",
         "Calvert-Lewin",
         "Bogle",
-        "Khalaili"
+        "Mitchell"
       ],
       "actual_scorers": [],
       "points": {
-        "outcome": 1,
+        "outcome": 0,
         "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {

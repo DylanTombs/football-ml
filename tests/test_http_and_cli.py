@@ -207,3 +207,17 @@ def test_cli_backtest_loads_player_histories(monkeypatch):
         "gameweeks": [], "season": {}, "availability_proxy": "live", "injury_impact": 0.0, "scorer_leak": False})
     assert cli.main(["backtest", "--from", "1", "--to", "1", "--availability", "live"]) == 0
     assert seen == {"with_histories": True}
+
+
+def test_cli_bench_runs_the_walk_forward(monkeypatch, capsys, tmp_path):
+    seen = {}
+    monkeypatch.setattr(cli, "BENCH_DIR", tmp_path)
+    monkeypatch.setattr(cli, "fetch_results", lambda seasons: "RESULTS")
+    monkeypatch.setattr(cli, "run_bench", lambda results, seasons, **kw: seen.update(kw, seasons=seasons) or {
+        "label": "x", "metrics": {"matches": 3, "exact_log_loss": 3.0, "outcome_log_loss": 1.0, "rps": 0.2,
+                                  "outcome_points": 2, "predicted_goals": 8.0, "actual_goals": 9,
+                                  "predicted_draws": 1.0, "actual_draws": 1}})
+    assert cli.main(["bench", "--seasons", "holdout", "--xi", "0.002"]) == 0
+    assert seen["seasons"] == ("2526",) and seen["xi"] == 0.002
+    assert "3.0000" in capsys.readouterr().out
+    assert (tmp_path / "holdout-x.json").exists()

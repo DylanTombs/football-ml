@@ -7,35 +7,35 @@
     "changed_scorelines": 90,
     "components": {
       "total": {
-        "difference": 42,
-        "per_match": 0.42,
+        "difference": 46,
+        "per_match": 0.46,
         "ci95": [
-          0.12,
-          0.73
+          0.19,
+          0.72
         ]
       },
       "outcome": {
-        "difference": -2,
-        "per_match": -0.02,
+        "difference": 0,
+        "per_match": 0.0,
         "ci95": [
-          -0.1802,
-          0.14
+          -0.09,
+          0.09
         ]
       },
       "scorers": {
-        "difference": 27,
-        "per_match": 0.27,
+        "difference": 28,
+        "per_match": 0.28,
         "ci95": [
           0.16,
-          0.38
+          0.4
         ]
       },
       "minutes": {
-        "difference": 17,
-        "per_match": 0.17,
+        "difference": 18,
+        "per_match": 0.18,
         "ci95": [
-          0.07,
-          0.28
+          0.06,
+          0.31
         ]
       }
     }
@@ -45,22 +45,22 @@
     "challenger": "dixon-coles-expected-points-chance",
     "matches": 100,
     "gameweeks": 10,
-    "changed_scorelines": 80,
+    "changed_scorelines": 82,
     "components": {
       "total": {
-        "difference": 37,
-        "per_match": 0.37,
+        "difference": 50,
+        "per_match": 0.5,
         "ci95": [
-          0.14,
-          0.59
+          0.22,
+          0.76
         ]
       },
       "outcome": {
-        "difference": -13,
-        "per_match": -0.13,
+        "difference": 0,
+        "per_match": 0.0,
         "ci95": [
-          -0.24,
-          -0.03
+          -0.09,
+          0.1
         ]
       },
       "scorers": {
@@ -75,8 +75,8 @@
         "difference": 19,
         "per_match": 0.19,
         "ci95": [
-          0.09,
-          0.29
+          0.07,
+          0.31
         ]
       }
     }
@@ -86,38 +86,38 @@
     "challenger": "naive-favourite",
     "matches": 100,
     "gameweeks": 10,
-    "changed_scorelines": 44,
+    "changed_scorelines": 28,
     "components": {
       "total": {
-        "difference": 14,
-        "per_match": 0.14,
+        "difference": 16,
+        "per_match": 0.16,
         "ci95": [
-          -0.05,
-          0.33
+          0.02,
+          0.3
         ]
       },
       "outcome": {
-        "difference": -4,
-        "per_match": -0.04,
+        "difference": -2,
+        "per_match": -0.02,
         "ci95": [
-          -0.18,
-          0.09
+          -0.12,
+          0.08
         ]
       },
       "scorers": {
         "difference": 8,
         "per_match": 0.08,
         "ci95": [
-          0.02,
-          0.15
+          0.04,
+          0.13
         ]
       },
       "minutes": {
         "difference": 10,
         "per_match": 0.1,
         "ci95": [
-          0.02,
-          0.19
+          0.01,
+          0.2
         ]
       }
     }
@@ -127,38 +127,38 @@
     "challenger": "dixon-coles-expected-points-chance",
     "matches": 100,
     "gameweeks": 10,
-    "changed_scorelines": 18,
+    "changed_scorelines": 15,
     "components": {
       "total": {
-        "difference": -5,
-        "per_match": -0.05,
-        "ci95": [
-          -0.2,
-          0.09
-        ]
-      },
-      "outcome": {
-        "difference": -11,
-        "per_match": -0.11,
-        "ci95": [
-          -0.21,
-          -0.02
-        ]
-      },
-      "scorers": {
         "difference": 4,
         "per_match": 0.04,
         "ci95": [
+          -0.05,
+          0.13
+        ]
+      },
+      "outcome": {
+        "difference": 0,
+        "per_match": 0.0,
+        "ci95": [
           -0.04,
+          0.04
+        ]
+      },
+      "scorers": {
+        "difference": 3,
+        "per_match": 0.03,
+        "ci95": [
+          -0.06,
           0.11
         ]
       },
       "minutes": {
-        "difference": 2,
-        "per_match": 0.02,
+        "difference": 1,
+        "per_match": 0.01,
         "ci95": [
-          -0.02,
-          0.06
+          -0.03,
+          0.05
         ]
       }
     }

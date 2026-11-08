@@ -3,9 +3,9 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 6,
+    "points": 8,
     "matches": 10,
-    "exact_scores": 0,
+    "exact_scores": 1,
     "correct_results": 6,
     "scorer_hits": 0,
     "minute_hits": 0,
@@ -79,7 +79,7 @@
       "fixture_id": 5,
       "home": "Ipswich",
       "away": "Sunderland",
-      "predicted": "1-0",
+      "predicted": "0-1",
       "actual": "2-1",
       "predicted_scorers": [
         null
@@ -90,10 +90,10 @@
         "Clarke 90'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 0,
         "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
@@ -166,9 +166,10 @@
       "fixture_id": 8,
       "home": "Man City",
       "away": "Bournemouth",
-      "predicted": "2-0",
+      "predicted": "2-1",
       "actual": "2-1",
       "predicted_scorers": [
+        null,
         null,
         null
       ],
@@ -178,10 +179,10 @@
         "Gvardiol 90+1'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 3,
         "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 3
       }
     },
     {
@@ -212,7 +213,7 @@
       "fixture_id": 10,
       "home": "Fulham",
       "away": "Chelsea",
-      "predicted": "2-1",
+      "predicted": "1-2",
       "actual": "2-3",
       "predicted_scorers": [
         null,
@@ -227,10 +228,10 @@
         "Gonzalo 54'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     }
   ]

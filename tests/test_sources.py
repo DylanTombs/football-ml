@@ -92,6 +92,7 @@ def test_fetch_results_combines_leagues_and_seasons(monkeypatch):
     ])
     assert len(df) == 8
     assert df["date"].is_monotonic_increasing
+    assert set(df["league"]) == {"E0", "E1"} and set(df["season"]) == {"2526", "2627"}
 
 
 # --- odds (plan 04) ---------------------------------------------------------------
@@ -132,3 +133,9 @@ def test_match_odds_favourite_and_over_probability():
 
 def test_parse_odds_without_odds_columns_is_empty():
     assert parse_odds(CSV).empty
+
+
+def test_parse_odds_can_keep_one_league():
+    csv = ODDS_CSV + "E1,22/08/2026,Hull,Leeds,,,2.0,3.4,3.8,1.9,1.9,,,\n"
+    assert len(parse_odds(csv)) == 3
+    assert list(parse_odds(csv, league="E0")["home"]) == ["Arsenal", "Hull"]

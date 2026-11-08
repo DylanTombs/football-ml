@@ -3,10 +3,10 @@
   "predictor": "dixon-coles-expected-points-chance",
   "complete": true,
   "totals": {
-    "points": 24,
+    "points": 25,
     "matches": 10,
     "exact_scores": 1,
-    "correct_results": 7,
+    "correct_results": 8,
     "scorer_hits": 10,
     "minute_hits": 5,
     "fallbacks": 0
@@ -16,23 +16,23 @@
       "fixture_id": 64,
       "home": "Everton",
       "away": "Chelsea",
-      "predicted": "2-2",
+      "predicted": "1-3",
       "actual": "0-2",
       "predicted_scorers": [
-        "João Pedro",
+        "Rogers",
         "Barry",
-        "Dewsbury-Hall",
-        "Rogers"
+        "João Pedro",
+        "Palmer"
       ],
       "actual_scorers": [
         "Neto 46'",
         "Neto 90'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -85,13 +85,13 @@
       "fixture_id": 67,
       "home": "Man City",
       "away": "Ipswich",
-      "predicted": "5-0",
+      "predicted": "4-1",
       "actual": "3-2",
       "predicted_scorers": [
         "Semenyo",
         "Haaland",
         "Cherki",
-        "Anderson",
+        "Emersonn",
         "Haaland"
       ],
       "actual_scorers": [
@@ -112,13 +112,12 @@
       "fixture_id": 68,
       "home": "Newcastle",
       "away": "Aston Villa",
-      "predicted": "3-1",
+      "predicted": "2-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Barnes",
+        "N.Jackson",
         "Wissa",
-        "Fernandez-Pardo",
-        "N.Jackson"
+        "Fernandez-Pardo"
       ],
       "actual_scorers": [
         "Manzambi 36'"
@@ -206,12 +205,13 @@
       "fixture_id": 69,
       "home": "Nott'm Forest",
       "away": "Arsenal",
-      "predicted": "1-2",
+      "predicted": "1-3",
       "actual": "0-1",
       "predicted_scorers": [
         "Havertz",
         "Gibbs-White",
-        "Saka"
+        "Saka",
+        "Ødegaard"
       ],
       "actual_scorers": [
         "Madueke 80'"

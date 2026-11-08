@@ -19,12 +19,47 @@
 
 ## Tasks
 
-- [ ] Add 2020-21 to the training data; walk-forward runner over past seasons (score part only)
-- [ ] Log loss, RPS and calibration output (predicted vs actual draw rate and total goals)
-- [ ] Tune time decay and the ridge penalty, with results recorded here
-- [ ] `sources/odds.py`: pre-closing odds from season CSVs and `fixtures.csv`, Shin margin removal, with tests
-- [ ] Odds → λ, μ; blend weight tuned on the walk-forward
-- [ ] Save `fixtures.csv` odds alongside each gameweek's frozen prediction
+- [x] Add 2020-21 to the training data; walk-forward runner over past seasons (score part only)
+- [x] Log loss, RPS and calibration output (predicted vs actual draw rate and total goals)
+- [x] Tune time decay and the ridge penalty, with results recorded here
+- [x] `sources/odds.py`: pre-closing odds from season CSVs and `fixtures.csv`, Shin margin removal, with tests
+- [x] Odds → λ, μ; blend weight tuned on the walk-forward
+- [x] Save `fixtures.csv` odds alongside each gameweek's frozen prediction
+
+## Results (run 2026-11-08)
+
+**Bench baseline** (current settings xi 0.0019, l2 0.5; 2021-22 to 2024-25, 1,520 PL matches, weekly refits): exact-score log loss **3.0090**, 1X2 log loss 0.9693, RPS 0.2000, modal outcome points 1,123; goals 4,338 predicted vs 4,516 actual (−4%), draws 348 vs 350. `football-ml bench` reproduces it in about 3 s.
+
+**xi / l2 grid** (`bench --grid`, `out/bench/grid-tune.json`): best xi 0.003, l2 0.1 (exact 3.0051, RPS 0.1987, 1,139 pts). The current setting was not within one SE. Below l2 0.1 the gain is under 0.0004.
+
+**Odds blend** on the tuning seasons, xi 0.003 / l2 0.1, all 1,520 matches with odds:
+
+| Model weight w | Exact log loss | 1X2 log loss | RPS | Outcome pts |
+|---|---|---|---|---|
+| 0.0 (market rates) | **2.9684** | **0.9454** | **0.1923** | 1,170 |
+| 0.1 | 2.9692 | 0.9464 | 0.1926 | 1,173 |
+| 0.5 | 2.9785 | 0.9524 | 0.1945 | 1,165 |
+| 1.0 (model) | 3.0051 | 0.9656 | 0.1987 | 1,139 |
+
+Loss rises steadily with w; only w = 0 is within one SE of the best.
+
+**2025-26 holdout** (380 matches, run once):
+
+| | Exact log loss | vs old settings | 1X2 log loss | RPS | Outcome pts |
+|---|---|---|---|---|---|
+| old settings (xi 0.0019, l2 0.5) | 2.8964 | – | 1.0395 | 0.2131 | 247 |
+| tuned (xi 0.003, l2 0.1) | 2.9044 | +0.0081 ± 0.0036 | 1.0394 | 0.2129 | 236 |
+| tuned + market (w = 0) | **2.8696** | **−0.0268 ± 0.0108** | **1.0164** | **0.2056** | **274** |
+
+**Current season** (`backtest` GW1–10, default predictor, odds blend vs plan 05's model-only run, paired): **+11 pts** (174 vs 163) [+0.01, +0.21 per match], outcome +8, scorers +2, minutes +1; 35 scorelines changed. Modal: −2 [−0.23, +0.15].
+
+- **Market rates are on** (`ODDS_MODEL_WEIGHT = 0`): they beat the model on held-out log loss by 2.5 SE and gain 27 outcome points there, and the current-season backtest agrees. As the research expected, blending in the model did not help.
+- **xi / l2 stay at 0.0019 / 0.5.** The tuned values won on 2021-25 but lost on the holdout (2.2 SE worse, −11 points), so they didn't generalise. With odds on, the ratings matter only for fixtures without odds and for ρ.
+- **What's still ours:** with odds present, λ and μ are the market's. The Dixon-Coles part supplies ρ (the low-score correction) and the fallback, and the pick rule, plausibility floor, scorer model and minutes are all ours. For the reels, say the scoreline probabilities are anchored to bookmaker odds.
+- **Timing:** odds for weekend games appear in `fixtures.csv` on Friday afternoon. A run before that uses the model alone for every fixture without odds (the CLI says how many). Each run saves the matching odds rows to `data/odds/gwNN.csv`; rows from the previous round are never saved.
+- **Faster fitting:** the fit now uses an exact gradient (0.036 s instead of 2 s, same optimum, checked by test). 2020-21 is a warm-up season (about 1% weight live).
+- Shin de-margining on both 1X2 and over/under; (λ, μ) solved by Nelder-Mead on the squared error of H/D/A/over 2.5 with the fitted ρ. Matches without over/under odds fit the 1X2 alone.
+- Calibration left for plan 07: the model under-predicts goals by 3-4% on the bench, and 2025-26 had more draws (104) than any setting predicted (89-93).
 
 ## Done when
 
