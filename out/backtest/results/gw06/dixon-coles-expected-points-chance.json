@@ -3,10 +3,10 @@
   "predictor": "dixon-coles-expected-points-chance",
   "complete": true,
   "totals": {
-    "points": 15,
+    "points": 14,
     "matches": 10,
-    "exact_scores": 1,
-    "correct_results": 3,
+    "exact_scores": 0,
+    "correct_results": 4,
     "scorer_hits": 7,
     "minute_hits": 3,
     "fallbacks": 0
@@ -40,13 +40,12 @@
       "fixture_id": 52,
       "home": "Aston Villa",
       "away": "Brentford",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "2-2",
       "predicted_scorers": [
         "Thiago",
         "N.Jackson",
-        "Buendía",
-        "Schade"
+        "Buendía"
       ],
       "actual_scorers": [
         "Yarmoliuk 10'",
@@ -55,10 +54,10 @@
         "Ajer 79'"
       ],
       "points": {
-        "outcome": 3,
+        "outcome": 0,
         "scorers": 1,
         "minutes": 0,
-        "total": 4
+        "total": 1
       }
     },
     {
@@ -115,23 +114,22 @@
       "fixture_id": 60,
       "home": "Sunderland",
       "away": "Brighton",
-      "predicted": "2-2",
+      "predicted": "1-2",
       "actual": "0-2",
       "predicted_scorers": [
-        "Kostoulas",
+        "Groß",
         "Brobbey",
-        "E.Le Fée",
-        "Groß"
+        "Kostoulas"
       ],
       "actual_scorers": [
         "De Cuyper 53'",
         "Hadjam 90+3'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -161,13 +159,12 @@
       "fixture_id": 55,
       "home": "Crystal Palace",
       "away": "Nott'm Forest",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "3-1",
       "predicted_scorers": [
         "Gibbs-White",
         "Strand Larsen",
-        "Nketiah",
-        "Igor Jesus"
+        "Nketiah"
       ],
       "actual_scorers": [
         "Ndoye 3'",
@@ -176,10 +173,10 @@
         "Yeremy 59'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {

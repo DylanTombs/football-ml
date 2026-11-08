@@ -3,10 +3,10 @@
   "predictor": "dixon-coles-expected-points-chance",
   "complete": true,
   "totals": {
-    "points": 22,
+    "points": 19,
     "matches": 10,
-    "exact_scores": 1,
-    "correct_results": 5,
+    "exact_scores": 0,
+    "correct_results": 4,
     "scorer_hits": 11,
     "minute_hits": 4,
     "fallbacks": 0
@@ -16,13 +16,12 @@
       "fixture_id": 31,
       "home": "Aston Villa",
       "away": "Nott'm Forest",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "1-2",
       "predicted_scorers": [
         "Igor Jesus",
         "N.Jackson",
-        "McGinn",
-        "Gibbs-White"
+        "McGinn"
       ],
       "actual_scorers": [
         "Delap 46'",
@@ -40,13 +39,12 @@
       "fixture_id": 32,
       "home": "Bournemouth",
       "away": "Brentford",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "2-2",
       "predicted_scorers": [
         "Thiago",
         "Evanilson",
-        "Tavernier",
-        "Lewis-Potter"
+        "Tavernier"
       ],
       "actual_scorers": [
         "Schade 34'",
@@ -55,24 +53,23 @@
         "Schade 56'"
       ],
       "points": {
-        "outcome": 3,
+        "outcome": 0,
         "scorers": 1,
         "minutes": 1,
-        "total": 5
+        "total": 2
       }
     },
     {
       "fixture_id": 33,
       "home": "Chelsea",
       "away": "Hull",
-      "predicted": "4-1",
+      "predicted": "3-1",
       "actual": "2-2",
       "predicted_scorers": [
         "Palmer",
         "João Pedro",
         "Rogers",
-        "McBurnie",
-        "João Pedro"
+        "McBurnie"
       ],
       "actual_scorers": [
         "Rogers 7'",
@@ -156,13 +153,12 @@
       "fixture_id": 36,
       "home": "Sunderland",
       "away": "Arsenal",
-      "predicted": "1-3",
+      "predicted": "1-2",
       "actual": "0-2",
       "predicted_scorers": [
         "Saka",
         "E.Le Fée",
-        "Havertz",
-        "Ødegaard"
+        "Havertz"
       ],
       "actual_scorers": [
         "Bruno G. 58'",

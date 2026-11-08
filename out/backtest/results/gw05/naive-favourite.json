@@ -3,12 +3,12 @@
   "predictor": "naive-favourite",
   "complete": true,
   "totals": {
-    "points": 15,
+    "points": 14,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 4,
     "scorer_hits": 7,
-    "minute_hits": 2,
+    "minute_hits": 1,
     "fallbacks": 0
   },
   "matches": [
@@ -195,9 +195,9 @@
       "predicted": "2-1",
       "actual": "5-3",
       "predicted_scorers": [
-        "Haaland",
         "E.Le Fée",
-        "Haaland"
+        "Haaland",
+        "Foden"
       ],
       "actual_scorers": [
         "Enzo 9'",
@@ -212,8 +212,8 @@
       "points": {
         "outcome": 1,
         "scorers": 1,
-        "minutes": 1,
-        "total": 3
+        "minutes": 0,
+        "total": 2
       }
     },
     {

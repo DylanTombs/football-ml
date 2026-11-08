@@ -148,11 +148,13 @@ def gameweek_context(gameweek: int, inputs: SeasonInputs, injury_impact: float =
         )
         for f in sorted(fixtures, key=lambda f: f.kickoff)
     )
-    with_odds = sum(c.market_rates is not None for c in contexts)
-    if with_odds < len(contexts):
-        log.warning("GW%d: %d of %d fixtures have no odds and use the model alone", gameweek,
-                    len(contexts) - with_odds, len(contexts))
-    model = {**model, "odds_model_weight": ODDS_MODEL_WEIGHT, "fixtures_with_odds": with_odds}
+    model = {**model, "odds_model_weight": ODDS_MODEL_WEIGHT}
+    if ODDS_MODEL_WEIGHT < 1:
+        with_odds = sum(c.market_rates is not None for c in contexts)
+        if with_odds < len(contexts):
+            log.warning("GW%d: %d of %d fixtures have no odds and use the model alone", gameweek,
+                        len(contexts) - with_odds, len(contexts))
+        model = {**model, "fixtures_with_odds": with_odds}
     return GameweekContext(gameweek, model, contexts)
 
 

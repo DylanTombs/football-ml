@@ -180,7 +180,9 @@ def test_backtest_with_histories_is_leak_free_and_compares_scorer_models(tmp_pat
     assert all(g["scorer"] is None for m in gw1["matches"] for g in m["prediction"]["goals"])
 
 
-def test_run_gameweek_saves_upcoming_odds_and_reports_the_blend(monkeypatch, tmp_path):
+def test_predictions_never_use_bookmaker_odds_but_the_odds_are_saved_as_a_benchmark(monkeypatch, tmp_path):
+    """Decided 2026-11-08: the series is a statistical model, so odds are a
+    yardstick (naive-favourite, market comparison), never a model input."""
     from football_ml import pipeline
     upcoming = pd.DataFrame([_odds(2, "Arsenal", "Hull", 1.5, 6.0)])
     monkeypatch.setattr(pipeline, "load_season_inputs", lambda **_: replace(_inputs(), odds=upcoming, upcoming_odds=upcoming))
@@ -188,7 +190,8 @@ def test_run_gameweek_saves_upcoming_odds_and_reports_the_blend(monkeypatch, tmp
                              snapshots_dir=tmp_path / "snapshots", odds_dir=tmp_path / "odds", now=START)
     assert (tmp_path / "odds" / "gw02.csv").exists()
     assert report["odds"] == str(tmp_path / "odds" / "gw02.csv")
-    assert report["model"]["fixtures_with_odds"] == 1
-    assert report["model"]["odds_model_weight"] == 0.0
+    assert report["model"]["odds_model_weight"] == 1.0
+    assert "fixtures_with_odds" not in report["model"]
     arsenal = next(m for m in report["matches"] if m["home"] == "Arsenal")
-    assert arsenal["rates"]["market"] is not None
+    assert arsenal["rates"]["market"] is None
+    assert arsenal["expected_goals"]["home"] == pytest.approx(arsenal["rates"]["model"]["home"], rel=1e-2)

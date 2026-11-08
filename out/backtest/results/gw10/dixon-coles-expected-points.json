@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 22,
+    "points": 24,
     "matches": 10,
-    "exact_scores": 2,
-    "correct_results": 5,
+    "exact_scores": 1,
+    "correct_results": 8,
     "scorer_hits": 10,
-    "minute_hits": 3,
+    "minute_hits": 4,
     "fallbacks": 0
   },
   "matches": [
@@ -16,13 +16,12 @@
       "fixture_id": 94,
       "home": "Everton",
       "away": "Coventry",
-      "predicted": "3-1",
+      "predicted": "2-1",
       "actual": "3-1",
       "predicted_scorers": [
         "Rudoni",
         "Barry",
-        "Dewsbury-Hall",
-        "Barry"
+        "Dewsbury-Hall"
       ],
       "actual_scorers": [
         "Gboho 52'",
@@ -31,42 +30,40 @@
         "Dewsbury-Hall 81'"
       ],
       "points": {
-        "outcome": 3,
-        "scorers": 3,
+        "outcome": 1,
+        "scorers": 2,
         "minutes": 1,
-        "total": 7
+        "total": 4
       }
     },
     {
       "fixture_id": 97,
       "home": "Leeds",
       "away": "Tottenham",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "1-0",
       "predicted_scorers": [
         "Van Hecke",
         "Calvert-Lewin",
-        "Bogle",
-        "Solanke"
+        "Bogle"
       ],
       "actual_scorers": [
         "Okafor 79'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
       "fixture_id": 91,
       "home": "Arsenal",
       "away": "Hull",
-      "predicted": "5-0",
+      "predicted": "4-0",
       "actual": "1-0",
       "predicted_scorers": [
-        "Bruno G.",
         "Gabriel",
         "Havertz",
         "Ødegaard",
@@ -86,23 +83,23 @@
       "fixture_id": 95,
       "home": "Fulham",
       "away": "Newcastle",
-      "predicted": "3-1",
+      "predicted": "2-2",
       "actual": "1-1",
       "predicted_scorers": [
-        "Bobb",
+        "Wissa",
         "Gonzalo",
         "King",
-        "Wissa"
+        "Barnes"
       ],
       "actual_scorers": [
         "J.Murphy 80'",
         "Muniz 83'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -115,7 +112,7 @@
         "Cherki",
         "Ndoye",
         "Haaland",
-        "Haaland"
+        "Foden"
       ],
       "actual_scorers": [
         "Jair Cunha 6'",
@@ -206,13 +203,12 @@
       "fixture_id": 100,
       "home": "Sunderland",
       "away": "Chelsea",
-      "predicted": "1-3",
+      "predicted": "1-2",
       "actual": "1-0",
       "predicted_scorers": [
         "Palmer",
         "Brobbey",
-        "Rogers",
-        "Neto"
+        "Rogers"
       ],
       "actual_scorers": [
         "E.Le Fée 36'"
@@ -228,13 +224,13 @@
       "fixture_id": 98,
       "home": "Man United",
       "away": "Aston Villa",
-      "predicted": "3-1",
+      "predicted": "2-2",
       "actual": "4-4",
       "predicted_scorers": [
-        "Cunha",
+        "N.Jackson",
         "Mbeumo",
         "B.Fernandes",
-        "N.Jackson"
+        "McGinn"
       ],
       "actual_scorers": [
         "Alysson 1'",
@@ -247,10 +243,10 @@
         "Dorgu 90+6'"
       ],
       "points": {
-        "outcome": 0,
-        "scorers": 2,
-        "minutes": 0,
-        "total": 2
+        "outcome": 1,
+        "scorers": 3,
+        "minutes": 1,
+        "total": 5
       }
     }
   ]

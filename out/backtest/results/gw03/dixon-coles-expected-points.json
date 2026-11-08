@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 13,
+    "points": 14,
     "matches": 10,
-    "exact_scores": 0,
+    "exact_scores": 1,
     "correct_results": 4,
     "scorer_hits": 7,
-    "minute_hits": 2,
+    "minute_hits": 1,
     "fallbacks": 0
   },
   "matches": [
@@ -110,13 +110,12 @@
       "fixture_id": 24,
       "home": "Fulham",
       "away": "Crystal Palace",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "2-3",
       "predicted_scorers": [
         "Nketiah",
         "Gonzalo",
-        "King",
-        "Strand Larsen"
+        "King"
       ],
       "actual_scorers": [
         "King 11'",
@@ -159,20 +158,20 @@
       "fixture_id": 28,
       "home": "Nott'm Forest",
       "away": "Tottenham",
-      "predicted": "2-2",
+      "predicted": "3-1",
       "actual": "0-0",
       "predicted_scorers": [
-        "Moore",
+        "Ndoye",
         "Gibbs-White",
         "Igor Jesus",
-        "Pedro Porro"
+        "Moore"
       ],
       "actual_scorers": [],
       "points": {
-        "outcome": 1,
+        "outcome": 0,
         "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
@@ -199,13 +198,13 @@
       "fixture_id": 30,
       "home": "Everton",
       "away": "Man United",
-      "predicted": "1-3",
+      "predicted": "2-2",
       "actual": "2-2",
       "predicted_scorers": [
-        "Mbeumo",
-        "Barry",
         "B.Fernandes",
-        "B.Fernandes"
+        "Barry",
+        "Dewsbury-Hall",
+        "Mbeumo"
       ],
       "actual_scorers": [
         "Mbeumo 46'",
@@ -214,10 +213,10 @@
         "Maitland-Niles 90+6'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 3,
         "scorers": 1,
-        "minutes": 1,
-        "total": 2
+        "minutes": 0,
+        "total": 4
       }
     },
     {

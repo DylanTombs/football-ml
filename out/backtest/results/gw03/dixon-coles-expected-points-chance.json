@@ -110,13 +110,12 @@
       "fixture_id": 24,
       "home": "Fulham",
       "away": "Crystal Palace",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "2-3",
       "predicted_scorers": [
         "Nketiah",
         "Gonzalo",
-        "King",
-        "Strand Larsen"
+        "King"
       ],
       "actual_scorers": [
         "King 11'",
@@ -136,13 +135,13 @@
       "fixture_id": 26,
       "home": "Man City",
       "away": "Coventry",
-      "predicted": "5-0",
+      "predicted": "4-1",
       "actual": "1-0",
       "predicted_scorers": [
         "Ndiaye",
         "Haaland",
         "Foden",
-        "Semenyo",
+        "Awoniyi",
         "Haaland"
       ],
       "actual_scorers": [
@@ -159,12 +158,13 @@
       "fixture_id": 28,
       "home": "Nott'm Forest",
       "away": "Tottenham",
-      "predicted": "2-1",
+      "predicted": "3-1",
       "actual": "0-0",
       "predicted_scorers": [
-        "Marmoush",
+        "McAtee",
         "Igor Jesus",
-        "Gibbs-White"
+        "Gibbs-White",
+        "Marmoush"
       ],
       "actual_scorers": [],
       "points": {
@@ -198,13 +198,12 @@
       "fixture_id": 30,
       "home": "Everton",
       "away": "Man United",
-      "predicted": "1-3",
+      "predicted": "1-2",
       "actual": "2-2",
       "predicted_scorers": [
         "Mbeumo",
         "Barry",
-        "B.Fernandes",
-        "Tielemans"
+        "B.Fernandes"
       ],
       "actual_scorers": [
         "Mbeumo 46'",

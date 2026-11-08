@@ -3,11 +3,11 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 9,
+    "points": 10,
     "matches": 10,
     "exact_scores": 0,
     "correct_results": 5,
-    "scorer_hits": 4,
+    "scorer_hits": 5,
     "minute_hits": 0,
     "fallbacks": 0
   },
@@ -16,11 +16,10 @@
       "fixture_id": 51,
       "home": "Arsenal",
       "away": "Leeds",
-      "predicted": "2-0",
+      "predicted": "1-0",
       "actual": "2-1",
       "predicted_scorers": [
-        "Saka",
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Justin 55'",
@@ -38,12 +37,12 @@
       "fixture_id": 52,
       "home": "Aston Villa",
       "away": "Brentford",
-      "predicted": "1-2",
+      "predicted": "2-1",
       "actual": "2-2",
       "predicted_scorers": [
-        "Thiago",
         "Buendía",
-        "Schade"
+        "Thiago",
+        "N.Jackson"
       ],
       "actual_scorers": [
         "Yarmoliuk 10'",
@@ -53,9 +52,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 0,
+        "scorers": 1,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -111,12 +110,10 @@
       "fixture_id": 60,
       "home": "Sunderland",
       "away": "Brighton",
-      "predicted": "1-2",
+      "predicted": "0-1",
       "actual": "0-2",
       "predicted_scorers": [
-        "Groß",
-        "Brobbey",
-        "Yalcouyé"
+        "Groß"
       ],
       "actual_scorers": [
         "De Cuyper 53'",

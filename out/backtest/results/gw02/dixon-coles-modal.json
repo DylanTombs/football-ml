@@ -16,12 +16,10 @@
       "fixture_id": 11,
       "home": "Crystal Palace",
       "away": "Man City",
-      "predicted": "1-2",
+      "predicted": "0-1",
       "actual": "1-4",
       "predicted_scorers": [
-        "Guéhi",
-        "Mateta",
-        "Haaland"
+        "Guéhi"
       ],
       "actual_scorers": [
         "Haaland 17'",
@@ -32,19 +30,20 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
       "fixture_id": 14,
       "home": "Liverpool",
       "away": "Nott'm Forest",
-      "predicted": "2-0",
+      "predicted": "2-1",
       "actual": "2-2",
       "predicted_scorers": [
         "Szoboszlai",
+        "Muñoz",
         "Isak"
       ],
       "actual_scorers": [
@@ -84,9 +83,11 @@
       "fixture_id": 13,
       "home": "Coventry",
       "away": "Hull",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "0-1",
       "predicted_scorers": [
+        "Rudoni",
+        "Ajayi",
         "Rudoni"
       ],
       "actual_scorers": [
@@ -103,22 +104,22 @@
       "fixture_id": 15,
       "home": "Tottenham",
       "away": "Newcastle",
-      "predicted": "2-1",
+      "predicted": "1-2",
       "actual": "0-2",
       "predicted_scorers": [
-        "Moore",
         "Wissa",
-        "Moore"
+        "Moore",
+        "Elanga"
       ],
       "actual_scorers": [
         "Elanga 62'",
         "Wissa 72'"
       ],
       "points": {
-        "outcome": 0,
-        "scorers": 1,
+        "outcome": 1,
+        "scorers": 2,
         "minutes": 0,
-        "total": 1
+        "total": 3
       }
     },
     {
@@ -152,9 +153,11 @@
       "fixture_id": 17,
       "home": "Leeds",
       "away": "Brentford",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "1-1",
       "predicted_scorers": [
+        "Stach",
+        "Lewis-Potter",
         "Stach"
       ],
       "actual_scorers": [
@@ -172,29 +175,30 @@
       "fixture_id": 19,
       "home": "Sunderland",
       "away": "Fulham",
-      "predicted": "1-0",
+      "predicted": "0-1",
       "actual": "1-0",
       "predicted_scorers": [
-        "N.Angulo"
+        "Gonzalo"
       ],
       "actual_scorers": [
         "Isidor 75'"
       ],
       "points": {
-        "outcome": 3,
+        "outcome": 0,
         "scorers": 0,
         "minutes": 0,
-        "total": 3
+        "total": 0
       }
     },
     {
       "fixture_id": 18,
       "home": "Man United",
       "away": "Ipswich",
-      "predicted": "2-0",
+      "predicted": "2-1",
       "actual": "5-2",
       "predicted_scorers": [
         "Mbeumo",
+        "Emersonn",
         "Dorgu"
       ],
       "actual_scorers": [
@@ -217,20 +221,19 @@
       "fixture_id": 20,
       "home": "Aston Villa",
       "away": "Arsenal",
-      "predicted": "0-2",
+      "predicted": "0-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Saka",
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Saka 59'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 3,
         "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 4
       }
     }
   ]

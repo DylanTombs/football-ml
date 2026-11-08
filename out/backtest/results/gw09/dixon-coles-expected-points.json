@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 24,
+    "points": 22,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 6,
-    "scorer_hits": 11,
-    "minute_hits": 5,
+    "scorer_hits": 10,
+    "minute_hits": 4,
     "fallbacks": 0
   },
   "matches": [
@@ -39,22 +39,23 @@
       "fixture_id": 82,
       "home": "Bournemouth",
       "away": "Leeds",
-      "predicted": "2-1",
+      "predicted": "2-2",
       "actual": "2-0",
       "predicted_scorers": [
         "Calvert-Lewin",
         "Tavernier",
-        "Evanilson"
+        "Evanilson",
+        "Bogle"
       ],
       "actual_scorers": [
         "Evanilson 31'",
         "Adli 90+4'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 0,
         "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -84,13 +85,12 @@
       "fixture_id": 85,
       "home": "Coventry",
       "away": "Sunderland",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "3-1",
       "predicted_scorers": [
         "Brobbey",
         "Rudoni",
-        "Awoniyi",
-        "E.Le Fée"
+        "Awoniyi"
       ],
       "actual_scorers": [
         "Sakamoto 17'",
@@ -99,10 +99,10 @@
         "E.Le Fée 67'"
       ],
       "points": {
-        "outcome": 0,
-        "scorers": 3,
-        "minutes": 2,
-        "total": 5
+        "outcome": 1,
+        "scorers": 2,
+        "minutes": 1,
+        "total": 4
       }
     },
     {
@@ -223,13 +223,12 @@
       "fixture_id": 89,
       "home": "Newcastle",
       "away": "Everton",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "0-1",
       "predicted_scorers": [
         "Barry",
         "Wissa",
-        "Barnes",
-        "Dewsbury-Hall"
+        "Barnes"
       ],
       "actual_scorers": [
         "Barry 49'"

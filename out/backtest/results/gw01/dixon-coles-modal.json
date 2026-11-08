@@ -3,10 +3,10 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 8,
+    "points": 7,
     "matches": 10,
-    "exact_scores": 1,
-    "correct_results": 6,
+    "exact_scores": 0,
+    "correct_results": 7,
     "scorer_hits": 0,
     "minute_hits": 0,
     "fallbacks": 0
@@ -79,7 +79,7 @@
       "fixture_id": 5,
       "home": "Ipswich",
       "away": "Sunderland",
-      "predicted": "0-1",
+      "predicted": "1-0",
       "actual": "2-1",
       "predicted_scorers": [
         null
@@ -90,10 +90,10 @@
         "Clarke 90'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -166,10 +166,9 @@
       "fixture_id": 8,
       "home": "Man City",
       "away": "Bournemouth",
-      "predicted": "2-1",
+      "predicted": "2-0",
       "actual": "2-1",
       "predicted_scorers": [
-        null,
         null,
         null
       ],
@@ -179,10 +178,10 @@
         "Gvardiol 90+1'"
       ],
       "points": {
-        "outcome": 3,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 3
+        "total": 1
       }
     },
     {

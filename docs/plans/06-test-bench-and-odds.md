@@ -53,14 +53,14 @@ Loss rises steadily with w; only w = 0 is within one SE of the best.
 
 **Current season** (`backtest` GW1–10, default predictor, odds blend vs plan 05's model-only run, paired): **+11 pts** (174 vs 163) [+0.01, +0.21 per match], outcome +8, scorers +2, minutes +1; 35 scorelines changed. Modal: −2 [−0.23, +0.15].
 
-- **Market rates are on** (`ODDS_MODEL_WEIGHT = 0`): they beat the model on held-out log loss by 2.5 SE and gain 27 outcome points there, and the current-season backtest agrees. As the research expected, blending in the model did not help.
-- **xi / l2 stay at 0.0019 / 0.5.** The tuned values won on 2021-25 but lost on the holdout (2.2 SE worse, −11 points), so they didn't generalise. With odds on, the ratings matter only for fixtures without odds and for ρ.
-- **What's still ours:** with odds present, λ and μ are the market's. The Dixon-Coles part supplies ρ (the low-score correction) and the fallback, and the pick rule, plausibility floor, scorer model and minutes are all ours. For the reels, say the scoreline probabilities are anchored to bookmaker odds.
-- **Timing:** odds for weekend games appear in `fixtures.csv` on Friday afternoon. A run before that uses the model alone for every fixture without odds (the CLI says how many). Each run saves the matching odds rows to `data/odds/gwNN.csv`; rows from the previous round are never saved.
+- **Odds are not a model input (Dylan, 2026-11-08).** The bench says market rates forecast better, but using them would make the predictions the bookmakers' rather than a statistical model's, which defeats the series. `ODDS_MODEL_WEIGHT` = 1.0; the blend code, `data/odds/gwNN.csv` and `naive-favourite` stay as benchmarks ("how close is the model to the bookies"). The numbers above are kept as that yardstick: the model's gap to the market is 0.027 exact log loss on 2025-26.
+- **xi / l2 stay at 0.0019 / 0.5.** The tuned values won on 2021-25 but lost on the holdout (2.2 SE worse, −11 points), so they didn't generalise.
+- **GW1–10 backtest, model only** (after this plan): expected-points + chance scorers 164, weights 170, naive-favourite 139, modal 127 (plan 05: 163 / 168 / 140 / 126; the small shift is the 2020-21 warm-up season).
+- Each `predict` saves the gameweek's rows of `fixtures.csv` to `data/odds/gwNN.csv` for benchmarking; rows from the previous round are never saved.
 - **Faster fitting:** the fit now uses an exact gradient (0.036 s instead of 2 s, same optimum, checked by test). 2020-21 is a warm-up season (about 1% weight live).
 - Shin de-margining on both 1X2 and over/under; (λ, μ) solved by Nelder-Mead on the squared error of H/D/A/over 2.5 with the fitted ρ. Matches without over/under odds fit the 1X2 alone.
 - Calibration left for plan 07: the model under-predicts goals by 3-4% on the bench, and 2025-26 had more draws (104) than any setting predicted (89-93).
 
 ## Done when
 
-- The model's settings are chosen on the multi-season walk-forward. The odds blend is on by default only if it beats the model alone on held-out 2025-26 log loss without losing outcome points.
+- The model's settings are chosen on the multi-season walk-forward. ~~The odds blend is on by default only if it beats the model alone on held-out 2025-26 log loss without losing outcome points.~~ Odds are a benchmark only (2026-11-08).

@@ -61,42 +61,39 @@
       "fixture_id": 71,
       "home": "Arsenal",
       "away": "Everton",
-      "predicted": "2-0",
+      "predicted": "1-0",
       "actual": "2-0",
       "predicted_scorers": [
-        "Saka",
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Konsa 7'",
         "Gabriel 68'"
       ],
       "points": {
-        "outcome": 3,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 3
+        "total": 1
       }
     },
     {
       "fixture_id": 74,
       "home": "Coventry",
       "away": "Fulham",
-      "predicted": "1-2",
+      "predicted": "0-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Gonzalo",
-        "Rudoni",
-        "King"
+        "Gonzalo"
       ],
       "actual_scorers": [
         "Bobb 80'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 3,
         "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 3
       }
     },
     {
@@ -147,12 +144,10 @@
       "fixture_id": 76,
       "home": "Hull",
       "away": "Brentford",
-      "predicted": "1-2",
+      "predicted": "0-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "Thiago",
-        "Belloumi",
-        "Schade"
+        "Thiago"
       ],
       "actual_scorers": [
         "McBurnie 24'",

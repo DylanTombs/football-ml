@@ -78,10 +78,10 @@ BENCH_SEASON_SETS = {"tune": BENCH_TUNE_SEASONS, "holdout": BENCH_HOLDOUT_SEASON
 BENCH_XI_GRID = (0.0010, 0.0015, 0.0019, 0.0025, 0.0030, 0.0040)
 BENCH_L2_GRID = (0.1, 0.25, 0.5, 1.0, 2.0)
 MARKET_RATE_START = (1.4, 1.1)  # starting (λ, μ) when fitting rates to odds
-# λ = w × Dixon-Coles + (1 − w) × market, when the match has odds. Plan 06:
-# w = 0 was best on 2021-25 and beat the model on the 2025-26 holdout
-# (exact log loss −0.027 ± 0.011, +27 outcome points in 380 matches).
-ODDS_MODEL_WEIGHT = 0.0
+# λ = w × Dixon-Coles + (1 − w) × market. Kept at 1.0: bookmaker odds are never
+# a model input (decided 2026-11-08: the series is a statistical model). Odds
+# are a benchmark only. For the record, w = 0 scored better on the plan 06 bench.
+ODDS_MODEL_WEIGHT = 1.0
 
 # --- Injuries --------------------------------------------------------------
 # λ_adj = λ × (1 − INJURY_IMPACT × missing_share). Below 1 because

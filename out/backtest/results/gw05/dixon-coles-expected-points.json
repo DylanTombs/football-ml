@@ -3,10 +3,10 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 15,
+    "points": 16,
     "matches": 10,
     "exact_scores": 0,
-    "correct_results": 5,
+    "correct_results": 6,
     "scorer_hits": 8,
     "minute_hits": 2,
     "fallbacks": 0
@@ -40,13 +40,13 @@
       "fixture_id": 48,
       "home": "Tottenham",
       "away": "Aston Villa",
-      "predicted": "3-1",
+      "predicted": "2-2",
       "actual": "2-3",
       "predicted_scorers": [
-        "Marmoush",
+        "Buendía",
         "Van de Ven",
         "Solanke",
-        "Buendía"
+        "McGinn"
       ],
       "actual_scorers": [
         "Manzambi 45+4'",
@@ -112,13 +112,13 @@
       "fixture_id": 46,
       "home": "Newcastle",
       "away": "Hull",
-      "predicted": "3-1",
+      "predicted": "4-0",
       "actual": "2-1",
       "predicted_scorers": [
         "Barnes",
         "Wissa",
         "Willock",
-        "Belloumi"
+        "Touré"
       ],
       "actual_scorers": [
         "Willock 3'",
@@ -180,20 +180,20 @@
       "fixture_id": 44,
       "home": "Leeds",
       "away": "Crystal Palace",
-      "predicted": "3-1",
+      "predicted": "2-2",
       "actual": "0-0",
       "predicted_scorers": [
-        "Stach",
+        "Mitchell",
         "Calvert-Lewin",
         "Bogle",
-        "Mitchell"
+        "Khalaili"
       ],
       "actual_scorers": [],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {

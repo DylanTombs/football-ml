@@ -3,10 +3,10 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 17,
+    "points": 16,
     "matches": 10,
     "exact_scores": 0,
-    "correct_results": 6,
+    "correct_results": 5,
     "scorer_hits": 8,
     "minute_hits": 3,
     "fallbacks": 0
@@ -67,10 +67,9 @@
       "fixture_id": 12,
       "home": "Bournemouth",
       "away": "Everton",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "Dewsbury-Hall",
         "Tavernier",
         "Barry",
         "Tavernier"
@@ -80,10 +79,10 @@
         "Tarkowski 90+1'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 0,
         "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
@@ -186,13 +185,12 @@
       "fixture_id": 19,
       "home": "Sunderland",
       "away": "Fulham",
-      "predicted": "2-2",
+      "predicted": "1-2",
       "actual": "1-0",
       "predicted_scorers": [
-        "Gonzalo",
+        "King",
         "N.Angulo",
-        "Brobbey",
-        "King"
+        "Gonzalo"
       ],
       "actual_scorers": [
         "Isidor 75'"

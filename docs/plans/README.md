@@ -9,7 +9,7 @@ Build in this order. Each phase relies on the one before it. The research behind
 | 3 | [Predictor interface + LLM adapters](03-predictors-and-llm.md) | One interface for the pipeline and benchmarks; LLM plumbing for plan 08 | done: AI-vs-AI comparison dropped |
 | 4 | [Expected-points picks + player snapshots](04-expected-points-picks.md) | The biggest gain: modal picks leave goals, and so scorer points, on the table. Snapshots can't be recovered later | done: 180 pts (+39 vs modal), now the default |
 | 5 | [Scorer model](05-scorer-model.md) | Real chances of scoring for plan 04's picks; removes the scorer leak | done: chance model default, leak-free backtest |
-| 6 | [Multi-season test bench + bookmaker odds](06-test-bench-and-odds.md) | 90 matches can't rank changes; odds are the strongest input for λ and μ | done: market rates on (holdout log loss −0.027), xi/l2 unchanged |
+| 6 | [Multi-season test bench + bookmaker odds](06-test-bench-and-odds.md) | 90 matches can't rank changes; odds are the strongest input for λ and μ | done: bench built; odds kept as a benchmark only (not a model input); xi/l2 unchanged |
 | 7 | [Dixon-Coles structure tweaks](07-model-structure.md) | Small model gains, measurable only on the plan 06 bench | todo |
 | 8 | [Availability and LLM adjustments](08-llm-adjustments.md) | Team news via fitted, capped adjustments; the LLM only extracts facts | todo |
 | 9 | [Weekly command](09-weekly-command.md) | One command, run by hand each gameweek: score, snapshot, predict, summary | todo |

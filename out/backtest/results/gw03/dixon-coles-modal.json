@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 9,
+    "points": 7,
     "matches": 10,
     "exact_scores": 0,
     "correct_results": 3,
-    "scorer_hits": 4,
-    "minute_hits": 2,
+    "scorer_hits": 3,
+    "minute_hits": 1,
     "fallbacks": 0
   },
   "matches": [
@@ -82,10 +82,12 @@
       "fixture_id": 23,
       "home": "Brighton",
       "away": "Leeds",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "De Cuyper"
+        "De Cuyper",
+        "Calvert-Lewin",
+        "Yalcouyé"
       ],
       "actual_scorers": [
         "Bogle 15'",
@@ -125,12 +127,11 @@
       "fixture_id": 26,
       "home": "Man City",
       "away": "Coventry",
-      "predicted": "3-0",
+      "predicted": "2-0",
       "actual": "1-0",
       "predicted_scorers": [
         "Haaland",
-        "Guéhi",
-        "Cherki"
+        "Guéhi"
       ],
       "actual_scorers": [
         "Haaland 26'"
@@ -138,18 +139,20 @@
       "points": {
         "outcome": 1,
         "scorers": 1,
-        "minutes": 1,
-        "total": 3
+        "minutes": 0,
+        "total": 2
       }
     },
     {
       "fixture_id": 28,
       "home": "Nott'm Forest",
       "away": "Tottenham",
-      "predicted": "1-0",
+      "predicted": "2-1",
       "actual": "0-0",
       "predicted_scorers": [
-        "Gibbs-White"
+        "Gibbs-White",
+        "Moore",
+        "Igor Jesus"
       ],
       "actual_scorers": [],
       "points": {
@@ -180,12 +183,10 @@
       "fixture_id": 30,
       "home": "Everton",
       "away": "Man United",
-      "predicted": "1-2",
+      "predicted": "0-1",
       "actual": "2-2",
       "predicted_scorers": [
-        "B.Fernandes",
-        "Barry",
-        "Mbeumo"
+        "B.Fernandes"
       ],
       "actual_scorers": [
         "Mbeumo 46'",
@@ -195,18 +196,19 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
       "fixture_id": 29,
       "home": "Arsenal",
       "away": "Chelsea",
-      "predicted": "1-0",
+      "predicted": "2-0",
       "actual": "2-1",
       "predicted_scorers": [
+        "Saka",
         "Saka"
       ],
       "actual_scorers": [

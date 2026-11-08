@@ -6,9 +6,9 @@
     "points": 14,
     "matches": 10,
     "exact_scores": 0,
-    "correct_results": 4,
-    "scorer_hits": 7,
-    "minute_hits": 3,
+    "correct_results": 6,
+    "scorer_hits": 6,
+    "minute_hits": 2,
     "fallbacks": 0
   },
   "matches": [
@@ -16,13 +16,12 @@
       "fixture_id": 41,
       "home": "Brentford",
       "away": "Chelsea",
-      "predicted": "2-2",
+      "predicted": "2-1",
       "actual": "3-0",
       "predicted_scorers": [
         "João Pedro",
         "Thiago",
-        "Schade",
-        "Rogers"
+        "Schade"
       ],
       "actual_scorers": [
         "Anthony 61'",
@@ -30,23 +29,23 @@
         "Carvalho 90+4'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 1,
         "minutes": 0,
-        "total": 1
+        "total": 2
       }
     },
     {
       "fixture_id": 48,
       "home": "Tottenham",
       "away": "Aston Villa",
-      "predicted": "3-1",
+      "predicted": "2-2",
       "actual": "2-3",
       "predicted_scorers": [
-        "Tonali",
+        "N.Jackson",
         "Marmoush",
         "Solanke",
-        "N.Jackson"
+        "McGinn"
       ],
       "actual_scorers": [
         "Manzambi 45+4'",
@@ -58,8 +57,8 @@
       "points": {
         "outcome": 0,
         "scorers": 1,
-        "minutes": 1,
-        "total": 2
+        "minutes": 0,
+        "total": 1
       }
     },
     {
@@ -180,13 +179,12 @@
       "fixture_id": 44,
       "home": "Leeds",
       "away": "Crystal Palace",
-      "predicted": "3-1",
+      "predicted": "2-1",
       "actual": "0-0",
       "predicted_scorers": [
-        "Bogle",
+        "Strand Larsen",
         "Calvert-Lewin",
-        "Stach",
-        "Strand Larsen"
+        "Stach"
       ],
       "actual_scorers": [],
       "points": {
@@ -229,21 +227,21 @@
       "fixture_id": 50,
       "home": "Fulham",
       "away": "Man United",
-      "predicted": "1-3",
+      "predicted": "2-2",
       "actual": "1-1",
       "predicted_scorers": [
-        "Mbeumo",
-        "Gonzalo",
         "B.Fernandes",
-        "Cunha"
+        "Gonzalo",
+        "King",
+        "Mbeumo"
       ],
       "actual_scorers": [
         "Martinez (og) 63'",
         "Cunha 89'"
       ],
       "points": {
-        "outcome": 0,
-        "scorers": 1,
+        "outcome": 1,
+        "scorers": 0,
         "minutes": 0,
         "total": 1
       }
