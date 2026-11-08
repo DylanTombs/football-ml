@@ -3,12 +3,12 @@
   "predictor": "naive-favourite",
   "complete": true,
   "totals": {
-    "points": 23,
+    "points": 18,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 7,
-    "scorer_hits": 10,
-    "minute_hits": 4,
+    "scorer_hits": 6,
+    "minute_hits": 3,
     "fallbacks": 0
   },
   "matches": [
@@ -19,9 +19,9 @@
       "predicted": "1-2",
       "actual": "0-2",
       "predicted_scorers": [
-        "Palmer",
+        "Rogers",
         "Barry",
-        "Rogers"
+        "João Pedro"
       ],
       "actual_scorers": [
         "Neto 46'",
@@ -41,7 +41,7 @@
       "predicted": "2-1",
       "actual": "1-2",
       "predicted_scorers": [
-        "Isak",
+        "Wirtz",
         "Thiago",
         "Schade"
       ],
@@ -52,9 +52,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
@@ -64,7 +64,7 @@
       "predicted": "2-1",
       "actual": "1-0",
       "predicted_scorers": [
-        "McBurnie",
+        "Belloumi",
         "Gonzalo",
         "King"
       ],
@@ -85,9 +85,9 @@
       "predicted": "2-1",
       "actual": "3-2",
       "predicted_scorers": [
-        "Haaland",
         "Emersonn",
-        "Haaland"
+        "Haaland",
+        "Cherki"
       ],
       "actual_scorers": [
         "Foden 19'",
@@ -98,9 +98,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 0,
-        "total": 3
+        "total": 2
       }
     },
     {
@@ -110,9 +110,9 @@
       "predicted": "2-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "N.Jackson",
+        "McGinn",
         "Wissa",
-        "Barnes"
+        "Willock"
       ],
       "actual_scorers": [
         "Manzambi 36'"
@@ -131,7 +131,7 @@
       "predicted": "2-1",
       "actual": "2-0",
       "predicted_scorers": [
-        "Brobbey",
+        "E.Le Fée",
         "Tavernier",
         "Evanilson"
       ],
@@ -154,8 +154,8 @@
       "actual": "5-0",
       "predicted_scorers": [
         "Strand Larsen",
-        "Hinshelwood",
-        "Kostoulas"
+        "Groß",
+        "De Cuyper"
       ],
       "actual_scorers": [
         "Canvot (og) 4'",
@@ -166,9 +166,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "scorers": 0,
+        "minutes": 0,
+        "total": 1
       }
     },
     {
@@ -200,7 +200,7 @@
       "predicted": "0-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Madueke 80'"
@@ -220,8 +220,8 @@
       "actual": "3-1",
       "predicted_scorers": [
         "Rudoni",
-        "Van Hecke",
-        "Solanke"
+        "Solanke",
+        "Gallagher"
       ],
       "actual_scorers": [
         "Maddison 14'",

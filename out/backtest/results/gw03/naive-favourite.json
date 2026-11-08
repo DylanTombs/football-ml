@@ -3,12 +3,12 @@
   "predictor": "naive-favourite",
   "complete": true,
   "totals": {
-    "points": 15,
+    "points": 12,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 3,
-    "scorer_hits": 9,
-    "minute_hits": 1,
+    "scorer_hits": 5,
+    "minute_hits": 2,
     "fallbacks": 0
   },
   "matches": [
@@ -19,8 +19,8 @@
       "predicted": "1-2",
       "actual": "0-2",
       "predicted_scorers": [
-        "Emersonn",
-        "Isak",
+        "Szoboszlai",
+        "Akpom",
         "Isak"
       ],
       "actual_scorers": [
@@ -29,9 +29,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 0,
-        "total": 3
+        "total": 2
       }
     },
     {
@@ -43,7 +43,7 @@
       "predicted_scorers": [
         "Tavernier",
         "Wissa",
-        "Barnes"
+        "Elanga"
       ],
       "actual_scorers": [
         "Tavernier 9'",
@@ -53,9 +53,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -65,9 +65,9 @@
       "predicted": "2-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "Brobbey",
+        "Isidor",
         "Thiago",
-        "Schade"
+        "Lewis-Potter"
       ],
       "actual_scorers": [
         "Janelt 57'",
@@ -88,8 +88,8 @@
       "actual": "1-1",
       "predicted_scorers": [
         "Calvert-Lewin",
-        "Hinshelwood",
-        "Kostoulas"
+        "De Cuyper",
+        "Yalcouyé"
       ],
       "actual_scorers": [
         "Bogle 15'",
@@ -132,9 +132,9 @@
       "predicted": "2-1",
       "actual": "1-0",
       "predicted_scorers": [
+        "Awoniyi",
         "Haaland",
-        "Rudoni",
-        "Haaland"
+        "Guéhi"
       ],
       "actual_scorers": [
         "Haaland 26'"
@@ -153,7 +153,7 @@
       "predicted": "1-0",
       "actual": "0-0",
       "predicted_scorers": [
-        "Ndoye"
+        "Gibbs-White"
       ],
       "actual_scorers": [],
       "points": {
@@ -170,9 +170,9 @@
       "predicted": "1-2",
       "actual": "0-0",
       "predicted_scorers": [
-        "McGinn",
-        "McBurnie",
-        "N.Jackson"
+        "Cash",
+        "Millar",
+        "Buendía"
       ],
       "actual_scorers": [],
       "points": {
@@ -189,9 +189,9 @@
       "predicted": "1-2",
       "actual": "2-2",
       "predicted_scorers": [
-        "B.Fernandes",
+        "Mbeumo",
         "Barry",
-        "Mbeumo"
+        "B.Fernandes"
       ],
       "actual_scorers": [
         "Mbeumo 46'",
@@ -202,8 +202,8 @@
       "points": {
         "outcome": 0,
         "scorers": 1,
-        "minutes": 0,
-        "total": 1
+        "minutes": 1,
+        "total": 2
       }
     },
     {
@@ -213,8 +213,8 @@
       "predicted": "2-1",
       "actual": "2-1",
       "predicted_scorers": [
-        "Rogers",
-        "Havertz",
+        "João Pedro",
+        "Saka",
         "Ødegaard"
       ],
       "actual_scorers": [
@@ -224,9 +224,9 @@
       ],
       "points": {
         "outcome": 3,
-        "scorers": 3,
+        "scorers": 1,
         "minutes": 1,
-        "total": 7
+        "total": 5
       }
     }
   ]

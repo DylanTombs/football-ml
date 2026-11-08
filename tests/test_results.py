@@ -88,7 +88,7 @@ ESPN_PAYLOAD = {"events": [{
         ],
         "details": [
             {"scoringPlay": True, "team": {"id": "359"}, "clock": {"displayValue": "15'"},
-             "ownGoal": False, "athletesInvolved": [{"displayName": "Kai Havertz"}]},
+             "ownGoal": False, "penaltyKick": True, "athletesInvolved": [{"displayName": "Kai Havertz"}]},
             {"scoringPlay": False, "team": {"id": "388"}, "clock": {"displayValue": "20'"}},
             {"scoringPlay": True, "team": {"id": "388"}, "clock": {"displayValue": "90'+2'"},
              "ownGoal": True, "athletesInvolved": []},
@@ -103,6 +103,16 @@ def test_parse_goal_events_maps_teams_and_flags():
     assert events[0].home == "Arsenal" and events[0].away == "Coventry"
     assert events[0].scorer == "Kai Havertz" and events[0].clock == "15'"
     assert events[1].team == "Coventry" and events[1].own_goal and events[1].scorer is None
+    assert events[0].penalty and not events[1].penalty
+
+
+def test_actual_goals_keep_the_penalty_flag():
+    pen = GoalEvent(pd.Timestamp("2026-08-21T19:00Z"), "Arsenal", "Coventry", "Arsenal", "Kai Havertz", "15'", False, True)
+    raw = [_fixture(goals_h=[(10, 1)], hs=1, as_=0)]
+    (match,) = build_actual_matches(raw, BOOTSTRAP, (pen,), gameweek=1)
+    assert match.goals[0].penalty
+    (plain,) = build_actual_matches(raw, BOOTSTRAP, ESPN_EVENTS[:1], gameweek=1)
+    assert not plain.goals[0].penalty
 
 
 def test_parse_goal_events_empty_payload():

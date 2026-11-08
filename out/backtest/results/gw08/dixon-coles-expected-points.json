@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 12,
+    "points": 9,
     "matches": 10,
     "exact_scores": 0,
-    "correct_results": 2,
-    "scorer_hits": 7,
-    "minute_hits": 3,
+    "correct_results": 3,
+    "scorer_hits": 4,
+    "minute_hits": 2,
     "fallbacks": 0
   },
   "matches": [
@@ -16,22 +16,23 @@
       "fixture_id": 77,
       "home": "Ipswich",
       "away": "Nott'm Forest",
-      "predicted": "1-2",
+      "predicted": "2-2",
       "actual": "1-1",
       "predicted_scorers": [
-        "Delap",
+        "Ndoye",
         "Emersonn",
-        "Ndoye"
+        "Davis",
+        "Delap"
       ],
       "actual_scorers": [
         "N.Williams 13'",
         "Enciso 41'"
       ],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -41,10 +42,10 @@
       "predicted": "1-3",
       "actual": "2-1",
       "predicted_scorers": [
-        "Cherki",
+        "Foden",
         "N.Jackson",
         "Haaland",
-        "Foden"
+        "Haaland"
       ],
       "actual_scorers": [
         "N.Jackson 6'",
@@ -65,9 +66,9 @@
       "predicted": "3-1",
       "actual": "2-0",
       "predicted_scorers": [
-        "Gabriel",
-        "Havertz",
         "Ødegaard",
+        "Saka",
+        "Havertz",
         "Barry"
       ],
       "actual_scorers": [
@@ -76,9 +77,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -111,9 +112,9 @@
       "actual": "0-2",
       "predicted_scorers": [
         "Neto",
+        "João Pedro",
         "Rogers",
-        "Palmer",
-        "Van Hecke"
+        "Solanke"
       ],
       "actual_scorers": [
         "Penders (og) 77'",
@@ -136,7 +137,7 @@
         "Wissa",
         "Strand Larsen",
         "Khalaili",
-        "Barnes"
+        "Willock"
       ],
       "actual_scorers": [
         "Osula 47'",
@@ -144,9 +145,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
-        "minutes": 1,
-        "total": 2
+        "scorers": 0,
+        "minutes": 0,
+        "total": 0
       }
     },
     {
@@ -157,7 +158,7 @@
       "actual": "1-1",
       "predicted_scorers": [
         "Schade",
-        "McBurnie",
+        "Belloumi",
         "Thiago",
         "Lewis-Potter"
       ],
@@ -167,9 +168,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
@@ -179,10 +180,10 @@
       "predicted": "3-1",
       "actual": "2-0",
       "predicted_scorers": [
-        "Hinshelwood",
+        "Munoz",
         "Isak",
         "Szoboszlai",
-        "Isak"
+        "Hinshelwood"
       ],
       "actual_scorers": [
         "Groß (og) 17'",
@@ -202,10 +203,10 @@
       "predicted": "3-1",
       "actual": "0-3",
       "predicted_scorers": [
-        "Cunha",
+        "Tavernier",
         "Mbeumo",
         "B.Fernandes",
-        "Tavernier"
+        "Mbeumo"
       ],
       "actual_scorers": [
         "Rayan 38'",
@@ -227,7 +228,7 @@
       "actual": "0-0",
       "predicted_scorers": [
         "Bogle",
-        "Brobbey",
+        "E.Le Fée",
         "Calvert-Lewin"
       ],
       "actual_scorers": [],

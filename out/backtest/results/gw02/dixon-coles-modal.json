@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 16,
+    "points": 13,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 5,
-    "scorer_hits": 8,
-    "minute_hits": 1,
+    "scorer_hits": 6,
+    "minute_hits": 0,
     "fallbacks": 0
   },
   "matches": [
@@ -19,7 +19,7 @@
       "predicted": "0-1",
       "actual": "1-4",
       "predicted_scorers": [
-        "Haaland"
+        "Guéhi"
       ],
       "actual_scorers": [
         "Haaland 17'",
@@ -30,9 +30,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -42,8 +42,8 @@
       "predicted": "2-1",
       "actual": "2-2",
       "predicted_scorers": [
-        "Isak",
-        "Ndoye",
+        "Szoboszlai",
+        "Muñoz",
         "Isak"
       ],
       "actual_scorers": [
@@ -54,9 +54,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -87,8 +87,8 @@
       "actual": "0-1",
       "predicted_scorers": [
         "Rudoni",
-        "McBurnie",
-        "Awoniyi"
+        "Ajayi",
+        "Rudoni"
       ],
       "actual_scorers": [
         "Millar 82'"
@@ -108,8 +108,8 @@
       "actual": "0-2",
       "predicted_scorers": [
         "Wissa",
-        "Van Hecke",
-        "Barnes"
+        "Moore",
+        "Elanga"
       ],
       "actual_scorers": [
         "Elanga 62'",
@@ -117,9 +117,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 2,
         "minutes": 0,
-        "total": 2
+        "total": 3
       }
     },
     {
@@ -131,7 +131,7 @@
       "predicted_scorers": [
         "Rogers",
         "Hinshelwood",
-        "Palmer"
+        "João Pedro"
       ],
       "actual_scorers": [
         "Lavia 4'",
@@ -156,9 +156,9 @@
       "predicted": "2-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "Calvert-Lewin",
-        "Thiago",
-        "Calvert-Lewin"
+        "Stach",
+        "Lewis-Potter",
+        "Stach"
       ],
       "actual_scorers": [
         "Schade 41'",
@@ -166,9 +166,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
@@ -199,7 +199,7 @@
       "predicted_scorers": [
         "Mbeumo",
         "Emersonn",
-        "B.Fernandes"
+        "Dorgu"
       ],
       "actual_scorers": [
         "Davis 29'",
@@ -212,9 +212,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
       }
     },
     {
@@ -224,16 +224,16 @@
       "predicted": "0-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Saka 59'"
       ],
       "points": {
         "outcome": 3,
-        "scorers": 0,
+        "scorers": 1,
         "minutes": 0,
-        "total": 3
+        "total": 4
       }
     }
   ]

@@ -3,11 +3,11 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 25,
+    "points": 23,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 7,
-    "scorer_hits": 12,
+    "scorer_hits": 10,
     "minute_hits": 4,
     "fallbacks": 0
   },
@@ -19,9 +19,9 @@
       "predicted": "3-1",
       "actual": "2-0",
       "predicted_scorers": [
-        "Neto",
-        "Rogers",
         "Palmer",
+        "Rogers",
+        "Neto",
         "Mbeumo"
       ],
       "actual_scorers": [
@@ -112,9 +112,9 @@
       "actual": "2-2",
       "predicted_scorers": [
         "Emersonn",
-        "McBurnie",
         "Belloumi",
-        "Enciso"
+        "McBurnie",
+        "Davis"
       ],
       "actual_scorers": [
         "Florentino 22'",
@@ -124,9 +124,9 @@
       ],
       "points": {
         "outcome": 3,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 0,
-        "total": 5
+        "total": 4
       }
     },
     {
@@ -136,7 +136,7 @@
       "predicted": "3-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Hinshelwood",
+        "Kostoulas",
         "Haaland",
         "Cherki",
         "Haaland"
@@ -158,10 +158,10 @@
       "predicted": "3-1",
       "actual": "2-0",
       "predicted_scorers": [
-        "Gallagher",
-        "Van Hecke",
+        "Marmoush",
         "Solanke",
-        "Strand Larsen"
+        "Gallagher",
+        "Mateta"
       ],
       "actual_scorers": [
         "Gray 25'",
@@ -169,9 +169,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -181,9 +181,9 @@
       "predicted": "3-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "Manzambi",
-        "N.Jackson",
         "McGinn",
+        "N.Jackson",
+        "Manzambi",
         "Gonzalo"
       ],
       "actual_scorers": [
@@ -204,9 +204,9 @@
       "predicted": "1-2",
       "actual": "0-1",
       "predicted_scorers": [
-        "Ødegaard",
+        "Havertz",
         "Isak",
-        "Havertz"
+        "Ødegaard"
       ],
       "actual_scorers": [
         "Havertz 16'"

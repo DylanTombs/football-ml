@@ -126,7 +126,7 @@ def test_cli_score_without_predictions(monkeypatch, tmp_path, capsys):
     assert "No predictions" in capsys.readouterr().err
 
 
-def _fake_inputs():
+def _fake_inputs(**_):
     return type("Inputs", (), {"bootstrap": {"events": [{"id": 1, "finished": True},
                                                          {"id": 2, "finished": False}]}})()
 
@@ -191,3 +191,19 @@ def test_cli_backtest_prints_comparisons(monkeypatch, capsys):
     assert cli.main(["backtest", "--from", "1", "--to", "1", "--availability", "live"]) == 0
     out = capsys.readouterr().out
     assert "naive-favourite vs dixon-coles-modal" in out and "+5" in out and "[-0.10, +0.20]" in out
+
+
+def test_cli_predict_passes_scorer_model(monkeypatch):
+    seen = {}
+    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors: seen.update(p=predictors) or [])
+    assert cli.main(["predict", "--scorer-model", "chance"]) == 0
+    assert seen["p"][0].scorer_model == "chance"
+
+
+def test_cli_backtest_loads_player_histories(monkeypatch):
+    seen = {}
+    monkeypatch.setattr(cli, "load_season_inputs", lambda **kw: seen.update(kw) or _fake_inputs())
+    monkeypatch.setattr(cli, "run_backtest", lambda f, l, i, **kw: {
+        "gameweeks": [], "season": {}, "availability_proxy": "live", "injury_impact": 0.0, "scorer_leak": False})
+    assert cli.main(["backtest", "--from", "1", "--to", "1", "--availability", "live"]) == 0
+    assert seen == {"with_histories": True}

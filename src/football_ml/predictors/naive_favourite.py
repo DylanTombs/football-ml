@@ -19,4 +19,4 @@ class NaiveFavouritePredictor:
         over = ctx.odds.over_probability
         winner, loser = (2, 1) if over is not None and over > 0.5 else (1, 0)
         home, away = (winner, loser) if ctx.odds.favourite == "home" else (loser, winner)
-        return prediction_for_score(ctx, home, away)
+        return prediction_for_score(ctx, home, away, scorer_model="weights")  # fixed benchmark (plan 04)

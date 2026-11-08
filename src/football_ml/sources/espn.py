@@ -21,6 +21,7 @@ class GoalEvent:
     scorer: str | None
     clock: str  # raw ESPN clock, e.g. "90'+3'"
     own_goal: bool
+    penalty: bool = False
 
 
 def _canonical(name: str) -> str:
@@ -48,6 +49,7 @@ def _events_for(event: dict) -> tuple[GoalEvent, ...]:
                 scorer=athletes[0].get("displayName") if athletes else None,
                 clock=clock,
                 own_goal=bool(detail.get("ownGoal")),
+                penalty=bool(detail.get("penaltyKick")),
             ))
     return tuple(goals)
 

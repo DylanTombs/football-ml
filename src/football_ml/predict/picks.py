@@ -1,6 +1,6 @@
 """Expected-points picks: the scoreline and scorers worth the most points under our rules."""
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 import numpy as np
@@ -69,16 +69,25 @@ def best_scoreline(
     return best
 
 
-def pick_scorers(squad: Sequence[Player], team_rate: float, n: int) -> tuple[ScorerPick, ...]:
-    """n picks, greedily by marginal value. A player's goals are Poisson with
-    mean (share of eligible scoring weight) × team_rate, so their k-th pick is
-    matched with probability P(X ≥ k). The objective is separable and concave,
-    so greedy is optimal; ties go to the higher-rated player."""
+def _weight_rates(squad: Sequence[Player], team_rate: float) -> dict[int, float]:
+    """Plans 01-04: share of eligible scoring weight × team_rate."""
     eligible = [p for p in squad if p.available and p.minutes > 0 and scoring_weight(p) > 0]
     total = sum(scoring_weight(p) for p in eligible)
-    if not eligible or n <= 0 or team_rate <= 0:
+    return {p.id: scoring_weight(p) / total * team_rate for p in eligible} if team_rate > 0 else {}
+
+
+def pick_scorers(
+    squad: Sequence[Player], team_rate: float, n: int, rates: Mapping[int, float] | None = None,
+) -> tuple[ScorerPick, ...]:
+    """n picks, greedily by marginal value. A player's goals are Poisson with
+    mean `rates[id]` (plan 05 model) or, without rates, his share of the
+    squad's scoring weight × team_rate. His k-th pick is matched with
+    probability P(X ≥ k). The objective is separable and concave, so greedy is
+    optimal; ties go to the higher-rated player."""
+    rates = _weight_rates(squad, team_rate) if rates is None else {k: v for k, v in rates.items() if v > 0}
+    eligible = [p for p in squad if p.id in rates]
+    if not eligible or n <= 0:
         return ()
-    rates = {p.id: scoring_weight(p) / total * team_rate for p in eligible}
 
     picks: tuple[ScorerPick, ...] = ()
     for _ in range(n):

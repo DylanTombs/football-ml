@@ -20,7 +20,7 @@
       "actual": "3-0",
       "predicted_scorers": [
         "Thiago",
-        "Rogers",
+        "João Pedro",
         "Schade"
       ],
       "actual_scorers": [
@@ -42,8 +42,8 @@
       "predicted": "2-1",
       "actual": "2-3",
       "predicted_scorers": [
-        "Van Hecke",
-        "N.Jackson",
+        "Van de Ven",
+        "Buendía",
         "Solanke"
       ],
       "actual_scorers": [
@@ -55,9 +55,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -67,7 +67,7 @@
       "predicted": "0-1",
       "actual": "3-0",
       "predicted_scorers": [
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Groß 31'",
@@ -108,7 +108,7 @@
       "actual": "2-1",
       "predicted_scorers": [
         "Wissa",
-        "Barnes"
+        "Willock"
       ],
       "actual_scorers": [
         "Willock 3'",
@@ -117,9 +117,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 0,
+        "scorers": 1,
         "minutes": 0,
-        "total": 1
+        "total": 2
       }
     },
     {
@@ -129,7 +129,7 @@
       "predicted": "1-0",
       "actual": "0-1",
       "predicted_scorers": [
-        "Ndoye"
+        "Gibbs-White"
       ],
       "actual_scorers": [
         "Dasilva 55'"

@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 16,
+    "points": 6,
     "matches": 10,
     "exact_scores": 0,
     "correct_results": 6,
-    "scorer_hits": 8,
-    "minute_hits": 2,
+    "scorer_hits": 0,
+    "minute_hits": 0,
     "fallbacks": 0
   },
   "matches": [
@@ -19,8 +19,8 @@
       "predicted": "2-0",
       "actual": "3-0",
       "predicted_scorers": [
-        "Havertz",
-        "Ødegaard"
+        null,
+        null
       ],
       "actual_scorers": [
         "Havertz 15'",
@@ -29,9 +29,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "scorers": 0,
+        "minutes": 0,
+        "total": 1
       }
     },
     {
@@ -41,8 +41,8 @@
       "predicted": "0-2",
       "actual": "2-0",
       "predicted_scorers": [
-        "Mbeumo",
-        "B.Fernandes"
+        null,
+        null
       ],
       "actual_scorers": [
         "Ajayi 17'",
@@ -62,7 +62,7 @@
       "predicted": "1-0",
       "actual": "2-0",
       "predicted_scorers": [
-        "Barry"
+        null
       ],
       "actual_scorers": [
         "Dewsbury-Hall 42'",
@@ -70,9 +70,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -82,7 +82,7 @@
       "predicted": "1-0",
       "actual": "2-1",
       "predicted_scorers": [
-        "Emersonn"
+        null
       ],
       "actual_scorers": [
         "Emersonn 24'",
@@ -91,9 +91,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -103,7 +103,7 @@
       "predicted": "1-0",
       "actual": "0-1",
       "predicted_scorers": [
-        "Ndoye"
+        null
       ],
       "actual_scorers": [
         "Stach 88'"
@@ -122,9 +122,9 @@
       "predicted": "2-1",
       "actual": "3-0",
       "predicted_scorers": [
-        "Thiago",
-        "Van Hecke",
-        "Schade"
+        null,
+        null,
+        null
       ],
       "actual_scorers": [
         "Lewis-Potter 12'",
@@ -145,9 +145,9 @@
       "predicted": "2-1",
       "actual": "4-0",
       "predicted_scorers": [
-        "Hinshelwood",
-        "N.Jackson",
-        "Kostoulas"
+        null,
+        null,
+        null
       ],
       "actual_scorers": [
         "Lindelöf (og) 8'",
@@ -157,9 +157,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -169,8 +169,8 @@
       "predicted": "2-0",
       "actual": "2-1",
       "predicted_scorers": [
-        "Haaland",
-        "Haaland"
+        null,
+        null
       ],
       "actual_scorers": [
         "Tavernier 26'",
@@ -191,9 +191,9 @@
       "predicted": "1-2",
       "actual": "2-2",
       "predicted_scorers": [
-        "Isak",
-        "Wissa",
-        "Isak"
+        null,
+        null,
+        null
       ],
       "actual_scorers": [
         "Elanga 5'",
@@ -215,9 +215,9 @@
       "predicted": "2-1",
       "actual": "2-3",
       "predicted_scorers": [
-        "Gonzalo",
-        "Rogers",
-        "King"
+        null,
+        null,
+        null
       ],
       "actual_scorers": [
         "João Pedro 1'",
@@ -228,9 +228,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 3,
-        "minutes": 1,
-        "total": 4
+        "scorers": 0,
+        "minutes": 0,
+        "total": 0
       }
     }
   ]

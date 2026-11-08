@@ -47,6 +47,15 @@ def _history():
     ])
 
 
+def _histories():
+    """Saka plays every Arsenal home game (fixture gw*10) with 0.5 xG."""
+    from football_ml.sources.player_history import Appearance
+    return {1: tuple(
+        Appearance(1, gw * 10, gw, START + timedelta(weeks=gw - 1, days=1), "Arsenal", 90, 1, 0.5, 0, 0)
+        for gw in (1, 2, 3)
+    )}
+
+
 def _inputs(events=()):
     return SeasonInputs(
         bootstrap=BOOTSTRAP,
@@ -54,6 +63,7 @@ def _inputs(events=()):
         results=_history(),
         players=(Player(1, "Saka", "Arsenal", 3.0, 3, 500, True),),
         goal_events=tuple(events),
+        histories=_histories(),
     )
 
 
@@ -72,7 +82,7 @@ def test_predict_gameweek_falls_back_to_uniform_goal_times():
 
 
 def test_run_backtest_scores_each_gameweek(tmp_path):
-    summary = run_backtest(1, 3, _inputs(), out_dir=tmp_path, proxy="live")
+    summary = run_backtest(1, 3, replace(_inputs(), histories=None), out_dir=tmp_path, proxy="live")
     modal = [g for g in summary["gameweeks"] if g["predictor"] == "dixon-coles-modal"]
     assert [g["gameweek"] for g in modal] == [1, 2, 3]
     assert (tmp_path / "predictions" / "gw02" / "dixon-coles-modal.json").exists()
@@ -118,7 +128,7 @@ def test_gameweek_context_attaches_pre_closing_odds():
 def test_backtest_compares_strategies_and_benchmark(tmp_path):
     odds = pd.DataFrame([_odds(gw, h, a, 4.0, 1.8) for gw in (1, 2, 3)
                          for h, a in (("Arsenal", "Hull"), ("Leeds", "Tottenham"))])
-    summary = run_backtest(1, 3, replace(_inputs(), odds=odds), out_dir=tmp_path, proxy="live",
+    summary = run_backtest(1, 3, replace(_inputs(), odds=odds, histories=None), out_dir=tmp_path, proxy="live",
                            pick_strategy="expected-points")
     names = ["dixon-coles-modal", "dixon-coles-expected-points", "naive-favourite"]
     assert summary["predictors"] == names
@@ -132,7 +142,7 @@ def test_backtest_compares_strategies_and_benchmark(tmp_path):
 
 def test_run_gameweek_writes_a_snapshot_before_the_deadline(monkeypatch, tmp_path):
     from football_ml import pipeline
-    monkeypatch.setattr(pipeline, "load_season_inputs", _inputs)
+    monkeypatch.setattr(pipeline, "load_season_inputs", lambda **_: _inputs())
     reports = run_gameweek(2, (DixonColesPredictor(),), predictions_dir=tmp_path / "predictions",
                            snapshots_dir=tmp_path / "snapshots", now=START)
     assert (tmp_path / "predictions" / "gw02" / "dixon-coles.json").exists()
@@ -142,8 +152,29 @@ def test_run_gameweek_writes_a_snapshot_before_the_deadline(monkeypatch, tmp_pat
 
 def test_run_gameweek_skips_the_snapshot_after_the_deadline(monkeypatch, tmp_path):
     from football_ml import pipeline
-    monkeypatch.setattr(pipeline, "load_season_inputs", _inputs)
+    monkeypatch.setattr(pipeline, "load_season_inputs", lambda **_: _inputs())
     reports = run_gameweek(2, (DixonColesPredictor(),), predictions_dir=tmp_path / "predictions",
                            snapshots_dir=tmp_path / "snapshots", now=START + timedelta(weeks=2))
     assert not (tmp_path / "snapshots").exists()
     assert reports[0]["snapshot"] is None
+
+
+def test_gameweek_context_builds_scoring_rates_from_histories():
+    gw = gameweek_context(2, replace(_inputs(), histories=_histories()))
+    arsenal = next(ctx for ctx in gw.fixtures if ctx.fixture.home == "Arsenal")
+    assert set(arsenal.home_scoring_rates) == {1}
+    assert gameweek_context(2, replace(_inputs(), histories=None)).fixtures[0].home_scoring_rates is None
+
+
+def test_backtest_with_histories_is_leak_free_and_compares_scorer_models(tmp_path):
+    summary = run_backtest(1, 3, replace(_inputs(), histories=_histories(), penalty_order={1: 1}),
+                           out_dir=tmp_path, proxy="live", pick_strategy="expected-points")
+    assert summary["scorer_leak"] is False
+    assert summary["predictors"] == [
+        "dixon-coles-modal", "dixon-coles-expected-points", "dixon-coles-expected-points-chance", "naive-favourite",
+    ]
+    pairs = [(c["reference"], c["challenger"]) for c in summary["comparisons"]]
+    assert ("dixon-coles-expected-points", "dixon-coles-expected-points-chance") in pairs
+    # GW1: no history before kickoff, so nobody can be picked as a scorer
+    gw1 = json.loads((tmp_path / "predictions" / "gw01" / "dixon-coles-expected-points-chance.json").read_text())
+    assert all(g["scorer"] is None for m in gw1["matches"] for g in m["prediction"]["goals"])

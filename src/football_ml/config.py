@@ -25,6 +25,7 @@ FOOTBALL_DATA_URL = "https://football-data.co.uk/mmz4281/{season}/{league}.csv"
 FPL_BOOTSTRAP_URL = "https://fantasy.premierleague.com/api/bootstrap-static/"
 FPL_FIXTURES_URL = "https://fantasy.premierleague.com/api/fixtures/"
 FPL_EVENT_LIVE_URL = "https://fantasy.premierleague.com/api/event/{gameweek}/live/"
+FPL_PLAYER_URL = "https://fantasy.premierleague.com/api/element-summary/{player_id}/"
 ESPN_SCOREBOARD_URL = (
     "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates={date}"
 )
@@ -32,6 +33,8 @@ HTTP_TIMEOUT_SECONDS = 30
 HTTP_HEADERS = {"User-Agent": "football-ml/0.1 (personal research project)"}
 # Live data (FPL, current season CSV) is refetched after this many hours.
 LIVE_CACHE_MAX_AGE_HOURS = 6
+# Per-player FPL match history (one request per player; only changes after a round).
+PLAYER_HISTORY_MAX_AGE_HOURS = 12
 
 # --- Training data ---------------------------------------------------------
 # football-data.co.uk season codes, oldest first. Last entry = current season.
@@ -79,6 +82,20 @@ DEFAULT_BACKTEST_PROXY = "lagged"
 MIN_CHANCE_OF_PLAYING = 75
 SCORER_XG_WEIGHT = 0.7  # remainder goes to actual goals scored
 SCORER_REPEAT_DECAY = 1.0  # weight / (1 + decay * goals_already_given)
+
+# --- Scorer model (plan 05) -------------------------------------------------
+# weights — share of 0.7 × xG + 0.3 × goals (plans 01-04)
+# chance  — shrunk non-penalty xG per 90 × expected minutes, plus penalties
+SCORER_MODELS = ("weights", "chance")
+DEFAULT_SCORER_MODEL = "chance"  # plan 05: better calibrated (Brier 0.0303 vs 0.0320), +6 scorer hits on the same scorelines
+PENALTY_XG = 0.78  # Opta xG of a penalty, also used as its conversion rate
+PRIOR_PENALTY_ATTEMPTS_PER_MATCH = 0.13  # per team; ESPN 2023-26: 0.105 pen goals / 0.78
+PENALTY_PRIOR_MATCHES = 20  # team penalty rate shrunk towards the prior with this many matches
+SCORER_PRIOR_MINUTES = 900  # npxG per 90 shrunk towards the position average with this many minutes
+POSITION_MIN_MINUTES = 900  # below this a position's pooled rate falls back to the table below
+FALLBACK_NPXG_PER90 = {1: 0.0, 2: 0.05, 3: 0.12, 4: 0.30}  # FPL element_type: GK, DEF, MID, FWD
+EXPECTED_MINUTES_MATCHES = 5  # expected minutes = mean over the team's last N matches
+OWN_GOAL_SHARE = 0.03  # share of a team's goals that are opponents' own goals
 
 # --- Picks (plan 04) -------------------------------------------------------
 # modal: likeliest result, then likeliest score in it; scorers by weight decay;

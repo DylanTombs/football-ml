@@ -3,12 +3,12 @@
   "predictor": "naive-favourite",
   "complete": true,
   "totals": {
-    "points": 13,
+    "points": 10,
     "matches": 10,
     "exact_scores": 0,
     "correct_results": 4,
-    "scorer_hits": 6,
-    "minute_hits": 3,
+    "scorer_hits": 4,
+    "minute_hits": 2,
     "fallbacks": 0
   },
   "matches": [
@@ -41,7 +41,7 @@
       "predicted": "1-2",
       "actual": "2-1",
       "predicted_scorers": [
-        "Cherki",
+        "Foden",
         "N.Jackson",
         "Haaland"
       ],
@@ -65,8 +65,8 @@
       "actual": "2-0",
       "predicted_scorers": [
         "Barry",
-        "Havertz",
-        "Ødegaard"
+        "Saka",
+        "Havertz"
       ],
       "actual_scorers": [
         "Konsa 7'",
@@ -107,9 +107,9 @@
       "predicted": "2-1",
       "actual": "0-2",
       "predicted_scorers": [
-        "Van Hecke",
-        "Rogers",
-        "Palmer"
+        "Solanke",
+        "João Pedro",
+        "Rogers"
       ],
       "actual_scorers": [
         "Penders (og) 77'",
@@ -129,7 +129,7 @@
       "predicted": "1-2",
       "actual": "0-2",
       "predicted_scorers": [
-        "Barnes",
+        "Willock",
         "Strand Larsen",
         "Wissa"
       ],
@@ -139,9 +139,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
-        "minutes": 1,
-        "total": 3
+        "scorers": 0,
+        "minutes": 0,
+        "total": 1
       }
     },
     {
@@ -152,7 +152,7 @@
       "actual": "1-1",
       "predicted_scorers": [
         "Schade",
-        "McBurnie",
+        "Belloumi",
         "Thiago"
       ],
       "actual_scorers": [
@@ -161,9 +161,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {

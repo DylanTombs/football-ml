@@ -1,5 +1,6 @@
 """What every predictor takes in and gives back, and how it's written to JSON."""
 
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from typing import Protocol
 
@@ -66,6 +67,9 @@ class FixtureContext:
     # P(home i, away j) behind `summary`; None only in hand-built contexts
     matrix: np.ndarray | None = field(default=None, compare=False, repr=False)
     odds: MatchOdds | None = None  # pre-closing market odds, when known
+    # plan 05 expected goals per player id; None when no scorer model was built
+    home_scoring_rates: Mapping[int, float] | None = field(default=None, compare=False)
+    away_scoring_rates: Mapping[int, float] | None = field(default=None, compare=False)
 
 
 class Predictor(Protocol):

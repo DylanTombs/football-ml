@@ -3,16 +3,18 @@
   "predictor": "dixon-coles-modal",
   "predictor_config": {
     "type": "dixon-coles",
-    "pick_strategy": "modal"
+    "pick_strategy": "modal",
+    "scorer_model": "weights"
   },
-  "generated_at": "2026-11-03T17:31:19.200955+00:00",
+  "generated_at": "2026-11-08T20:38:49.569394+00:00",
   "model": {
     "name": "dixon-coles",
     "trained_until": "2026-08-28",
     "home_advantage": 0.205,
     "rho": -0.059,
     "goal_time_samples": 30,
-    "injury_impact": 0.0
+    "injury_impact": 0.0,
+    "scorer_profiles": 421
   },
   "matches": [
     {
@@ -30,21 +32,21 @@
             "minute": "33'",
             "sort_key": 33.0,
             "team": "Man City",
-            "scorer": "Haaland",
-            "scorer_id": 411
+            "scorer": "Guéhi",
+            "scorer_id": 388
           }
         ],
         "fallback": false
       },
-      "prediction_probability": 0.113,
+      "prediction_probability": 0.1131,
       "baseline_score": {
         "home": 0,
         "away": 1
       },
       "probabilities": {
-        "home_win": 0.1844,
+        "home_win": 0.1843,
         "draw": 0.2437,
-        "away_win": 0.5719
+        "away_win": 0.572
       },
       "expected_goals": {
         "home": 0.92,
@@ -57,11 +59,11 @@
         },
         {
           "score": "0-1",
-          "probability": 0.113
+          "probability": 0.1131
         },
         {
           "score": "0-2",
-          "probability": 0.1067
+          "probability": 0.1068
         }
       ],
       "missing": {
@@ -84,15 +86,15 @@
             "minute": "5'",
             "sort_key": 5.0,
             "team": "Liverpool",
-            "scorer": "Isak",
-            "scorer_id": 379
+            "scorer": "Szoboszlai",
+            "scorer_id": 368
           },
           {
             "minute": "42'",
             "sort_key": 42.0,
             "team": "Nott'm Forest",
-            "scorer": "Ndoye",
-            "scorer_id": 483
+            "scorer": "Muñoz",
+            "scorer_id": 201
           },
           {
             "minute": "88'",
@@ -111,8 +113,8 @@
       },
       "probabilities": {
         "home_win": 0.5893,
-        "draw": 0.223,
-        "away_win": 0.1876
+        "draw": 0.2231,
+        "away_win": 0.1877
       },
       "expected_goals": {
         "home": 2.02,
@@ -158,7 +160,7 @@
         ],
         "fallback": false
       },
-      "prediction_probability": 0.114,
+      "prediction_probability": 0.1139,
       "baseline_score": {
         "home": 1,
         "away": 0
@@ -179,7 +181,7 @@
         },
         {
           "score": "1-0",
-          "probability": 0.114
+          "probability": 0.1139
         },
         {
           "score": "0-0",
@@ -213,15 +215,15 @@
             "minute": "41'",
             "sort_key": 41.0,
             "team": "Hull",
-            "scorer": "McBurnie",
-            "scorer_id": 295
+            "scorer": "Ajayi",
+            "scorer_id": 279
           },
           {
             "minute": "88'",
             "sort_key": 88.0,
             "team": "Coventry",
-            "scorer": "Awoniyi",
-            "scorer_id": 492
+            "scorer": "Rudoni",
+            "scorer_id": 183
           }
         ],
         "fallback": false
@@ -232,9 +234,9 @@
         "away": 1
       },
       "probabilities": {
-        "home_win": 0.5697,
+        "home_win": 0.5696,
         "draw": 0.234,
-        "away_win": 0.1963
+        "away_win": 0.1964
       },
       "expected_goals": {
         "home": 1.9,
@@ -243,7 +245,7 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1106
+          "probability": 0.1107
         },
         {
           "score": "2-1",
@@ -251,7 +253,7 @@
         },
         {
           "score": "2-0",
-          "probability": 0.096
+          "probability": 0.0959
         }
       ],
       "missing": {
@@ -281,15 +283,15 @@
             "minute": "26'",
             "sort_key": 26.0,
             "team": "Tottenham",
-            "scorer": "Van Hecke",
-            "scorer_id": 112
+            "scorer": "Moore",
+            "scorer_id": 523
           },
           {
             "minute": "90'",
             "sort_key": 90.0,
             "team": "Newcastle",
-            "scorer": "Barnes",
-            "scorer_id": 453
+            "scorer": "Elanga",
+            "scorer_id": 454
           }
         ],
         "fallback": false
@@ -300,7 +302,7 @@
         "away": 2
       },
       "probabilities": {
-        "home_win": 0.3592,
+        "home_win": 0.3593,
         "draw": 0.2443,
         "away_win": 0.3964
       },
@@ -356,8 +358,8 @@
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Chelsea",
-            "scorer": "Palmer",
-            "scorer_id": 154
+            "scorer": "João Pedro",
+            "scorer_id": 165
           }
         ],
         "fallback": false
@@ -370,7 +372,7 @@
       "probabilities": {
         "home_win": 0.4504,
         "draw": 0.2539,
-        "away_win": 0.2956
+        "away_win": 0.2957
       },
       "expected_goals": {
         "home": 1.66,
@@ -410,22 +412,22 @@
             "minute": "17'",
             "sort_key": 17.0,
             "team": "Leeds",
-            "scorer": "Calvert-Lewin",
-            "scorer_id": 346
+            "scorer": "Stach",
+            "scorer_id": 335
           },
           {
             "minute": "49'",
             "sort_key": 49.0,
             "team": "Brentford",
-            "scorer": "Thiago",
-            "scorer_id": 106
+            "scorer": "Lewis-Potter",
+            "scorer_id": 86
           },
           {
             "minute": "90+9'",
             "sort_key": 90.09,
             "team": "Leeds",
-            "scorer": "Calvert-Lewin",
-            "scorer_id": 346
+            "scorer": "Stach",
+            "scorer_id": 335
           }
         ],
         "fallback": false
@@ -546,8 +548,8 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Man United",
-            "scorer": "B.Fernandes",
-            "scorer_id": 426
+            "scorer": "Dorgu",
+            "scorer_id": 415
           }
         ],
         "fallback": false
@@ -600,8 +602,8 @@
             "minute": "90'",
             "sort_key": 90.0,
             "team": "Arsenal",
-            "scorer": "Havertz",
-            "scorer_id": 26
+            "scorer": "Saka",
+            "scorer_id": 12
           }
         ],
         "fallback": false
@@ -614,7 +616,7 @@
       "probabilities": {
         "home_win": 0.2129,
         "draw": 0.2579,
-        "away_win": 0.5292
+        "away_win": 0.5291
       },
       "expected_goals": {
         "home": 0.97,

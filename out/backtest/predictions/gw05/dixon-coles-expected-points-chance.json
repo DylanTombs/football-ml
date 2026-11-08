@@ -1,0 +1,956 @@
+{
+  "gameweek": 5,
+  "predictor": "dixon-coles-expected-points-chance",
+  "predictor_config": {
+    "type": "dixon-coles",
+    "pick_strategy": "expected-points",
+    "scorer_model": "chance"
+  },
+  "generated_at": "2026-11-08T20:38:56.002337+00:00",
+  "model": {
+    "name": "dixon-coles",
+    "trained_until": "2026-09-18",
+    "home_advantage": 0.202,
+    "rho": -0.067,
+    "goal_time_samples": 114,
+    "injury_impact": 0.0,
+    "scorer_profiles": 457
+  },
+  "matches": [
+    {
+      "fixture_id": 41,
+      "kickoff": "2026-09-18T19:00:00+00:00",
+      "home": "Brentford",
+      "away": "Chelsea",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Chelsea",
+            "scorer": "João Pedro",
+            "scorer_id": 165
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Brentford",
+            "scorer": "Thiago",
+            "scorer_id": 106
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Brentford",
+            "scorer": "Schade",
+            "scorer_id": 94
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.0893,
+      "baseline_score": {
+        "home": 2,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.4216,
+        "draw": 0.2507,
+        "away_win": 0.3277
+      },
+      "expected_goals": {
+        "home": 1.67,
+        "away": 1.45
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1143
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0893
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0776
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Collins",
+            "xg_share": 0.07
+          },
+          {
+            "name": "Jensen",
+            "xg_share": 0.011
+          },
+          {
+            "name": "Wilson",
+            "xg_share": 0.01
+          }
+        ],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 48,
+      "kickoff": "2026-09-19T11:30:00+00:00",
+      "home": "Tottenham",
+      "away": "Aston Villa",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 2
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Aston Villa",
+            "scorer": "N.Jackson",
+            "scorer_id": 166
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Tottenham",
+            "scorer": "Marmoush",
+            "scorer_id": 401
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Tottenham",
+            "scorer": "Solanke",
+            "scorer_id": 526
+          },
+          {
+            "minute": "58'",
+            "sort_key": 58.0,
+            "team": "Aston Villa",
+            "scorer": "McGinn",
+            "scorer_id": 45
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.0601,
+      "baseline_score": {
+        "home": 2,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.3715,
+        "draw": 0.2649,
+        "away_win": 0.3637
+      },
+      "expected_goals": {
+        "home": 1.44,
+        "away": 1.43
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1246
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0843
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0833
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Moore",
+            "xg_share": 0.116
+          },
+          {
+            "name": "Pedro Porro",
+            "xg_share": 0.104
+          },
+          {
+            "name": "Gallagher",
+            "xg_share": 0.006
+          }
+        ],
+        "away": [
+          {
+            "name": "Cash",
+            "xg_share": 0.044
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": 42,
+      "kickoff": "2026-09-19T14:00:00+00:00",
+      "home": "Brighton",
+      "away": "Arsenal",
+      "prediction": {
+        "score": {
+          "home": 1,
+          "away": 3
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Arsenal",
+            "scorer": "Saka",
+            "scorer_id": 12
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Brighton",
+            "scorer": "Groß",
+            "scorer_id": 124
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Arsenal",
+            "scorer": "Havertz",
+            "scorer_id": 26
+          },
+          {
+            "minute": "58'",
+            "sort_key": 58.0,
+            "team": "Arsenal",
+            "scorer": "Ødegaard",
+            "scorer_id": 15
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.0509,
+      "baseline_score": {
+        "home": 0,
+        "away": 1
+      },
+      "probabilities": {
+        "home_win": 0.2234,
+        "draw": 0.2655,
+        "away_win": 0.5111
+      },
+      "expected_goals": {
+        "home": 0.98,
+        "away": 1.6
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1265
+        },
+        {
+          "score": "0-1",
+          "probability": 0.1129
+        },
+        {
+          "score": "0-2",
+          "probability": 0.0969
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Hinshelwood",
+            "xg_share": 0.138
+          },
+          {
+            "name": "David",
+            "xg_share": 0.041
+          },
+          {
+            "name": "Wieffer",
+            "xg_share": 0.012
+          },
+          {
+            "name": "Georginio",
+            "xg_share": 0.008
+          }
+        ],
+        "away": []
+      }
+    },
+    {
+      "fixture_id": 43,
+      "kickoff": "2026-09-19T14:00:00+00:00",
+      "home": "Everton",
+      "away": "Ipswich",
+      "prediction": {
+        "score": {
+          "home": 3,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Everton",
+            "scorer": "George",
+            "scorer_id": 242
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Everton",
+            "scorer": "Barry",
+            "scorer_id": 249
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Everton",
+            "scorer": "Dewsbury-Hall",
+            "scorer_id": 236
+          },
+          {
+            "minute": "58'",
+            "sort_key": 58.0,
+            "team": "Ipswich",
+            "scorer": "Emersonn",
+            "scorer_id": 316
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.057,
+      "baseline_score": {
+        "home": 1,
+        "away": 0
+      },
+      "probabilities": {
+        "home_win": 0.5564,
+        "draw": 0.2496,
+        "away_win": 0.194
+      },
+      "expected_goals": {
+        "home": 1.75,
+        "away": 0.94
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1191
+        },
+        {
+          "score": "1-0",
+          "probability": 0.1109
+        },
+        {
+          "score": "2-0",
+          "probability": 0.1036
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Beto",
+            "xg_share": 0.018
+          },
+          {
+            "name": "Alcaraz",
+            "xg_share": 0.01
+          }
+        ],
+        "away": [
+          {
+            "name": "Akpom",
+            "xg_share": 0.154
+          },
+          {
+            "name": "McAteer",
+            "xg_share": 0.008
+          },
+          {
+            "name": "Núñez",
+            "xg_share": 0.005
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": 46,
+      "kickoff": "2026-09-19T14:00:00+00:00",
+      "home": "Newcastle",
+      "away": "Hull",
+      "prediction": {
+        "score": {
+          "home": 3,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Newcastle",
+            "scorer": "Barnes",
+            "scorer_id": 453
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Newcastle",
+            "scorer": "Wissa",
+            "scorer_id": 464
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Newcastle",
+            "scorer": "Fernandez-Pardo",
+            "scorer_id": 634
+          },
+          {
+            "minute": "58'",
+            "sort_key": 58.0,
+            "team": "Hull",
+            "scorer": "McBurnie",
+            "scorer_id": 295
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.0769,
+      "baseline_score": {
+        "home": 2,
+        "away": 0
+      },
+      "probabilities": {
+        "home_win": 0.7306,
+        "draw": 0.1703,
+        "away_win": 0.0991
+      },
+      "expected_goals": {
+        "home": 2.48,
+        "away": 0.82
+      },
+      "top_scorelines": [
+        {
+          "score": "2-0",
+          "probability": 0.1131
+        },
+        {
+          "score": "3-0",
+          "probability": 0.0934
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0931
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Elanga",
+            "xg_share": 0.109
+          },
+          {
+            "name": "J.Ramsey",
+            "xg_share": 0.044
+          },
+          {
+            "name": "Osula",
+            "xg_share": 0.016
+          },
+          {
+            "name": "Woltemade",
+            "xg_share": 0.005
+          }
+        ],
+        "away": [
+          {
+            "name": "Millar",
+            "xg_share": 0.154
+          },
+          {
+            "name": "Drameh",
+            "xg_share": 0.013
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": 47,
+      "kickoff": "2026-09-19T16:30:00+00:00",
+      "home": "Nott'm Forest",
+      "away": "Coventry",
+      "prediction": {
+        "score": {
+          "home": 3,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Nott'm Forest",
+            "scorer": "Delap",
+            "scorer_id": 167
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Nott'm Forest",
+            "scorer": "Igor Jesus",
+            "scorer_id": 491
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Nott'm Forest",
+            "scorer": "Gibbs-White",
+            "scorer_id": 480
+          },
+          {
+            "minute": "58'",
+            "sort_key": 58.0,
+            "team": "Coventry",
+            "scorer": "Awoniyi",
+            "scorer_id": 492
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.0615,
+      "baseline_score": {
+        "home": 1,
+        "away": 0
+      },
+      "probabilities": {
+        "home_win": 0.5797,
+        "draw": 0.2379,
+        "away_win": 0.1824
+      },
+      "expected_goals": {
+        "home": 1.86,
+        "away": 0.95
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1133
+        },
+        {
+          "score": "1-0",
+          "probability": 0.1043
+        },
+        {
+          "score": "2-0",
+          "probability": 0.1037
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Milenković",
+            "xg_share": 0.017
+          },
+          {
+            "name": "Jair Cunha",
+            "xg_share": 0.005
+          }
+        ],
+        "away": [
+          {
+            "name": "Simms",
+            "xg_share": 0.071
+          },
+          {
+            "name": "Tchaouna",
+            "xg_share": 0.045
+          },
+          {
+            "name": "Sakamoto",
+            "xg_share": 0.005
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": 49,
+      "kickoff": "2026-09-20T13:00:00+00:00",
+      "home": "Bournemouth",
+      "away": "Liverpool",
+      "prediction": {
+        "score": {
+          "home": 1,
+          "away": 2
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Liverpool",
+            "scorer": "Szoboszlai",
+            "scorer_id": 368
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Bournemouth",
+            "scorer": "Evanilson",
+            "scorer_id": 79
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Liverpool",
+            "scorer": "Isak",
+            "scorer_id": 379
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.0899,
+      "baseline_score": {
+        "home": 1,
+        "away": 2
+      },
+      "probabilities": {
+        "home_win": 0.3219,
+        "draw": 0.2516,
+        "away_win": 0.4265
+      },
+      "expected_goals": {
+        "home": 1.42,
+        "away": 1.66
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1152
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0899
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0769
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Jebbison",
+            "xg_share": 0.017
+          }
+        ],
+        "away": [
+          {
+            "name": "Koumas",
+            "xg_share": 0.004
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": 44,
+      "kickoff": "2026-09-20T13:00:00+00:00",
+      "home": "Leeds",
+      "away": "Crystal Palace",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Crystal Palace",
+            "scorer": "Strand Larsen",
+            "scorer_id": 222
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Leeds",
+            "scorer": "Calvert-Lewin",
+            "scorer_id": 346
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Leeds",
+            "scorer": "Stach",
+            "scorer_id": 335
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.0929,
+      "baseline_score": {
+        "home": 1,
+        "away": 0
+      },
+      "probabilities": {
+        "home_win": 0.4671,
+        "draw": 0.2715,
+        "away_win": 0.2613
+      },
+      "expected_goals": {
+        "home": 1.53,
+        "away": 1.09
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1295
+        },
+        {
+          "score": "1-0",
+          "probability": 0.1038
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0929
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Bijol",
+            "xg_share": 0.017
+          },
+          {
+            "name": "Rodon",
+            "xg_share": 0.005
+          }
+        ],
+        "away": [
+          {
+            "name": "Nketiah",
+            "xg_share": 0.22
+          },
+          {
+            "name": "Mateta",
+            "xg_share": 0.14
+          },
+          {
+            "name": "Canvot",
+            "xg_share": 0.01
+          },
+          {
+            "name": "McNeil",
+            "xg_share": 0.01
+          },
+          {
+            "name": "Guessand",
+            "xg_share": 0.006
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": 45,
+      "kickoff": "2026-09-20T13:00:00+00:00",
+      "home": "Man City",
+      "away": "Sunderland",
+      "prediction": {
+        "score": {
+          "home": 3,
+          "away": 1
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Sunderland",
+            "scorer": "E.Le Fée",
+            "scorer_id": 542
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Man City",
+            "scorer": "Haaland",
+            "scorer_id": 411
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Man City",
+            "scorer": "Foden",
+            "scorer_id": 398
+          },
+          {
+            "minute": "86'",
+            "sort_key": 86.0,
+            "team": "Man City",
+            "scorer": "Haaland",
+            "scorer_id": 411
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.063,
+      "baseline_score": {
+        "home": 2,
+        "away": 0
+      },
+      "probabilities": {
+        "home_win": 0.7534,
+        "draw": 0.1752,
+        "away_win": 0.0714
+      },
+      "expected_goals": {
+        "home": 2.23,
+        "away": 0.55
+      },
+      "top_scorelines": [
+        {
+          "score": "2-0",
+          "probability": 0.1542
+        },
+        {
+          "score": "1-0",
+          "probability": 0.1334
+        },
+        {
+          "score": "3-0",
+          "probability": 0.1146
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Lewis",
+            "xg_share": 0.021
+          },
+          {
+            "name": "McAidoo",
+            "xg_share": 0.013
+          }
+        ],
+        "away": [
+          {
+            "name": "Mundle",
+            "xg_share": 0.027
+          },
+          {
+            "name": "Hume",
+            "xg_share": 0.006
+          },
+          {
+            "name": "Diarra",
+            "xg_share": 0.005
+          },
+          {
+            "name": "O'Nien",
+            "xg_share": 0.002
+          }
+        ]
+      }
+    },
+    {
+      "fixture_id": 50,
+      "kickoff": "2026-09-20T15:30:00+00:00",
+      "home": "Fulham",
+      "away": "Man United",
+      "prediction": {
+        "score": {
+          "home": 2,
+          "away": 2
+        },
+        "goals": [
+          {
+            "minute": "55'",
+            "sort_key": 55.0,
+            "team": "Man United",
+            "scorer": "B.Fernandes",
+            "scorer_id": 426
+          },
+          {
+            "minute": "56'",
+            "sort_key": 56.0,
+            "team": "Fulham",
+            "scorer": "Gonzalo",
+            "scorer_id": 569
+          },
+          {
+            "minute": "57'",
+            "sort_key": 57.0,
+            "team": "Fulham",
+            "scorer": "King",
+            "scorer_id": 268
+          },
+          {
+            "minute": "58'",
+            "sort_key": 58.0,
+            "team": "Man United",
+            "scorer": "Mbeumo",
+            "scorer_id": 427
+          }
+        ],
+        "fallback": false
+      },
+      "prediction_probability": 0.058,
+      "baseline_score": {
+        "home": 1,
+        "away": 2
+      },
+      "probabilities": {
+        "home_win": 0.3632,
+        "draw": 0.2695,
+        "away_win": 0.3673
+      },
+      "expected_goals": {
+        "home": 1.39,
+        "away": 1.4
+      },
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1276
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0836
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0831
+        }
+      ],
+      "missing": {
+        "home": [
+          {
+            "name": "Palacios",
+            "xg_share": 0.159
+          },
+          {
+            "name": "Sessegnon",
+            "xg_share": 0.021
+          }
+        ],
+        "away": [
+          {
+            "name": "Mazraoui",
+            "xg_share": 0.025
+          },
+          {
+            "name": "Heaven",
+            "xg_share": 0.014
+          },
+          {
+            "name": "Shaw",
+            "xg_share": 0.002
+          }
+        ]
+      }
+    }
+  ]
+}

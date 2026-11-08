@@ -3,11 +3,11 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 19,
+    "points": 17,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 5,
-    "scorer_hits": 10,
+    "scorer_hits": 8,
     "minute_hits": 2,
     "fallbacks": 0
   },
@@ -19,9 +19,9 @@
       "predicted": "3-1",
       "actual": "2-1",
       "predicted_scorers": [
-        "Gabriel",
-        "Havertz",
         "Ødegaard",
+        "Saka",
+        "Havertz",
         "Calvert-Lewin"
       ],
       "actual_scorers": [
@@ -44,8 +44,8 @@
       "actual": "2-2",
       "predicted_scorers": [
         "Thiago",
+        "Buendía",
         "N.Jackson",
-        "McGinn",
         "Schade"
       ],
       "actual_scorers": [
@@ -56,9 +56,9 @@
       ],
       "points": {
         "outcome": 3,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 0,
-        "total": 5
+        "total": 4
       }
     },
     {
@@ -92,12 +92,13 @@
       "fixture_id": 57,
       "home": "Ipswich",
       "away": "Fulham",
-      "predicted": "1-2",
+      "predicted": "2-2",
       "actual": "2-1",
       "predicted_scorers": [
-        "King",
+        "Gonzalo",
         "Emersonn",
-        "Gonzalo"
+        "Davis",
+        "King"
       ],
       "actual_scorers": [
         "Sessegnon 55'",
@@ -118,9 +119,9 @@
       "predicted": "1-2",
       "actual": "0-2",
       "predicted_scorers": [
-        "Kostoulas",
+        "Yalcouyé",
         "Brobbey",
-        "Hinshelwood"
+        "Groß"
       ],
       "actual_scorers": [
         "De Cuyper 53'",
@@ -160,12 +161,12 @@
       "fixture_id": 55,
       "home": "Crystal Palace",
       "away": "Nott'm Forest",
-      "predicted": "1-2",
+      "predicted": "2-1",
       "actual": "3-1",
       "predicted_scorers": [
-        "Delap",
-        "Strand Larsen",
-        "Ndoye"
+        "Gibbs-White",
+        "Mitchell",
+        "Khalaili"
       ],
       "actual_scorers": [
         "Ndoye 3'",
@@ -174,8 +175,8 @@
         "Yeremy 59'"
       ],
       "points": {
-        "outcome": 0,
-        "scorers": 1,
+        "outcome": 1,
+        "scorers": 0,
         "minutes": 0,
         "total": 1
       }
@@ -188,7 +189,7 @@
       "actual": "2-2",
       "predicted_scorers": [
         "Dewsbury-Hall",
-        "McBurnie",
+        "Belloumi",
         "Barry"
       ],
       "actual_scorers": [
@@ -199,21 +200,22 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 2,
+        "scorers": 3,
         "minutes": 1,
-        "total": 3
+        "total": 4
       }
     },
     {
       "fixture_id": 58,
       "home": "Liverpool",
       "away": "Man City",
-      "predicted": "1-2",
+      "predicted": "2-2",
       "actual": "0-3",
       "predicted_scorers": [
-        "Cherki",
+        "Haaland",
         "Isak",
-        "Haaland"
+        "Szoboszlai",
+        "Cherki"
       ],
       "actual_scorers": [
         "Haaland 65'",
@@ -221,10 +223,10 @@
         "Cherki 78'"
       ],
       "points": {
-        "outcome": 1,
+        "outcome": 0,
         "scorers": 2,
         "minutes": 1,
-        "total": 4
+        "total": 3
       }
     },
     {
@@ -234,10 +236,10 @@
       "predicted": "1-3",
       "actual": "4-1",
       "predicted_scorers": [
-        "Barnes",
-        "Rudoni",
+        "Willock",
+        "Dasilva",
         "Wissa",
-        "Willock"
+        "Barnes"
       ],
       "actual_scorers": [
         "Rudoni 6'",
@@ -248,9 +250,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     }
   ]

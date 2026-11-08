@@ -3,12 +3,12 @@
   "predictor": "naive-favourite",
   "complete": true,
   "totals": {
-    "points": 17,
+    "points": 14,
     "matches": 10,
     "exact_scores": 0,
     "correct_results": 5,
-    "scorer_hits": 9,
-    "minute_hits": 3,
+    "scorer_hits": 7,
+    "minute_hits": 2,
     "fallbacks": 0
   },
   "matches": [
@@ -21,7 +21,7 @@
       "predicted_scorers": [
         "Mbeumo",
         "Rogers",
-        "Palmer"
+        "Neto"
       ],
       "actual_scorers": [
         "Rogers 50'",
@@ -29,9 +29,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 2,
-        "total": 5
+        "scorers": 1,
+        "minutes": 1,
+        "total": 3
       }
     },
     {
@@ -108,8 +108,8 @@
       "actual": "2-2",
       "predicted_scorers": [
         "Emersonn",
-        "McBurnie",
-        "Belloumi"
+        "Belloumi",
+        "McBurnie"
       ],
       "actual_scorers": [
         "Florentino 22'",
@@ -131,7 +131,7 @@
       "predicted": "2-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Hinshelwood",
+        "Kostoulas",
         "Haaland",
         "Cherki"
       ],
@@ -152,9 +152,9 @@
       "predicted": "2-1",
       "actual": "2-0",
       "predicted_scorers": [
-        "Strand Larsen",
-        "Van Hecke",
-        "Solanke"
+        "Mateta",
+        "Solanke",
+        "Gallagher"
       ],
       "actual_scorers": [
         "Gray 25'",
@@ -162,9 +162,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -176,7 +176,7 @@
       "predicted_scorers": [
         "Gonzalo",
         "N.Jackson",
-        "McGinn"
+        "Manzambi"
       ],
       "actual_scorers": [
         "N.Jackson 39'",
@@ -196,9 +196,9 @@
       "predicted": "1-2",
       "actual": "0-1",
       "predicted_scorers": [
-        "Ødegaard",
+        "Havertz",
         "Isak",
-        "Havertz"
+        "Ødegaard"
       ],
       "actual_scorers": [
         "Havertz 16'"

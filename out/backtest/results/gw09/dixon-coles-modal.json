@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 19,
+    "points": 12,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 6,
-    "scorer_hits": 9,
-    "minute_hits": 2,
+    "scorer_hits": 4,
+    "minute_hits": 0,
     "fallbacks": 0
   },
   "matches": [
@@ -21,7 +21,7 @@
       "predicted_scorers": [
         "Rogers",
         "Mbeumo",
-        "Palmer"
+        "Neto"
       ],
       "actual_scorers": [
         "Rogers 50'",
@@ -29,9 +29,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
       }
     },
     {
@@ -104,8 +104,8 @@
       "actual": "2-2",
       "predicted_scorers": [
         "Emersonn",
-        "McBurnie",
-        "Enciso"
+        "Belloumi",
+        "Davis"
       ],
       "actual_scorers": [
         "Florentino 22'",
@@ -115,9 +115,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 2,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 0
       }
     },
     {
@@ -128,7 +128,7 @@
       "actual": "0-1",
       "predicted_scorers": [
         "Haaland",
-        "Hinshelwood",
+        "Kostoulas",
         "Haaland"
       ],
       "actual_scorers": [
@@ -148,9 +148,9 @@
       "predicted": "2-1",
       "actual": "2-0",
       "predicted_scorers": [
-        "Van Hecke",
-        "Strand Larsen",
-        "Solanke"
+        "Solanke",
+        "Mateta",
+        "Gallagher"
       ],
       "actual_scorers": [
         "Gray 25'",
@@ -158,9 +158,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -190,16 +190,16 @@
       "predicted": "0-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Havertz"
+        "Ødegaard"
       ],
       "actual_scorers": [
         "Havertz 16'"
       ],
       "points": {
         "outcome": 3,
-        "scorers": 1,
-        "minutes": 1,
-        "total": 5
+        "scorers": 0,
+        "minutes": 0,
+        "total": 3
       }
     },
     {

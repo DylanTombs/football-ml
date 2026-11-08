@@ -6,9 +6,12 @@ minutes played. See AVAILABILITY_PROXIES in config for the options."""
 from collections.abc import Mapping
 from dataclasses import replace
 
-from football_ml.config import AVAILABILITY_PROXIES
+import pandas as pd
+
+from football_ml.config import AVAILABILITY_PROXIES, MIN_CHANCE_OF_PLAYING
 from football_ml.predict.scorers import Player
 from football_ml.sources.fpl import team_names
+from football_ml.sources.player_history import Appearance
 
 Minutes = Mapping[int, Mapping[int, int]]  # gameweek -> player id -> minutes
 
@@ -58,5 +61,27 @@ def players_as_of(
         reference = _reference_gameweek(team_gws, gameweek, proxy)
         missing = reference is not None and _was_missing(player, minutes, team_gws, reference)
         return replace(player, availability=0.0 if missing else 1.0, departed=False)
+
+    return tuple(as_of(p) for p in players)
+
+
+def players_before(
+    players: tuple[Player, ...],
+    histories: Mapping[int, tuple[Appearance, ...]],
+    before: pd.Timestamp,
+) -> tuple[Player, ...]:
+    """Copies of `players` with season xG, goals and minutes summed from
+    matches that kicked off before `before`, so scorer picks can't see the
+    future. Eligibility follows `availability` (already as-of) instead of
+    today's FPL flag."""
+    def as_of(player: Player) -> Player:
+        apps = [a for a in histories.get(player.id, ()) if a.kickoff < before]
+        return replace(
+            player,
+            xg=sum(a.xg for a in apps),
+            goals=sum(a.goals for a in apps),
+            minutes=sum(a.minutes for a in apps),
+            available=player.availability * 100 >= MIN_CHANCE_OF_PLAYING,
+        )
 
     return tuple(as_of(p) for p in players)

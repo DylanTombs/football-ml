@@ -7,6 +7,7 @@ from football_ml.model.dixon_coles import DixonColesParams, matrix_from_rates
 from football_ml.predict.availability import adjust_rate, team_availability
 from football_ml.predict.scoreline import summarise
 from football_ml.predict.scorers import Player, assign_scorers
+from football_ml.predict.scoring_chance import ScorerModel, goal_rates
 from football_ml.predict.timing import GoalTime, goal_times, order_goals
 from football_ml.predictors.base import FixtureContext, FormResult, MatchPrediction, PredictedGoal
 from football_ml.sources.football_data import MatchOdds
@@ -60,6 +61,7 @@ def fixture_context(
     injury_impact: float,
     results: pd.DataFrame | None = None,
     odds: MatchOdds | None = None,
+    scorer_model: ScorerModel | None = None,
 ) -> FixtureContext:
     home_squad = tuple(p for p in players if p.team == fixture.home)
     away_squad = tuple(p for p in players if p.team == fixture.away)
@@ -75,6 +77,7 @@ def fixture_context(
     summary = summarise(matrix, TOP_SCORELINES)
     before = fixture.kickoff.tz_convert(None).normalize()
     form = (lambda team: recent_form(results, team, before)) if results is not None else (lambda _: ())
+    rates = (lambda squad, team, rate: goal_rates(scorer_model, squad, team, rate)) if scorer_model else (lambda *_: None)
 
     return FixtureContext(
         gameweek=gameweek,
@@ -89,4 +92,6 @@ def fixture_context(
         away_form=form(fixture.away),
         matrix=matrix,
         odds=odds,
+        home_scoring_rates=rates(home_squad, fixture.home, summary.expected_home_goals),
+        away_scoring_rates=rates(away_squad, fixture.away, summary.expected_away_goals),
     )

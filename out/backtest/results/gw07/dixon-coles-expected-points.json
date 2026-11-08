@@ -3,11 +3,11 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 24,
+    "points": 21,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 7,
-    "scorer_hits": 11,
+    "scorer_hits": 8,
     "minute_hits": 4,
     "fallbacks": 0
   },
@@ -19,10 +19,10 @@
       "predicted": "2-2",
       "actual": "0-2",
       "predicted_scorers": [
-        "Rogers",
+        "João Pedro",
         "Barry",
         "Dewsbury-Hall",
-        "Palmer"
+        "Rogers"
       ],
       "actual_scorers": [
         "Neto 46'",
@@ -42,10 +42,10 @@
       "predicted": "2-2",
       "actual": "1-2",
       "predicted_scorers": [
-        "Isak",
+        "Wirtz",
         "Thiago",
         "Schade",
-        "Szoboszlai"
+        "Munoz"
       ],
       "actual_scorers": [
         "Lewis-Potter 44'",
@@ -55,8 +55,8 @@
       "points": {
         "outcome": 0,
         "scorers": 1,
-        "minutes": 0,
-        "total": 1
+        "minutes": 1,
+        "total": 2
       }
     },
     {
@@ -69,7 +69,7 @@
         "Bobb",
         "Gonzalo",
         "King",
-        "McBurnie"
+        "Belloumi"
       ],
       "actual_scorers": [
         "Iwobi 33'"
@@ -88,10 +88,10 @@
       "predicted": "5-0",
       "actual": "3-2",
       "predicted_scorers": [
-        "Foden",
+        "Guéhi",
         "Haaland",
         "Cherki",
-        "Ndiaye",
+        "Semenyo",
         "Haaland"
       ],
       "actual_scorers": [
@@ -103,9 +103,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 3,
+        "scorers": 2,
         "minutes": 0,
-        "total": 4
+        "total": 3
       }
     },
     {
@@ -115,10 +115,10 @@
       "predicted": "3-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Willock",
-        "Wissa",
         "Barnes",
-        "N.Jackson"
+        "Wissa",
+        "Willock",
+        "McGinn"
       ],
       "actual_scorers": [
         "Manzambi 36'"
@@ -137,10 +137,10 @@
       "predicted": "3-1",
       "actual": "2-0",
       "predicted_scorers": [
-        "Rayan",
+        "Silva",
         "Tavernier",
         "Evanilson",
-        "Brobbey"
+        "E.Le Fée"
       ],
       "actual_scorers": [
         "Tavernier 6'",
@@ -160,9 +160,9 @@
       "predicted": "3-1",
       "actual": "5-0",
       "predicted_scorers": [
+        "Yalcouyé",
         "Groß",
-        "Hinshelwood",
-        "Kostoulas",
+        "De Cuyper",
         "Strand Larsen"
       ],
       "actual_scorers": [
@@ -174,9 +174,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "scorers": 0,
+        "minutes": 0,
+        "total": 1
       }
     },
     {
@@ -206,12 +206,12 @@
       "fixture_id": 69,
       "home": "Nott'm Forest",
       "away": "Arsenal",
-      "predicted": "1-2",
+      "predicted": "0-3",
       "actual": "0-1",
       "predicted_scorers": [
-        "Ødegaard",
-        "Ndoye",
-        "Havertz"
+        "Havertz",
+        "Saka",
+        "Ødegaard"
       ],
       "actual_scorers": [
         "Madueke 80'"
@@ -230,9 +230,9 @@
       "predicted": "3-1",
       "actual": "3-1",
       "predicted_scorers": [
-        "Gallagher",
         "Van Hecke",
         "Solanke",
+        "Gallagher",
         "Rudoni"
       ],
       "actual_scorers": [

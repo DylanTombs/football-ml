@@ -3,12 +3,12 @@
   "predictor": "naive-favourite",
   "complete": true,
   "totals": {
-    "points": 19,
+    "points": 15,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 5,
-    "scorer_hits": 9,
-    "minute_hits": 3,
+    "scorer_hits": 6,
+    "minute_hits": 2,
     "fallbacks": 0
   },
   "matches": [
@@ -19,9 +19,9 @@
       "predicted": "1-2",
       "actual": "1-4",
       "predicted_scorers": [
-        "Cherki",
-        "Strand Larsen",
-        "Haaland"
+        "Haaland",
+        "Mateta",
+        "Guéhi"
       ],
       "actual_scorers": [
         "Haaland 17'",
@@ -32,9 +32,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
       }
     },
     {
@@ -44,9 +44,9 @@
       "predicted": "2-1",
       "actual": "2-2",
       "predicted_scorers": [
-        "Ndoye",
-        "Isak",
-        "Szoboszlai"
+        "Muñoz",
+        "Szoboszlai",
+        "Isak"
       ],
       "actual_scorers": [
         "Ndoye 24'",
@@ -56,9 +56,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 1,
-        "total": 3
+        "total": 2
       }
     },
     {
@@ -88,9 +88,9 @@
       "predicted": "2-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "McBurnie",
         "Rudoni",
-        "Awoniyi"
+        "Ajayi",
+        "Rudoni"
       ],
       "actual_scorers": [
         "Millar 82'"
@@ -109,9 +109,9 @@
       "predicted": "2-1",
       "actual": "0-2",
       "predicted_scorers": [
+        "Moore",
         "Wissa",
-        "Van Hecke",
-        "Solanke"
+        "Moore"
       ],
       "actual_scorers": [
         "Elanga 62'",
@@ -133,7 +133,7 @@
       "predicted_scorers": [
         "Hinshelwood",
         "Rogers",
-        "Palmer"
+        "João Pedro"
       ],
       "actual_scorers": [
         "Lavia 4'",
@@ -158,9 +158,9 @@
       "predicted": "2-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "Thiago",
-        "Calvert-Lewin",
-        "Bogle"
+        "Stach",
+        "Lewis-Potter",
+        "Stach"
       ],
       "actual_scorers": [
         "Schade 41'",
@@ -168,9 +168,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
@@ -180,7 +180,7 @@
       "predicted": "1-0",
       "actual": "1-0",
       "predicted_scorers": [
-        "Brobbey"
+        "N.Angulo"
       ],
       "actual_scorers": [
         "Isidor 75'"
@@ -201,7 +201,7 @@
       "predicted_scorers": [
         "Emersonn",
         "Mbeumo",
-        "B.Fernandes"
+        "Dorgu"
       ],
       "actual_scorers": [
         "Davis 29'",
@@ -214,9 +214,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
       }
     },
     {
@@ -226,18 +226,18 @@
       "predicted": "1-2",
       "actual": "0-1",
       "predicted_scorers": [
-        "Ødegaard",
-        "N.Jackson",
-        "Havertz"
+        "Havertz",
+        "Buendía",
+        "Saka"
       ],
       "actual_scorers": [
         "Saka 59'"
       ],
       "points": {
         "outcome": 1,
-        "scorers": 0,
-        "minutes": 0,
-        "total": 1
+        "scorers": 1,
+        "minutes": 1,
+        "total": 3
       }
     }
   ]

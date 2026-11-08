@@ -3,11 +3,11 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 19,
+    "points": 16,
     "matches": 10,
     "exact_scores": 0,
     "correct_results": 5,
-    "scorer_hits": 11,
+    "scorer_hits": 8,
     "minute_hits": 3,
     "fallbacks": 0
   },
@@ -19,10 +19,10 @@
       "predicted": "1-3",
       "actual": "1-4",
       "predicted_scorers": [
-        "Cherki",
-        "Strand Larsen",
         "Haaland",
-        "Foden"
+        "Mateta",
+        "Guéhi",
+        "Gvardiol"
       ],
       "actual_scorers": [
         "Haaland 17'",
@@ -33,9 +33,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
       }
     },
     {
@@ -45,10 +45,10 @@
       "predicted": "3-1",
       "actual": "2-2",
       "predicted_scorers": [
-        "Ndoye",
-        "Isak",
+        "Gakpo",
         "Szoboszlai",
-        "Isak"
+        "Isak",
+        "Muñoz"
       ],
       "actual_scorers": [
         "Ndoye 24'",
@@ -58,9 +58,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 1,
-        "total": 3
+        "total": 2
       }
     },
     {
@@ -70,9 +70,9 @@
       "predicted": "2-1",
       "actual": "1-1",
       "predicted_scorers": [
-        "Barry",
         "Tavernier",
-        "Evanilson"
+        "Barry",
+        "Tavernier"
       ],
       "actual_scorers": [
         "Scott 41'",
@@ -92,10 +92,10 @@
       "predicted": "3-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Dasilva",
+        "Ajayi",
         "Rudoni",
-        "Awoniyi",
-        "McBurnie"
+        "Tchaouna",
+        "Rudoni"
       ],
       "actual_scorers": [
         "Millar 82'"
@@ -114,10 +114,10 @@
       "predicted": "2-2",
       "actual": "0-2",
       "predicted_scorers": [
+        "Elanga",
+        "Moore",
         "Wissa",
-        "Van Hecke",
-        "Solanke",
-        "Barnes"
+        "Moore"
       ],
       "actual_scorers": [
         "Elanga 62'",
@@ -125,9 +125,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
-        "minutes": 0,
-        "total": 1
+        "scorers": 2,
+        "minutes": 1,
+        "total": 3
       }
     },
     {
@@ -137,9 +137,9 @@
       "predicted": "3-1",
       "actual": "4-3",
       "predicted_scorers": [
-        "Neto",
-        "Rogers",
         "Palmer",
+        "Rogers",
+        "João Pedro",
         "Hinshelwood"
       ],
       "actual_scorers": [
@@ -166,9 +166,9 @@
       "actual": "1-1",
       "predicted_scorers": [
         "Thiago",
-        "Calvert-Lewin",
-        "Bogle",
-        "Schade"
+        "Stach",
+        "Lewis-Potter",
+        "Stach"
       ],
       "actual_scorers": [
         "Schade 41'",
@@ -176,9 +176,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
+        "scorers": 0,
         "minutes": 0,
-        "total": 3
+        "total": 1
       }
     },
     {
@@ -189,7 +189,7 @@
       "actual": "1-0",
       "predicted_scorers": [
         "King",
-        "Brobbey",
+        "N.Angulo",
         "Gonzalo"
       ],
       "actual_scorers": [
@@ -211,7 +211,7 @@
       "predicted_scorers": [
         "Cunha",
         "Mbeumo",
-        "B.Fernandes",
+        "Dorgu",
         "Emersonn"
       ],
       "actual_scorers": [
@@ -225,9 +225,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
-        "minutes": 1,
-        "total": 4
+        "scorers": 1,
+        "minutes": 0,
+        "total": 2
       }
     },
     {
@@ -237,19 +237,19 @@
       "predicted": "1-3",
       "actual": "0-1",
       "predicted_scorers": [
-        "Ødegaard",
-        "N.Jackson",
         "Havertz",
-        "Gabriel"
+        "Buendía",
+        "Saka",
+        "Ødegaard"
       ],
       "actual_scorers": [
         "Saka 59'"
       ],
       "points": {
         "outcome": 1,
-        "scorers": 0,
-        "minutes": 0,
-        "total": 1
+        "scorers": 1,
+        "minutes": 1,
+        "total": 3
       }
     }
   ]

@@ -5,14 +5,15 @@
     "type": "naive-favourite",
     "odds": "pre-closing market average"
   },
-  "generated_at": "2026-11-03T17:31:17.249985+00:00",
+  "generated_at": "2026-11-08T20:38:47.604318+00:00",
   "model": {
     "name": "dixon-coles",
     "trained_until": "2026-08-21",
     "home_advantage": 0.199,
     "rho": -0.056,
     "goal_time_samples": 90,
-    "injury_impact": 0.0
+    "injury_impact": 0.0,
+    "scorer_profiles": 0
   },
   "matches": [
     {
@@ -30,22 +31,22 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Coventry",
-            "scorer": "Rudoni",
-            "scorer_id": 183
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Arsenal",
-            "scorer": "Havertz",
-            "scorer_id": 26
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Arsenal",
-            "scorer": "Ødegaard",
-            "scorer_id": 15
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -56,9 +57,9 @@
         "away": 0
       },
       "probabilities": {
-        "home_win": 0.8006,
-        "draw": 0.1386,
-        "away_win": 0.0608
+        "home_win": 0.8009,
+        "draw": 0.1385,
+        "away_win": 0.0607
       },
       "expected_goals": {
         "home": 2.65,
@@ -67,11 +68,11 @@
       "top_scorelines": [
         {
           "score": "2-0",
-          "probability": 0.1328
+          "probability": 0.1329
         },
         {
           "score": "3-0",
-          "probability": 0.1174
+          "probability": 0.1175
         },
         {
           "score": "1-0",
@@ -98,22 +99,22 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Man United",
-            "scorer": "B.Fernandes",
-            "scorer_id": 426
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Hull",
-            "scorer": "McBurnie",
-            "scorer_id": 295
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Man United",
-            "scorer": "Mbeumo",
-            "scorer_id": 427
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -124,13 +125,13 @@
         "away": 2
       },
       "probabilities": {
-        "home_win": 0.146,
+        "home_win": 0.1459,
         "draw": 0.206,
-        "away_win": 0.648
+        "away_win": 0.6481
       },
       "expected_goals": {
         "home": 0.92,
-        "away": 2.14
+        "away": 2.15
       },
       "top_scorelines": [
         {
@@ -166,8 +167,8 @@
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Everton",
-            "scorer": "Barry",
-            "scorer_id": 249
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -178,7 +179,7 @@
         "away": 0
       },
       "probabilities": {
-        "home_win": 0.4063,
+        "home_win": 0.4062,
         "draw": 0.301,
         "away_win": 0.2927
       },
@@ -197,7 +198,7 @@
         },
         {
           "score": "0-0",
-          "probability": 0.1143
+          "probability": 0.1144
         }
       ],
       "missing": {
@@ -220,8 +221,8 @@
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Sunderland",
-            "scorer": "Brobbey",
-            "scorer_id": 552
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -274,8 +275,8 @@
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Nott'm Forest",
-            "scorer": "Ndoye",
-            "scorer_id": 483
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -328,22 +329,22 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Tottenham",
-            "scorer": "Van Hecke",
-            "scorer_id": 112
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Brentford",
-            "scorer": "Thiago",
-            "scorer_id": 106
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Brentford",
-            "scorer": "Schade",
-            "scorer_id": 94
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -396,22 +397,22 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Aston Villa",
-            "scorer": "N.Jackson",
-            "scorer_id": 166
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Brighton",
-            "scorer": "Hinshelwood",
-            "scorer_id": 123
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Brighton",
-            "scorer": "Kostoulas",
-            "scorer_id": 138
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -464,22 +465,22 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Bournemouth",
-            "scorer": "Tavernier",
-            "scorer_id": 68
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Man City",
-            "scorer": "Haaland",
-            "scorer_id": 411
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Man City",
-            "scorer": "Cherki",
-            "scorer_id": 399
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -532,22 +533,22 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Liverpool",
-            "scorer": "Szoboszlai",
-            "scorer_id": 368
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Newcastle",
-            "scorer": "Wissa",
-            "scorer_id": 464
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Liverpool",
-            "scorer": "Isak",
-            "scorer_id": 379
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -558,7 +559,7 @@
         "away": 2
       },
       "probabilities": {
-        "home_win": 0.3614,
+        "home_win": 0.3615,
         "draw": 0.2405,
         "away_win": 0.398
       },
@@ -600,22 +601,22 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Chelsea",
-            "scorer": "Palmer",
-            "scorer_id": 154
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Fulham",
-            "scorer": "Gonzalo",
-            "scorer_id": 569
+            "scorer": null,
+            "scorer_id": null
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Chelsea",
-            "scorer": "Rogers",
-            "scorer_id": 40
+            "scorer": null,
+            "scorer_id": null
           }
         ],
         "fallback": false
@@ -627,8 +628,8 @@
       },
       "probabilities": {
         "home_win": 0.3658,
-        "draw": 0.2695,
-        "away_win": 0.3647
+        "draw": 0.2696,
+        "away_win": 0.3646
       },
       "expected_goals": {
         "home": 1.37,

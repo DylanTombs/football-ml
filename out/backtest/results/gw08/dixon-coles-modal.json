@@ -3,12 +3,12 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 14,
+    "points": 12,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 4,
-    "scorer_hits": 5,
-    "minute_hits": 3,
+    "scorer_hits": 4,
+    "minute_hits": 2,
     "fallbacks": 0
   },
   "matches": [
@@ -64,7 +64,7 @@
       "predicted": "1-0",
       "actual": "2-0",
       "predicted_scorers": [
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Konsa 7'",
@@ -103,9 +103,9 @@
       "predicted": "2-1",
       "actual": "0-2",
       "predicted_scorers": [
-        "Rogers",
-        "Van Hecke",
-        "Palmer"
+        "João Pedro",
+        "Solanke",
+        "Rogers"
       ],
       "actual_scorers": [
         "Penders (og) 77'",
@@ -127,7 +127,7 @@
       "predicted_scorers": [
         "Wissa",
         "Strand Larsen",
-        "Barnes"
+        "Willock"
       ],
       "actual_scorers": [
         "Osula 47'",
@@ -135,9 +135,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
-        "minutes": 1,
-        "total": 3
+        "scorers": 0,
+        "minutes": 0,
+        "total": 1
       }
     },
     {

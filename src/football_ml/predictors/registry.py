@@ -7,6 +7,7 @@ from anthropic import Anthropic
 
 from football_ml.config import (
     DEFAULT_PICK_STRATEGY,
+    DEFAULT_SCORER_MODEL,
     LLM_CACHE_DIR,
     LLM_TIMEOUT_SECONDS,
     PREDICTOR_SPECS,
@@ -50,9 +51,10 @@ def build_predictors(
     env: Mapping[str, str],
     cache_dir: Path = LLM_CACHE_DIR,
     pick_strategy: str = DEFAULT_PICK_STRATEGY,
+    scorer_model: str = DEFAULT_SCORER_MODEL,
 ) -> tuple[Predictor, ...]:
     """Check every needed API key first, so a run never half-finishes for a missing key.
-    `pick_strategy` applies to the Dixon-Coles predictor."""
+    `pick_strategy` and `scorer_model` apply to the Dixon-Coles predictor."""
     specs = {name: PREDICTOR_SPECS[name] for name in parse_predictor_names(",".join(names))}
     missing = sorted({
         PROVIDER_API_KEY_ENV[spec[0]] for spec in specs.values() if spec and not _api_key(env, spec[0])
@@ -62,7 +64,7 @@ def build_predictors(
 
     cache = JsonFileCache(cache_dir)
     return tuple(
-        DixonColesPredictor(pick_strategy) if spec is None
+        DixonColesPredictor(pick_strategy, scorer_model=scorer_model) if spec is None
         else LLMPredictor(name, _provider(spec[0], spec[1], _api_key(env, spec[0])), cache)
         for name, spec in specs.items()
     )

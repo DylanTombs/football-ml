@@ -3,16 +3,18 @@
   "predictor": "dixon-coles-expected-points",
   "predictor_config": {
     "type": "dixon-coles",
-    "pick_strategy": "expected-points"
+    "pick_strategy": "expected-points",
+    "scorer_model": "weights"
   },
-  "generated_at": "2026-11-03T17:31:23.286212+00:00",
+  "generated_at": "2026-11-08T20:38:53.606893+00:00",
   "model": {
     "name": "dixon-coles",
     "trained_until": "2026-09-12",
     "home_advantage": 0.208,
     "rho": -0.067,
     "goal_time_samples": 85,
-    "injury_impact": 0.0
+    "injury_impact": 0.0,
+    "scorer_profiles": 455
   },
   "matches": [
     {
@@ -30,15 +32,15 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Nott'm Forest",
-            "scorer": "Ndoye",
-            "scorer_id": 483
+            "scorer": "Gibbs-White",
+            "scorer_id": 480
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Aston Villa",
-            "scorer": "N.Jackson",
-            "scorer_id": 166
+            "scorer": "Buendía",
+            "scorer_id": 41
           },
           {
             "minute": "57'",
@@ -50,7 +52,7 @@
         ],
         "fallback": false
       },
-      "prediction_probability": 0.0921,
+      "prediction_probability": 0.092,
       "baseline_score": {
         "home": 1,
         "away": 0
@@ -75,28 +77,15 @@
         },
         {
           "score": "2-1",
-          "probability": 0.0921
+          "probability": 0.092
         }
       ],
       "missing": {
-        "home": [
-          {
-            "name": "Pau",
-            "xg_share": 0.024
-          }
-        ],
+        "home": [],
         "away": [
           {
-            "name": "Hudson-Odoi",
-            "xg_share": 0.007
-          },
-          {
             "name": "I.Sangaré",
-            "xg_share": 0.006
-          },
-          {
-            "name": "Kalimuendo",
-            "xg_share": 0.002
+            "xg_share": 0.007
           }
         ]
       }
@@ -130,15 +119,15 @@
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Bournemouth",
-            "scorer": "Evanilson",
-            "scorer_id": 79
+            "scorer": "Kluivert",
+            "scorer_id": 70
           },
           {
             "minute": "58'",
             "sort_key": 58.0,
             "team": "Brentford",
-            "scorer": "Schade",
-            "scorer_id": 94
+            "scorer": "Lewis-Potter",
+            "scorer_id": 86
           }
         ],
         "fallback": false
@@ -160,7 +149,7 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1228
+          "probability": 0.1229
         },
         {
           "score": "2-1",
@@ -172,16 +161,11 @@
         }
       ],
       "missing": {
-        "home": [
-          {
-            "name": "Rodríguez",
-            "xg_share": 0.007
-          }
-        ],
+        "home": [],
         "away": [
           {
             "name": "Jensen",
-            "xg_share": 0.009
+            "xg_share": 0.012
           }
         ]
       }
@@ -193,42 +177,42 @@
       "away": "Hull",
       "prediction": {
         "score": {
-          "home": 3,
-          "away": 1
+          "home": 4,
+          "away": 0
         },
         "goals": [
           {
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Chelsea",
-            "scorer": "Neto",
-            "scorer_id": 156
+            "scorer": "Palmer",
+            "scorer_id": 154
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Chelsea",
-            "scorer": "Rogers",
-            "scorer_id": 40
+            "scorer": "João Pedro",
+            "scorer_id": 165
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Chelsea",
-            "scorer": "Palmer",
-            "scorer_id": 154
+            "scorer": "Rogers",
+            "scorer_id": 40
           },
           {
             "minute": "58'",
             "sort_key": 58.0,
-            "team": "Hull",
-            "scorer": "McBurnie",
-            "scorer_id": 295
+            "team": "Chelsea",
+            "scorer": "Lavia",
+            "scorer_id": 161
           }
         ],
         "fallback": false
       },
-      "prediction_probability": 0.0765,
+      "prediction_probability": 0.0613,
       "baseline_score": {
         "home": 2,
         "away": 0
@@ -260,33 +244,21 @@
         "home": [
           {
             "name": "Barco",
-            "xg_share": 0.043
-          },
-          {
-            "name": "Caicedo",
-            "xg_share": 0.004
-          },
-          {
-            "name": "Quenda",
-            "xg_share": 0.002
+            "xg_share": 0.007
           },
           {
             "name": "Colwill",
-            "xg_share": 0.001
+            "xg_share": 0.002
           }
         ],
         "away": [
           {
             "name": "Millar",
-            "xg_share": 0.063
-          },
-          {
-            "name": "Iroegbunam",
-            "xg_share": 0.047
+            "xg_share": 0.245
           },
           {
             "name": "Drameh",
-            "xg_share": 0.005
+            "xg_share": 0.021
           }
         ]
       }
@@ -306,22 +278,22 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Crystal Palace",
-            "scorer": "Mitchell",
-            "scorer_id": 204
+            "scorer": "Khalaili",
+            "scorer_id": 588
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Crystal Palace",
-            "scorer": "Strand Larsen",
-            "scorer_id": 222
+            "scorer": "Mitchell",
+            "scorer_id": 204
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Crystal Palace",
-            "scorer": "Khalaili",
-            "scorer_id": 588
+            "scorer": "Nketiah",
+            "scorer_id": 224
           },
           {
             "minute": "58'",
@@ -339,7 +311,7 @@
         "away": 1
       },
       "probabilities": {
-        "home_win": 0.5585,
+        "home_win": 0.5586,
         "draw": 0.238,
         "away_win": 0.2034
       },
@@ -365,29 +337,25 @@
         "home": [
           {
             "name": "Mateta",
-            "xg_share": 0.176
+            "xg_share": 0.159
           },
           {
             "name": "McNeil",
-            "xg_share": 0.018
+            "xg_share": 0.011
           },
           {
             "name": "Guessand",
-            "xg_share": 0.003
+            "xg_share": 0.007
           }
         ],
         "away": [
           {
             "name": "Akpom",
-            "xg_share": 0.106
-          },
-          {
-            "name": "Walle Egeli",
-            "xg_share": 0.008
+            "xg_share": 0.21
           },
           {
             "name": "Núñez",
-            "xg_share": 0.002
+            "xg_share": 0.007
           }
         ]
       }
@@ -440,8 +408,8 @@
         "away": 1
       },
       "probabilities": {
-        "home_win": 0.6127,
-        "draw": 0.2142,
+        "home_win": 0.6126,
+        "draw": 0.2143,
         "away_win": 0.1731
       },
       "expected_goals": {
@@ -465,24 +433,19 @@
       "missing": {
         "home": [
           {
-            "name": "Ngumoha",
-            "xg_share": 0.02
+            "name": "Tsimikas",
+            "xg_share": 0.007
           },
           {
-            "name": "Tsimikas",
-            "xg_share": 0.003
+            "name": "Ngumoha",
+            "xg_share": 0.007
           },
           {
             "name": "Frimpong",
-            "xg_share": 0.001
+            "xg_share": 0.002
           }
         ],
-        "away": [
-          {
-            "name": "Kevin",
-            "xg_share": 0.016
-          }
-        ]
+        "away": []
       }
     },
     {
@@ -507,8 +470,8 @@
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Tottenham",
-            "scorer": "Van Hecke",
-            "scorer_id": 112
+            "scorer": "Van de Ven",
+            "scorer_id": 503
           },
           {
             "minute": "57'",
@@ -535,7 +498,7 @@
       "probabilities": {
         "home_win": 0.4032,
         "draw": 0.2829,
-        "away_win": 0.314
+        "away_win": 0.3139
       },
       "expected_goals": {
         "home": 1.37,
@@ -558,30 +521,18 @@
       "missing": {
         "home": [
           {
-            "name": "Gray",
-            "xg_share": 0.038
-          },
-          {
             "name": "Moore",
-            "xg_share": 0.034
-          },
-          {
-            "name": "Maddison",
-            "xg_share": 0.014
-          },
-          {
-            "name": "Bergvall",
-            "xg_share": 0.01
+            "xg_share": 0.144
           }
         ],
         "away": [
           {
-            "name": "Alcaraz",
-            "xg_share": 0.011
+            "name": "Beto",
+            "xg_share": 0.024
           },
           {
-            "name": "Beto",
-            "xg_share": 0.007
+            "name": "Alcaraz",
+            "xg_share": 0.013
           }
         ]
       }
@@ -601,15 +552,15 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Arsenal",
-            "scorer": "Gabriel",
-            "scorer_id": 4
+            "scorer": "Havertz",
+            "scorer_id": 26
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Arsenal",
-            "scorer": "Havertz",
-            "scorer_id": 26
+            "scorer": "Saka",
+            "scorer_id": 12
           },
           {
             "minute": "57'",
@@ -652,38 +603,22 @@
       "missing": {
         "home": [
           {
-            "name": "O'Nien",
-            "xg_share": 0.025
-          },
-          {
-            "name": "Rigg",
-            "xg_share": 0.018
-          },
-          {
-            "name": "Talbi",
-            "xg_share": 0.017
-          },
-          {
             "name": "Mundle",
-            "xg_share": 0.013
+            "xg_share": 0.039
           },
           {
             "name": "Diarra",
-            "xg_share": 0.002
+            "xg_share": 0.007
           },
           {
-            "name": "Alderete",
+            "name": "O'Nien",
             "xg_share": 0.002
           }
         ],
         "away": [
           {
-            "name": "Bruno G.",
-            "xg_share": 0.019
-          },
-          {
             "name": "Eze",
-            "xg_share": 0.006
+            "xg_share": 0.008
           }
         ]
       }
@@ -703,29 +638,29 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Brighton",
-            "scorer": "Kostoulas",
-            "scorer_id": 138
+            "scorer": "Groß",
+            "scorer_id": 124
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Coventry",
-            "scorer": "Rudoni",
-            "scorer_id": 183
+            "scorer": "Awoniyi",
+            "scorer_id": 492
           },
           {
             "minute": "57'",
             "sort_key": 57.0,
             "team": "Brighton",
-            "scorer": "Hinshelwood",
-            "scorer_id": 123
+            "scorer": "De Cuyper",
+            "scorer_id": 115
           },
           {
             "minute": "58'",
             "sort_key": 58.0,
             "team": "Brighton",
-            "scorer": "Groß",
-            "scorer_id": 124
+            "scorer": "Yalcouyé",
+            "scorer_id": 605
           }
         ],
         "fallback": false
@@ -736,7 +671,7 @@
         "away": 2
       },
       "probabilities": {
-        "home_win": 0.2692,
+        "home_win": 0.2691,
         "draw": 0.2532,
         "away_win": 0.4776
       },
@@ -762,29 +697,21 @@
         "home": [
           {
             "name": "Sakamoto",
-            "xg_share": 0.035
-          },
-          {
-            "name": "Torp",
-            "xg_share": 0.004
+            "xg_share": 0.007
           }
         ],
         "away": [
           {
             "name": "Hinshelwood",
-            "xg_share": 0.14
-          },
-          {
-            "name": "Georginio",
-            "xg_share": 0.014
+            "xg_share": 0.19
           },
           {
             "name": "Wieffer",
-            "xg_share": 0.007
+            "xg_share": 0.016
           },
           {
-            "name": "Osman",
-            "xg_share": 0.003
+            "name": "Georginio",
+            "xg_share": 0.011
           }
         ]
       }
@@ -804,15 +731,15 @@
             "minute": "55'",
             "sort_key": 55.0,
             "team": "Man City",
-            "scorer": "Cherki",
-            "scorer_id": 399
+            "scorer": "Foden",
+            "scorer_id": 398
           },
           {
             "minute": "56'",
             "sort_key": 56.0,
             "team": "Man United",
-            "scorer": "Mbeumo",
-            "scorer_id": 427
+            "scorer": "B.Fernandes",
+            "scorer_id": 426
           },
           {
             "minute": "57'",
@@ -825,8 +752,8 @@
             "minute": "58'",
             "sort_key": 58.0,
             "team": "Man City",
-            "scorer": "Foden",
-            "scorer_id": 398
+            "scorer": "Cherki",
+            "scorer_id": 399
           }
         ],
         "fallback": false
@@ -852,7 +779,7 @@
         },
         {
           "score": "1-2",
-          "probability": 0.0969
+          "probability": 0.097
         },
         {
           "score": "0-1",
@@ -863,25 +790,17 @@
         "home": [
           {
             "name": "Heaven",
-            "xg_share": 0.008
-          },
-          {
-            "name": "Lacey",
-            "xg_share": 0.002
+            "xg_share": 0.016
           }
         ],
         "away": [
           {
-            "name": "O'Reilly",
-            "xg_share": 0.066
-          },
-          {
             "name": "Lewis",
-            "xg_share": 0.009
+            "xg_share": 0.025
           },
           {
-            "name": "Matheus N.",
-            "xg_share": 0.008
+            "name": "O'Reilly",
+            "xg_share": 0.013
           }
         ]
       }
@@ -922,8 +841,8 @@
             "minute": "58'",
             "sort_key": 58.0,
             "team": "Newcastle",
-            "scorer": "Barnes",
-            "scorer_id": 453
+            "scorer": "Elanga",
+            "scorer_id": 454
           }
         ],
         "fallback": false
@@ -959,34 +878,22 @@
       "missing": {
         "home": [
           {
-            "name": "Longstaff",
-            "xg_share": 0.031
-          },
-          {
             "name": "James",
-            "xg_share": 0.031
+            "xg_share": 0.053
           },
           {
             "name": "Rodon",
-            "xg_share": 0.003
+            "xg_share": 0.007
           }
         ],
         "away": [
           {
             "name": "Osula",
-            "xg_share": 0.078
-          },
-          {
-            "name": "Touré",
-            "xg_share": 0.036
-          },
-          {
-            "name": "Schär",
-            "xg_share": 0.012
+            "xg_share": 0.02
           },
           {
             "name": "Woltemade",
-            "xg_share": 0.002
+            "xg_share": 0.007
           }
         ]
       }

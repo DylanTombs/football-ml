@@ -103,3 +103,12 @@ def test_cumulative_scorer_points():
 
 def _score(pick):
     return pick.home_goals, pick.away_goals
+
+
+def test_pick_scorers_from_given_rates():
+    """With per-player rates the squad weights are ignored; players without a rate can't be picked."""
+    picks = pick_scorers((STRIKER, WINGER, BENCH), team_rate=9.9, n=2, rates={2: 0.8, 4: 0.1})
+    assert [p.player.id for p in picks] == [2, 2]
+    assert picks[0].probability == pytest.approx(1 - math.exp(-0.8))
+    assert picks[1].probability == pytest.approx(1 - math.exp(-0.8) * (1 + 0.8))
+    assert pick_scorers((STRIKER,), team_rate=1.0, n=1, rates={}) == ()

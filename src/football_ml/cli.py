@@ -12,10 +12,12 @@ from football_ml.config import (
     DEFAULT_BACKTEST_PROXY,
     DEFAULT_PICK_STRATEGY,
     DEFAULT_PREDICTORS,
+    DEFAULT_SCORER_MODEL,
     INJURY_IMPACT,
     PICK_STRATEGIES,
     PREDICTIONS_DIR,
     RESULTS_DIR,
+    SCORER_MODELS,
 )
 from football_ml.evaluate.season import leaderboard, score_gameweek, season_table, write_gameweek_results
 from football_ml.llm.base import LLMError
@@ -59,7 +61,8 @@ def _leaderboard_lines(table: dict) -> list[str]:
 
 
 def _predict(args) -> int:
-    predictors = build_predictors(args.predictors, env=os.environ, pick_strategy=args.pick_strategy)
+    predictors = build_predictors(args.predictors, env=os.environ, pick_strategy=args.pick_strategy,
+                                  scorer_model=args.scorer_model)
     for report in run_gameweek(args.gameweek, predictors):
         print(f"\nGameweek {report['gameweek']}: {report['predictor']}\n")
         for match in report["matches"]:
@@ -109,7 +112,7 @@ def _comparison_lines(c: dict) -> list[str]:
 
 
 def _backtest(args) -> int:
-    inputs = load_season_inputs()
+    inputs = load_season_inputs(with_histories=True)
     minutes = None
     if args.availability != "live":
         finished = tuple(gw for gw in fpl.finished_gameweeks(inputs.bootstrap) if gw <= args.last)
@@ -119,8 +122,9 @@ def _backtest(args) -> int:
         injury_impact=args.injury_impact, gameweek_minutes=minutes, proxy=args.availability,
         pick_strategy=args.pick_strategy,
     )
+    scorers = "optimistic: live FPL stats" if summary.get("scorer_leak", True) else "leak-free: FPL history"
     print(
-        f"\nBacktest (scorer points optimistic: live FPL stats;"
+        f"\nBacktest (scorer stats {scorers};"
         f" injury impact {summary['injury_impact']}, availability {summary['availability_proxy']})\n"
     )
     for gw in summary["gameweeks"]:
@@ -162,6 +166,8 @@ def _parser() -> argparse.ArgumentParser:
                          help=f"comma-separated, e.g. dixon-coles,claude,gpt (default {','.join(DEFAULT_PREDICTORS)})")
     predict.add_argument("--pick-strategy", choices=PICK_STRATEGIES, default=DEFAULT_PICK_STRATEGY,
                          help=f"how Dixon-Coles picks its scoreline (default {DEFAULT_PICK_STRATEGY})")
+    predict.add_argument("--scorer-model", choices=SCORER_MODELS, default=DEFAULT_SCORER_MODEL,
+                         help=f"how expected-points picks choose scorers (default {DEFAULT_SCORER_MODEL})")
     predict.set_defaults(handler=_predict)
 
     score = sub.add_parser("score", help="Score saved predictions against actual results")

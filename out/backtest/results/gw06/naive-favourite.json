@@ -3,11 +3,11 @@
   "predictor": "naive-favourite",
   "complete": true,
   "totals": {
-    "points": 16,
+    "points": 13,
     "matches": 10,
     "exact_scores": 1,
     "correct_results": 5,
-    "scorer_hits": 8,
+    "scorer_hits": 5,
     "minute_hits": 1,
     "fallbacks": 0
   },
@@ -20,8 +20,8 @@
       "actual": "2-1",
       "predicted_scorers": [
         "Calvert-Lewin",
-        "Havertz",
-        "Ødegaard"
+        "Saka",
+        "Havertz"
       ],
       "actual_scorers": [
         "Justin 55'",
@@ -43,7 +43,7 @@
       "actual": "2-2",
       "predicted_scorers": [
         "Schade",
-        "N.Jackson",
+        "Buendía",
         "Thiago"
       ],
       "actual_scorers": [
@@ -54,9 +54,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     },
     {
@@ -115,9 +115,9 @@
       "predicted": "1-2",
       "actual": "0-2",
       "predicted_scorers": [
-        "Kostoulas",
+        "Yalcouyé",
         "Brobbey",
-        "Hinshelwood"
+        "Groß"
       ],
       "actual_scorers": [
         "De Cuyper 53'",
@@ -159,8 +159,8 @@
       "predicted": "2-1",
       "actual": "3-1",
       "predicted_scorers": [
-        "Ndoye",
-        "Strand Larsen",
+        "Gibbs-White",
+        "Mitchell",
         "Khalaili"
       ],
       "actual_scorers": [
@@ -171,9 +171,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -228,8 +228,8 @@
       "predicted": "1-2",
       "actual": "4-1",
       "predicted_scorers": [
-        "Barnes",
-        "Rudoni",
+        "Willock",
+        "Dasilva",
         "Wissa"
       ],
       "actual_scorers": [
@@ -241,9 +241,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     }
   ]

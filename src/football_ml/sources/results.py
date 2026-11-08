@@ -19,6 +19,7 @@ class ActualGoal:
     scorer_name: str
     minute: GoalTime | None
     own_goal: bool
+    penalty: bool = False  # from ESPN; False when the ESPN event wasn't matched
 
 
 @dataclass(frozen=True)
@@ -79,7 +80,8 @@ def _goals_for_side(fixture, side, team, opponent, players, espn_goals) -> tuple
             match = next((g for g in unused if player and g.scorer and names_match(g.scorer, player)), None)
             unused = [g for g in unused if g is not match]
             goals.append(ActualGoal(team, player_id, player.name if player else str(player_id),
-                                    parse_clock(match.clock) if match else None, False))
+                                    parse_clock(match.clock) if match else None, False,
+                                    penalty=bool(match and match.penalty)))
     own_goal_clocks = [g.clock for g in espn_goals if g.team == team and g.own_goal]
     for player_id, count in _stat(fixture, "own_goals", other):
         player = players.get(player_id)

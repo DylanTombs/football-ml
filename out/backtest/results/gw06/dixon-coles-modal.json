@@ -3,11 +3,11 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 12,
+    "points": 10,
     "matches": 10,
     "exact_scores": 0,
     "correct_results": 5,
-    "scorer_hits": 7,
+    "scorer_hits": 5,
     "minute_hits": 0,
     "fallbacks": 0
   },
@@ -19,7 +19,7 @@
       "predicted": "1-0",
       "actual": "2-1",
       "predicted_scorers": [
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Justin 55'",
@@ -40,9 +40,9 @@
       "predicted": "2-1",
       "actual": "2-2",
       "predicted_scorers": [
-        "N.Jackson",
+        "Buendía",
         "Thiago",
-        "McGinn"
+        "N.Jackson"
       ],
       "actual_scorers": [
         "Yarmoliuk 10'",
@@ -52,9 +52,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -113,7 +113,7 @@
       "predicted": "0-1",
       "actual": "0-2",
       "predicted_scorers": [
-        "Hinshelwood"
+        "Groß"
       ],
       "actual_scorers": [
         "De Cuyper 53'",
@@ -155,7 +155,7 @@
       "predicted": "1-0",
       "actual": "3-1",
       "predicted_scorers": [
-        "Strand Larsen"
+        "Mitchell"
       ],
       "actual_scorers": [
         "Ndoye 3'",
@@ -223,8 +223,8 @@
       "actual": "4-1",
       "predicted_scorers": [
         "Wissa",
-        "Rudoni",
-        "Barnes"
+        "Dasilva",
+        "Willock"
       ],
       "actual_scorers": [
         "Rudoni 6'",
@@ -235,9 +235,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 0,
         "minutes": 0,
-        "total": 1
+        "total": 0
       }
     }
   ]

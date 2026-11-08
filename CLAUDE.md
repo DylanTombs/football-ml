@@ -12,10 +12,10 @@ Premier League predictions (exact score, goalscorers, goal minutes) for every fi
 ## Commands
 
 ```bash
-uv run football-ml predict [--gameweek N] [--predictors dixon-coles,claude,gpt,gemini] [--pick-strategy expected-points|modal]
+uv run football-ml predict [--gameweek N] [--predictors dixon-coles,claude,gpt,gemini] [--pick-strategy expected-points|modal] [--scorer-model chance|weights]
                                             # writes out/predictions/gwNN/<predictor>.json + data/snapshots/gwNN.json
 uv run football-ml score --gameweek N       # scores every predictor: out/results/gwNN/<predictor>.json + season.json
-uv run football-ml backtest --from 1 --to N [--pick-strategy S]  # modal vs S vs naive-favourite → out/backtest/
+uv run football-ml backtest --from 1 --to N [--pick-strategy S]  # modal vs S vs chance scorers vs naive-favourite, leak-free → out/backtest/
 uv run pytest --cov=football_ml             # keep ≥ 80%
 ```
 

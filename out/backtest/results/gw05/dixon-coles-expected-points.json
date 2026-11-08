@@ -3,10 +3,10 @@
   "predictor": "dixon-coles-expected-points",
   "complete": true,
   "totals": {
-    "points": 14,
+    "points": 15,
     "matches": 10,
     "exact_scores": 0,
-    "correct_results": 4,
+    "correct_results": 5,
     "scorer_hits": 8,
     "minute_hits": 2,
     "fallbacks": 0
@@ -19,10 +19,10 @@
       "predicted": "2-2",
       "actual": "3-0",
       "predicted_scorers": [
-        "Rogers",
+        "João Pedro",
         "Thiago",
         "Schade",
-        "Palmer"
+        "Rogers"
       ],
       "actual_scorers": [
         "Anthony 61'",
@@ -43,8 +43,8 @@
       "predicted": "2-2",
       "actual": "2-3",
       "predicted_scorers": [
-        "N.Jackson",
-        "Van Hecke",
+        "Buendía",
+        "Van de Ven",
         "Solanke",
         "McGinn"
       ],
@@ -57,9 +57,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 2,
+        "scorers": 1,
         "minutes": 0,
-        "total": 2
+        "total": 1
       }
     },
     {
@@ -70,9 +70,9 @@
       "actual": "3-0",
       "predicted_scorers": [
         "Ødegaard",
-        "Hinshelwood",
-        "Havertz",
-        "Gabriel"
+        "Groß",
+        "Saka",
+        "Havertz"
       ],
       "actual_scorers": [
         "Groß 31'",
@@ -81,9 +81,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 0,
+        "scorers": 1,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -115,10 +115,10 @@
       "predicted": "4-0",
       "actual": "2-1",
       "predicted_scorers": [
-        "Willock",
-        "Wissa",
         "Barnes",
-        "Elanga"
+        "Wissa",
+        "Willock",
+        "Touré"
       ],
       "actual_scorers": [
         "Willock 3'",
@@ -139,10 +139,10 @@
       "predicted": "3-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Gibbs-White",
         "Ndoye",
-        "Delap",
-        "Rudoni"
+        "Gibbs-White",
+        "Igor Jesus",
+        "Awoniyi"
       ],
       "actual_scorers": [
         "Dasilva 55'"
@@ -163,7 +163,7 @@
       "predicted_scorers": [
         "Isak",
         "Tavernier",
-        "Evanilson",
+        "Kluivert",
         "Szoboszlai"
       ],
       "actual_scorers": [
@@ -180,19 +180,20 @@
       "fixture_id": 44,
       "home": "Leeds",
       "away": "Crystal Palace",
-      "predicted": "2-1",
+      "predicted": "2-2",
       "actual": "0-0",
       "predicted_scorers": [
-        "Strand Larsen",
+        "Mitchell",
         "Calvert-Lewin",
-        "Bogle"
+        "Bogle",
+        "Khalaili"
       ],
       "actual_scorers": [],
       "points": {
-        "outcome": 0,
+        "outcome": 1,
         "scorers": 0,
         "minutes": 0,
-        "total": 0
+        "total": 1
       }
     },
     {
@@ -202,9 +203,9 @@
       "predicted": "4-0",
       "actual": "5-3",
       "predicted_scorers": [
-        "Foden",
-        "Haaland",
         "Cherki",
+        "Haaland",
+        "Foden",
         "Haaland"
       ],
       "actual_scorers": [

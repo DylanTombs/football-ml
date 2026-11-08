@@ -3,11 +3,11 @@
   "predictor": "dixon-coles-modal",
   "complete": true,
   "totals": {
-    "points": 24,
+    "points": 22,
     "matches": 10,
     "exact_scores": 3,
     "correct_results": 8,
-    "scorer_hits": 8,
+    "scorer_hits": 6,
     "minute_hits": 2,
     "fallbacks": 0
   },
@@ -19,7 +19,7 @@
       "predicted": "0-1",
       "actual": "0-2",
       "predicted_scorers": [
-        "Rogers"
+        "João Pedro"
       ],
       "actual_scorers": [
         "Neto 46'",
@@ -39,9 +39,9 @@
       "predicted": "1-2",
       "actual": "1-2",
       "predicted_scorers": [
-        "Isak",
+        "Wirtz",
         "Thiago",
-        "Isak"
+        "Munoz"
       ],
       "actual_scorers": [
         "Lewis-Potter 44'",
@@ -107,8 +107,8 @@
       "actual": "0-1",
       "predicted_scorers": [
         "Wissa",
-        "N.Jackson",
-        "Barnes"
+        "McGinn",
+        "Willock"
       ],
       "actual_scorers": [
         "Manzambi 36'"
@@ -147,9 +147,9 @@
       "predicted": "2-1",
       "actual": "5-0",
       "predicted_scorers": [
-        "Hinshelwood",
+        "Groß",
         "Strand Larsen",
-        "Kostoulas"
+        "De Cuyper"
       ],
       "actual_scorers": [
         "Canvot (og) 4'",
@@ -160,9 +160,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 2,
+        "scorers": 0,
         "minutes": 0,
-        "total": 3
+        "total": 1
       }
     },
     {
@@ -192,7 +192,7 @@
       "predicted": "0-1",
       "actual": "0-1",
       "predicted_scorers": [
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Madueke 80'"
@@ -211,9 +211,9 @@
       "predicted": "2-1",
       "actual": "3-1",
       "predicted_scorers": [
-        "Van Hecke",
+        "Solanke",
         "Rudoni",
-        "Solanke"
+        "Gallagher"
       ],
       "actual_scorers": [
         "Maddison 14'",

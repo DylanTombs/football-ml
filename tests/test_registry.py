@@ -46,3 +46,8 @@ def test_only_enabled_predictors_need_keys(tmp_path):
 def test_blank_key_counts_as_missing(tmp_path):
     with pytest.raises(ValueError, match="OPENROUTER_API_KEY"):
         build_predictors(("gemini",), env={"OPENROUTER_API_KEY": "  "}, cache_dir=tmp_path)
+
+
+def test_scorer_model_applies_to_dixon_coles(tmp_path):
+    (predictor,) = build_predictors(("dixon-coles",), env={}, cache_dir=tmp_path, scorer_model="chance")
+    assert predictor.scorer_model == "chance"

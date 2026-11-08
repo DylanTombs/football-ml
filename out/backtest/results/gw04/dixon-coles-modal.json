@@ -19,7 +19,7 @@
       "predicted": "1-0",
       "actual": "1-2",
       "predicted_scorers": [
-        "N.Jackson"
+        "Buendía"
       ],
       "actual_scorers": [
         "Delap 46'",
@@ -42,7 +42,7 @@
       "predicted_scorers": [
         "Tavernier",
         "Thiago",
-        "Evanilson"
+        "Tavernier"
       ],
       "actual_scorers": [
         "Schade 34'",
@@ -64,8 +64,8 @@
       "predicted": "2-0",
       "actual": "2-2",
       "predicted_scorers": [
-        "Rogers",
-        "Palmer"
+        "João Pedro",
+        "Rogers"
       ],
       "actual_scorers": [
         "Rogers 7'",
@@ -75,9 +75,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 1,
+        "scorers": 2,
         "minutes": 0,
-        "total": 1
+        "total": 2
       }
     },
     {
@@ -87,9 +87,9 @@
       "predicted": "2-1",
       "actual": "2-3",
       "predicted_scorers": [
-        "Strand Larsen",
+        "Mitchell",
         "Emersonn",
-        "Khalaili"
+        "Nketiah"
       ],
       "actual_scorers": [
         "Khalaili 14'",
@@ -100,9 +100,9 @@
       ],
       "points": {
         "outcome": 0,
-        "scorers": 3,
+        "scorers": 1,
         "minutes": 0,
-        "total": 3
+        "total": 1
       }
     },
     {
@@ -131,7 +131,7 @@
       "predicted": "1-0",
       "actual": "0-0",
       "predicted_scorers": [
-        "Van Hecke"
+        "Van de Ven"
       ],
       "actual_scorers": [],
       "points": {
@@ -148,7 +148,7 @@
       "predicted": "0-1",
       "actual": "0-2",
       "predicted_scorers": [
-        "Havertz"
+        "Saka"
       ],
       "actual_scorers": [
         "Bruno G. 58'",
@@ -156,9 +156,9 @@
       ],
       "points": {
         "outcome": 1,
-        "scorers": 0,
+        "scorers": 1,
         "minutes": 0,
-        "total": 1
+        "total": 2
       }
     },
     {
@@ -168,9 +168,9 @@
       "predicted": "1-2",
       "actual": "0-5",
       "predicted_scorers": [
-        "Hinshelwood",
-        "Rudoni",
-        "Kostoulas"
+        "De Cuyper",
+        "Awoniyi",
+        "Groß"
       ],
       "actual_scorers": [
         "Kostoulas 35'",
@@ -194,7 +194,7 @@
       "actual": "0-1",
       "predicted_scorers": [
         "Haaland",
-        "Mbeumo",
+        "B.Fernandes",
         "Haaland"
       ],
       "actual_scorers": [
@@ -216,7 +216,7 @@
       "predicted_scorers": [
         "Wissa",
         "Calvert-Lewin",
-        "Barnes"
+        "Elanga"
       ],
       "actual_scorers": [
         "L.Miley (og) 32'",

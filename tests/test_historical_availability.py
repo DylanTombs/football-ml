@@ -1,6 +1,8 @@
 import pytest
 
-from football_ml.historical_availability import players_as_of, team_gameweeks
+import pandas as pd
+
+from football_ml.historical_availability import players_as_of, players_before, team_gameweeks
 from football_ml.predict.scorers import Player
 from football_ml.sources.fpl import parse_gameweek_minutes
 
@@ -122,3 +124,15 @@ def test_finished_gameweeks():
     from football_ml.sources.fpl import finished_gameweeks
     bootstrap = {"events": [{"id": 1, "finished": True}, {"id": 2, "finished": False}]}
     assert finished_gameweeks(bootstrap) == (1,)
+
+
+def test_players_before_rebuilds_season_stats_from_history():
+    from football_ml.sources.player_history import Appearance
+    t0 = pd.Timestamp("2026-08-15T15:00Z")
+    apps = tuple(Appearance(7, k, k, t0 + pd.Timedelta(weeks=k), "Arsenal", 90, 1, 0.4, 1, 0) for k in range(4))
+    live = Player(7, "Saka", "Arsenal", xg=9.9, goals=9, minutes=999, available=False, availability=1.0)
+    out = Player(8, "Out", "Arsenal", xg=1.0, goals=1, minutes=90, available=True, availability=0.0)
+    saka, gone = players_before((live, out), {7: apps}, before=t0 + pd.Timedelta(weeks=2))
+    assert (saka.xg, saka.goals, saka.minutes) == (pytest.approx(0.8), 2, 180)
+    assert saka.available  # eligibility follows the as-of availability, not today's FPL flag
+    assert (gone.minutes, gone.available) == (0, False)
