@@ -3,7 +3,7 @@
 ## Data flow
 
 ```
-football-data.co.uk ─┐ results (PL + Championship, 7 seasons), pre-closing odds (season CSVs + fixtures.csv)
+football-data.co.uk ─┐ results (PL + Championship, 7 seasons)
 FPL API ─────────────┼─► load_season_inputs() ─► SeasonInputs ─► gameweek_context(gw) ─► each predictor ─► out/predictions/gwNN/<predictor>.json
 ESPN scoreboard ─────┘ fixtures, squads,                                │
                        availability, goal events                         ▼
@@ -23,15 +23,14 @@ Per fixture: Dixon-Coles rates λ, μ → injury adjustment (`INJURY_IMPACT`, of
 |---|---|
 | `config.py` | Every constant, URL, team-name map and points value |
 | `sources/` | `http` (disk cache, falls back to stale cache), `football_data`, `fpl`, `player_history` (per-player match rows), `espn`, `results` (actual matches) |
-| `model/market.py` | Shin de-margining; (λ, μ) implied by 1X2 + over 2.5 odds (plan 06). Benchmark only: odds never feed predictions (`ODDS_MODEL_WEIGHT` = 1) |
 | `model/dixon_coles.py` | Fit (time decay, ridge penalty, ρ correction) and score matrix |
 | `predict/` | `scoreline`, `scorers`, `timing` (incl. fixed minutes), `picks` (expected points, floor, P(X ≥ k) scorers), `scoring_chance` (plan 05 scorer model), `availability` (missing xG share per team) |
 | `evaluate/` | `points` (one match), `season` (gameweek totals + season table), `compare` (paired block bootstrap over gameweeks) |
-| `predictors/` | `base` (`Predictor`, `FixtureContext`, `MatchPrediction`, JSON), `context` (Dixon-Coles baseline + form per fixture), `dixon_coles` (pick strategy), `expected_points`, `naive_favourite` (backtest benchmark), `llm` + `llm_prompt` (validation, retry, fallback), `registry` (names → predictors, API key checks) |
+| `predictors/` | `base` (`Predictor`, `FixtureContext`, `MatchPrediction`, JSON), `context` (Dixon-Coles baseline + form per fixture), `dixon_coles` (pick strategy), `expected_points`, `llm` + `llm_prompt` (validation, retry, fallback), `registry` (names → predictors, API key checks) |
 | `llm/` | `LLMProvider` protocol, `anthropic` (SDK, structured outputs), `openrouter` (GPT, Gemini…), `cache` |
 | `pipeline.py` | `SeasonInputs`, `gameweek_context`, `predictor_report`, `run_gameweek` |
-| `bench.py` | Multi-season walk-forward (weekly refits, PL matches only), exact-score log loss / 1X2 log loss / RPS / calibration, xi-l2 grid, odds blend weight (plan 06) |
-| `backtest.py` | Replays past gameweeks without access to later results: modal, the chosen strategy (weights), the chance scorer model and naive-favourite, compared with modal (and chance vs weights) |
+| `bench.py` | Multi-season walk-forward (weekly refits, PL matches only), exact-score log loss / 1X2 log loss / RPS / calibration, xi-l2 grid (plan 06) |
+| `backtest.py` | Replays past gameweeks without access to later results: modal, the chosen strategy (weights), and the chance scorer model, compared with modal (and chance vs weights) |
 | `snapshots.py` | Pre-deadline FPL player snapshots and loading them back as `Player`s |
 | `historical_availability.py` | Who was missing in a past gameweek, from FPL minutes (`lagged` / `oracle` / `live`), and players' season stats as of a gameweek (`players_before`) |
 | `cli.py` | `predict`, `score`, `backtest` |
@@ -39,7 +38,7 @@ Per fixture: Dixon-Coles rates λ, μ → injury adjustment (`INJURY_IMPACT`, of
 ## Data source quirks
 
 - **Team names:** the canonical name is football-data's. FPL and ESPN names are mapped in `config.py`, so a newly promoted team may need a new entry.
-- **football-data.co.uk:** `www.` redirects to the bare domain. Only pre-closing odds (`AvgH/D/A`, `Avg>2.5`) are used; the season CSV has no odds for unplayed matches, so upcoming odds come from `fixtures.csv` (all leagues, filtered to `Div` E0). It is overwritten every round and still shows the last round until the new odds go up (Friday afternoon, about 17:00 UK, for weekend games), (used only for benchmarks). Each `predict` saves the matching rows to `data/odds/gwNN.csv` (committed). Files carry a UTF-8 BOM but are served as Latin-1, so the first header arrives as `ï»¿Div`. The current season's CSV is refetched every 6 hours; past seasons are cached for good.
+- **football-data.co.uk:** results only (no odds are used anywhere, decided 2026-11-08). `www.` redirects to the bare domain. Files carry a UTF-8 BOM but are served as Latin-1, so the first header can arrive as `ï»¿Div`. The current season's CSV is refetched every 6 hours; past seasons are cached for good.
 - **FPL:** `bootstrap-static` player stats are season-to-date only. `element-summary/{id}` has per-match rows (xG, minutes, starts, missed penalties), one request per player (~550, cached 12 h). The backtest rebuilds stats from these before each gameweek, so it no longer leaks. FPL xG includes penalties; non-penalty xG subtracts 0.78 per attempt (ESPN `penaltyKick` goals + FPL misses). Weekly snapshots exist from GW10 (plan 04).
 - **FPL own goals:** listed under the side of the player who scored them.
 - **FPL finished flags:** `finished` waits for bonus points (often the next morning); scoring also accepts `finished_provisional`, when the score and scorers are already final.

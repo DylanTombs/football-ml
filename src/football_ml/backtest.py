@@ -18,7 +18,6 @@ from football_ml.historical_availability import Minutes, players_as_of, players_
 from football_ml.pipeline import SeasonInputs, gameweek_context, predictor_report, write_report
 from football_ml.predictors.base import Predictor
 from football_ml.predictors.dixon_coles import DixonColesPredictor
-from football_ml.predictors.naive_favourite import NaiveFavouritePredictor
 from football_ml.sources import fpl
 from football_ml.sources.results import build_actual_matches
 
@@ -27,8 +26,7 @@ log = logging.getLogger(__name__)
 
 def backtest_predictors(pick_strategy: str = DEFAULT_PICK_STRATEGY, with_chance: bool = False) -> tuple[Predictor, ...]:
     """Modal Dixon-Coles first (the reference), `pick_strategy` if different,
-    the plan 05 scorer model on expected-points picks (needs histories), then
-    the naive-favourite benchmark."""
+    the plan 05 scorer model on expected-points picks (needs histories)."""
     strategies = tuple(dict.fromkeys(("modal", pick_strategy)))
     chance = (
         (DixonColesPredictor("expected-points", name=f"{PREDICTOR_NAME}-expected-points-chance", scorer_model="chance"),)
@@ -37,7 +35,6 @@ def backtest_predictors(pick_strategy: str = DEFAULT_PICK_STRATEGY, with_chance:
     return (
         *(DixonColesPredictor(s, name=f"{PREDICTOR_NAME}-{s}", scorer_model="weights") for s in strategies),
         *chance,
-        NaiveFavouritePredictor(),
     )
 
 

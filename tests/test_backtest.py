@@ -86,7 +86,6 @@ def test_run_backtest_scores_each_gameweek(tmp_path):
     modal = [g for g in summary["gameweeks"] if g["predictor"] == "dixon-coles-modal"]
     assert [g["gameweek"] for g in modal] == [1, 2, 3]
     assert (tmp_path / "predictions" / "gw02" / "dixon-coles-modal.json").exists()
-    assert (tmp_path / "predictions" / "gw02" / "naive-favourite.json").exists()
     assert (tmp_path / "results" / "season.json").exists()
     assert summary["scorer_leak"] is True
     # home always wins 2-0 in history and in "actual" results → model should get results right
@@ -111,33 +110,15 @@ def test_backtest_needs_minutes_for_historical_proxies(tmp_path):
         run_backtest(1, 3, _inputs(), out_dir=tmp_path, proxy="lagged")
 
 
-def _odds(gameweek, home, away, odds_home, odds_away):
-    day = (START + timedelta(weeks=gameweek - 1, days=1)).tz_convert(None).normalize()
-    return {"date": day, "home": home, "away": away, "odds_home": odds_home, "odds_draw": 3.5,
-            "odds_away": odds_away, "odds_over": 2.0, "odds_under": 1.8}
-
-
-def test_gameweek_context_attaches_pre_closing_odds():
-    odds = pd.DataFrame([_odds(2, "Arsenal", "Hull", 1.5, 6.0)])
-    gw = gameweek_context(2, replace(_inputs(), odds=odds))
-    by_home = {ctx.fixture.home: ctx for ctx in gw.fixtures}
-    assert by_home["Arsenal"].odds.home == 1.5
-    assert by_home["Leeds"].odds is None
-
-
-def test_backtest_compares_strategies_and_benchmark(tmp_path):
-    odds = pd.DataFrame([_odds(gw, h, a, 4.0, 1.8) for gw in (1, 2, 3)
-                         for h, a in (("Arsenal", "Hull"), ("Leeds", "Tottenham"))])
-    summary = run_backtest(1, 3, replace(_inputs(), odds=odds, histories=None), out_dir=tmp_path, proxy="live",
+def test_backtest_compares_strategies(tmp_path):
+    summary = run_backtest(1, 3, replace(_inputs(), histories=None), out_dir=tmp_path, proxy="live",
                            pick_strategy="expected-points")
-    names = ["dixon-coles-modal", "dixon-coles-expected-points", "naive-favourite"]
+    names = ["dixon-coles-modal", "dixon-coles-expected-points"]
     assert summary["predictors"] == names
     assert set(summary["season"]) == set(names)
     assert [c["challenger"] for c in summary["comparisons"]] == names[1:]
     assert all(c["reference"] == "dixon-coles-modal" for c in summary["comparisons"])
     assert json.loads((tmp_path / "comparisons.json").read_text()) == summary["comparisons"]
-    # the market (wrongly) backs the away side every time; home always wins 2-0
-    assert summary["season"]["naive-favourite"]["correct_results"] == 0
 
 
 def test_run_gameweek_writes_a_snapshot_before_the_deadline(monkeypatch, tmp_path):
@@ -171,7 +152,7 @@ def test_backtest_with_histories_is_leak_free_and_compares_scorer_models(tmp_pat
                            out_dir=tmp_path, proxy="live", pick_strategy="expected-points")
     assert summary["scorer_leak"] is False
     assert summary["predictors"] == [
-        "dixon-coles-modal", "dixon-coles-expected-points", "dixon-coles-expected-points-chance", "naive-favourite",
+        "dixon-coles-modal", "dixon-coles-expected-points", "dixon-coles-expected-points-chance",
     ]
     pairs = [(c["reference"], c["challenger"]) for c in summary["comparisons"]]
     assert ("dixon-coles-expected-points", "dixon-coles-expected-points-chance") in pairs
@@ -180,18 +161,12 @@ def test_backtest_with_histories_is_leak_free_and_compares_scorer_models(tmp_pat
     assert all(g["scorer"] is None for m in gw1["matches"] for g in m["prediction"]["goals"])
 
 
-def test_predictions_never_use_bookmaker_odds_but_the_odds_are_saved_as_a_benchmark(monkeypatch, tmp_path):
-    """Decided 2026-11-08: the series is a statistical model, so odds are a
-    yardstick (naive-favourite, market comparison), never a model input."""
+
+def test_reports_carry_no_bookmaker_data(monkeypatch, tmp_path):
+    """Decided 2026-11-08: the series is a statistical model; odds are not used anywhere."""
     from football_ml import pipeline
-    upcoming = pd.DataFrame([_odds(2, "Arsenal", "Hull", 1.5, 6.0)])
-    monkeypatch.setattr(pipeline, "load_season_inputs", lambda **_: replace(_inputs(), odds=upcoming, upcoming_odds=upcoming))
+    monkeypatch.setattr(pipeline, "load_season_inputs", lambda **_: _inputs())
     (report,) = run_gameweek(2, (DixonColesPredictor(),), predictions_dir=tmp_path / "predictions",
-                             snapshots_dir=tmp_path / "snapshots", odds_dir=tmp_path / "odds", now=START)
-    assert (tmp_path / "odds" / "gw02.csv").exists()
-    assert report["odds"] == str(tmp_path / "odds" / "gw02.csv")
-    assert report["model"]["odds_model_weight"] == 1.0
-    assert "fixtures_with_odds" not in report["model"]
-    arsenal = next(m for m in report["matches"] if m["home"] == "Arsenal")
-    assert arsenal["rates"]["market"] is None
-    assert arsenal["expected_goals"]["home"] == pytest.approx(arsenal["rates"]["model"]["home"], rel=1e-2)
+                             snapshots_dir=tmp_path / "snapshots", now=START)
+    text = json.dumps(report).lower()
+    assert "odds" not in text and "market" not in text

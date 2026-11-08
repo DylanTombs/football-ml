@@ -10,8 +10,6 @@ BACKTEST_DIR = PROJECT_ROOT / "out" / "backtest"
 # Pre-deadline FPL player state, one file per gameweek; committed because the
 # FPL API has no history of it.
 SNAPSHOTS_DIR = PROJECT_ROOT / "data" / "snapshots"
-# Copy of the upcoming odds used for each frozen prediction (fixtures.csv is overwritten).
-ODDS_SNAPSHOTS_DIR = PROJECT_ROOT / "data" / "odds"
 SNAPSHOT_FIELDS = (
     "id", "web_name", "first_name", "second_name", "team", "element_type",
     "expected_goals", "goals_scored", "minutes", "starts", "status",
@@ -20,14 +18,9 @@ SNAPSHOT_FIELDS = (
 )
 
 PREDICTOR_NAME = "dixon-coles"
-NAIVE_FAVOURITE_NAME = "naive-favourite"
 
 # --- Sources ---------------------------------------------------------------
 FOOTBALL_DATA_URL = "https://football-data.co.uk/mmz4281/{season}/{league}.csv"
-# Upcoming fixtures with pre-closing odds, all leagues; overwritten every round
-# (odds appear Friday afternoon for weekend games, Tuesday for midweek).
-FOOTBALL_DATA_FIXTURES_URL = "https://football-data.co.uk/fixtures.csv"
-UPCOMING_ODDS_MAX_AGE_HOURS = 1
 FPL_BOOTSTRAP_URL = "https://fantasy.premierleague.com/api/bootstrap-static/"
 FPL_FIXTURES_URL = "https://fantasy.premierleague.com/api/fixtures/"
 FPL_EVENT_LIVE_URL = "https://fantasy.premierleague.com/api/event/{gameweek}/live/"
@@ -51,13 +44,6 @@ CURRENT_SEASON = TRAINING_SEASONS[-1]
 # promoted teams; teams moving between leagues link the two on one scale.
 TRAINING_LEAGUES = ("E0", "E1")
 
-# Pre-closing market-average odds (closing "C" columns would leak late news).
-# Pre-closing odds are collected Friday afternoon (Tuesday for midweek games).
-ODDS_COLUMNS = {"AvgH": "odds_home", "AvgD": "odds_draw", "AvgA": "odds_away",
-                "Avg>2.5": "odds_over", "Avg<2.5": "odds_under"}
-ODDS_LEAGUE = "E0"
-ODDS_MATCH_DAYS = 3  # an odds row matches a fixture kicking off within this many days
-
 # --- Dixon-Coles model -----------------------------------------------------
 # Per-day exponential time decay; ln(2)/365 ≈ 0.0019 → matches lose half
 # their weight after a year.
@@ -77,11 +63,6 @@ BENCH_HOLDOUT_SEASONS = ("2526",)  # tested once, after tuning
 BENCH_SEASON_SETS = {"tune": BENCH_TUNE_SEASONS, "holdout": BENCH_HOLDOUT_SEASONS}
 BENCH_XI_GRID = (0.0010, 0.0015, 0.0019, 0.0025, 0.0030, 0.0040)
 BENCH_L2_GRID = (0.1, 0.25, 0.5, 1.0, 2.0)
-MARKET_RATE_START = (1.4, 1.1)  # starting (λ, μ) when fitting rates to odds
-# λ = w × Dixon-Coles + (1 − w) × market. Kept at 1.0: bookmaker odds are never
-# a model input (decided 2026-11-08: the series is a statistical model). Odds
-# are a benchmark only. For the record, w = 0 scored better on the plan 06 bench.
-ODDS_MODEL_WEIGHT = 1.0
 
 # --- Injuries --------------------------------------------------------------
 # λ_adj = λ × (1 − INJURY_IMPACT × missing_share). Below 1 because

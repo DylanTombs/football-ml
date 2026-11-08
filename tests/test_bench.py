@@ -69,15 +69,6 @@ def test_forecast_metrics_reports_scores_and_calibration():
     assert metrics["outcome_points"] in (0, 2, 6)  # modal pick, twice
 
 
-def test_market_blend_moves_rates_towards_the_market():
-    f = Forecast(pd.Timestamp("2021-08-14"), "2122", "A", "B", 1, 0, lam=1.0, mu=1.0, rho=0.0,
-                 market_lam=2.0, market_mu=0.5)
-    assert f.blended(1.0) == (1.0, 1.0)
-    assert f.blended(0.25) == pytest.approx((1.75, 0.625))
-    no_market = Forecast(pd.Timestamp("2021-08-14"), "2122", "A", "B", 1, 0, lam=1.0, mu=1.0, rho=0.0)
-    assert no_market.blended(0.0) == (1.0, 1.0)  # falls back to the model
-
-
 def test_within_one_se_picks_ties_with_the_best():
     best = np.array([1.0, 1.0, 1.0, 1.0])
     close = np.array([1.01, 0.99, 1.02, 1.0])
@@ -95,23 +86,3 @@ def test_tune_grid_keeps_current_settings_when_within_one_se():
     chosen = (table["chosen"]["xi"], table["chosen"]["l2"])
     assert chosen == (0.0019, 0.5) if table["rows"][0]["within_one_se"] else chosen == (best["xi"], best["l2"])
 
-
-def test_attach_market_rates_matches_odds_by_teams_and_date():
-    from football_ml.bench import attach_market
-    f = Forecast(pd.Timestamp("2021-08-14"), "2122", "Strong", "Weak", 3, 0, lam=2.0, mu=0.6, rho=-0.05)
-    other = Forecast(pd.Timestamp("2021-08-14"), "2122", "MidA", "MidB", 1, 1, lam=1.2, mu=1.1, rho=-0.05)
-    odds = pd.DataFrame([{"date": pd.Timestamp("2021-08-14"), "home": "Strong", "away": "Weak",
-                          "odds_home": 1.3, "odds_draw": 5.5, "odds_away": 9.0, "odds_over": 1.7, "odds_under": 2.2}])
-    with_odds, without = attach_market((f, other), odds)
-    assert with_odds.market_lam > with_odds.market_mu
-    assert without.market_lam is None
-
-
-def test_tune_blend_reports_each_weight():
-    from football_ml.bench import tune_blend
-    f = Forecast(pd.Timestamp("2021-08-14"), "2122", "A", "B", 2, 0, lam=1.0, mu=1.0, rho=0.0,
-                 market_lam=2.0, market_mu=0.5)
-    table = tune_blend((f, f, f), weights=(0.0, 0.5, 1.0))
-    assert [r["model_weight"] for r in table["rows"]] == [0.0, 0.5, 1.0]
-    assert table["best"]["model_weight"] == 0.0  # the market saw the 2-0 coming
-    assert table["with_odds"] == 3

@@ -79,11 +79,6 @@ def _predict(args) -> int:
         print(f"\nSaved to {report['path']}")
         if report.get("snapshot"):
             print(f"Player snapshot: {report['snapshot']}")
-        if report.get("odds"):
-            print(f"Odds snapshot: {report['odds']}")
-        with_odds, total = report.get("model", {}).get("fixtures_with_odds"), len(report["matches"])
-        if with_odds is not None and with_odds < total:
-            print(f"Note: {total - with_odds} of {total} fixtures had no odds yet and use the model alone")
     return 0
 
 
@@ -231,7 +226,7 @@ def _parser() -> argparse.ArgumentParser:
     backtest.add_argument("--availability", choices=AVAILABILITY_PROXIES, default=DEFAULT_BACKTEST_PROXY,
                           help="how to tell who was missing in past gameweeks")
     backtest.add_argument("--pick-strategy", choices=PICK_STRATEGIES, default=DEFAULT_PICK_STRATEGY,
-                          help="strategy compared against modal picks and the naive-favourite benchmark")
+                          help="strategy compared against modal picks")
     backtest.set_defaults(handler=_backtest)
 
     bench = sub.add_parser("bench", help="Walk-forward over past seasons, scored by log loss (plan 06)")

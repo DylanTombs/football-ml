@@ -180,7 +180,7 @@ def test_cli_rejects_unknown_pick_strategy():
 
 
 def test_cli_backtest_prints_comparisons(monkeypatch, capsys):
-    comparison = {"reference": "dixon-coles-modal", "challenger": "naive-favourite", "matches": 90,
+    comparison = {"reference": "dixon-coles-modal", "challenger": "dixon-coles-expected-points", "matches": 90,
                   "gameweeks": 9, "changed_scorelines": 30,
                   "components": {c: {"difference": 5, "per_match": 0.0556, "ci95": [-0.1, 0.2]}
                                  for c in ("total", "outcome", "scorers", "minutes")}}
@@ -190,7 +190,7 @@ def test_cli_backtest_prints_comparisons(monkeypatch, capsys):
         "availability_proxy": "live", "injury_impact": 0.0})
     assert cli.main(["backtest", "--from", "1", "--to", "1", "--availability", "live"]) == 0
     out = capsys.readouterr().out
-    assert "naive-favourite vs dixon-coles-modal" in out and "+5" in out and "[-0.10, +0.20]" in out
+    assert "dixon-coles-expected-points vs dixon-coles-modal" in out and "+5" in out and "[-0.10, +0.20]" in out
 
 
 def test_cli_predict_passes_scorer_model(monkeypatch):

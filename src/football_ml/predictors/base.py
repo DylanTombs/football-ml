@@ -10,7 +10,6 @@ from football_ml.predict.availability import TeamAvailability
 from football_ml.predict.scoreline import ScorelineSummary
 from football_ml.predict.scorers import Player
 from football_ml.predict.timing import GoalTime
-from football_ml.sources.football_data import MatchOdds
 from football_ml.sources.fpl import Fixture
 
 SIDES = ("home", "away")
@@ -66,9 +65,6 @@ class FixtureContext:
     away_form: tuple[FormResult, ...] = ()
     # P(home i, away j) behind `summary`; None only in hand-built contexts
     matrix: np.ndarray | None = field(default=None, compare=False, repr=False)
-    odds: MatchOdds | None = None  # pre-closing market odds, when known
-    model_rates: tuple[float, float] | None = None  # Dixon-Coles (λ, μ) before blending
-    market_rates: tuple[float, float] | None = None  # (λ, μ) implied by the odds (plan 06)
     # plan 05 expected goals per player id; None when no scorer model was built
     home_scoring_rates: Mapping[int, float] | None = field(default=None, compare=False)
     away_scoring_rates: Mapping[int, float] | None = field(default=None, compare=False)
@@ -120,10 +116,6 @@ def scoreline_probability(ctx: FixtureContext, home_goals: int, away_goals: int)
     return float(ctx.matrix[home_goals, away_goals])
 
 
-def _rates_json(rates: tuple[float, float] | None) -> dict | None:
-    return None if rates is None else {"home": round(rates[0], 3), "away": round(rates[1], 3)}
-
-
 def match_json(ctx: FixtureContext, prediction: MatchPrediction) -> dict:
     """One match of a report. probabilities / expected_goals / top_scorelines are
     always the Dixon-Coles model's, whichever predictor made the prediction."""
@@ -142,7 +134,6 @@ def match_json(ctx: FixtureContext, prediction: MatchPrediction) -> dict:
         "expected_goals": {
             "home": round(s.expected_home_goals, 2), "away": round(s.expected_away_goals, 2),
         },
-        "rates": {"model": _rates_json(ctx.model_rates), "market": _rates_json(ctx.market_rates)},
         "top_scorelines": [
             {"score": f"{t.home_goals}-{t.away_goals}", "probability": round(t.probability, 4)}
             for t in s.top_scorelines

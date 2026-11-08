@@ -82,47 +82,6 @@
     }
   },
   {
-    "reference": "dixon-coles-modal",
-    "challenger": "naive-favourite",
-    "matches": 100,
-    "gameweeks": 10,
-    "changed_scorelines": 48,
-    "components": {
-      "total": {
-        "difference": 12,
-        "per_match": 0.12,
-        "ci95": [
-          -0.07,
-          0.32
-        ]
-      },
-      "outcome": {
-        "difference": -8,
-        "per_match": -0.08,
-        "ci95": [
-          -0.23,
-          0.06
-        ]
-      },
-      "scorers": {
-        "difference": 10,
-        "per_match": 0.1,
-        "ci95": [
-          0.04,
-          0.17
-        ]
-      },
-      "minutes": {
-        "difference": 10,
-        "per_match": 0.1,
-        "ci95": [
-          0.02,
-          0.19
-        ]
-      }
-    }
-  },
-  {
     "reference": "dixon-coles-expected-points",
     "challenger": "dixon-coles-expected-points-chance",
     "matches": 100,

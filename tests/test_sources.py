@@ -95,47 +95,7 @@ def test_fetch_results_combines_leagues_and_seasons(monkeypatch):
     assert set(df["league"]) == {"E0", "E1"} and set(df["season"]) == {"2526", "2627"}
 
 
-# --- odds (plan 04) ---------------------------------------------------------------
-
-import pandas as pd  # noqa: E402
-
-from football_ml.sources.football_data import MatchOdds, odds_for, parse_odds  # noqa: E402
-
-ODDS_CSV = (
-    "﻿Div,Date,HomeTeam,AwayTeam,FTHG,FTAG,AvgH,AvgD,AvgA,Avg>2.5,Avg<2.5,AvgCH,AvgCD,AvgCA\n"
-    "E0,21/08/2026,Arsenal,Coventry,3,0,1.30,5.50,9.00,1.70,2.20,1.20,6.00,12.0\n"
-    "E0,22/08/2026,Hull,Man United,1,1,4.00,3.60,1.90,,,4.2,3.5,1.8\n"
-    "E0,23/08/2026,Spurs,Leeds,,,,,,,,,,\n"
-)
-
-
-def test_parse_odds_keeps_pre_closing_columns_only():
-    df = parse_odds(ODDS_CSV)
-    assert len(df) == 2  # no 1X2 odds → dropped
-    first = odds_for(df, "Arsenal", "Coventry", pd.Timestamp("2026-08-21T19:00Z"))
-    assert first == MatchOdds(home=1.30, draw=5.50, away=9.00, over_2_5=1.70, under_2_5=2.20)
-
-
-def test_odds_for_missing_over_under_and_unknown_fixture():
-    df = parse_odds(ODDS_CSV)
-    hull = odds_for(df, "Hull", "Man United", pd.Timestamp("2026-08-22T14:00Z"))
-    assert hull.over_2_5 is None and hull.over_probability is None
-    assert odds_for(df, "Arsenal", "Coventry", pd.Timestamp("2027-02-01T15:00Z")) is None  # return fixture
-    assert odds_for(df, "Leeds", "Hull", pd.Timestamp("2026-08-21T15:00Z")) is None
-
-
-def test_match_odds_favourite_and_over_probability():
-    odds = MatchOdds(home=1.30, draw=5.50, away=9.00, over_2_5=1.70, under_2_5=2.20)
-    assert odds.favourite == "home"
-    assert odds.over_probability == pytest.approx((1 / 1.7) / (1 / 1.7 + 1 / 2.2))
-    assert MatchOdds(3.0, 3.0, 2.0, None, None).favourite == "away"
-
-
-def test_parse_odds_without_odds_columns_is_empty():
-    assert parse_odds(CSV).empty
-
-
-def test_parse_odds_can_keep_one_league():
-    csv = ODDS_CSV + "E1,22/08/2026,Hull,Leeds,,,2.0,3.4,3.8,1.9,1.9,,,\n"
-    assert len(parse_odds(csv)) == 3
-    assert list(parse_odds(csv, league="E0")["home"]) == ["Arsenal", "Hull"]
+def test_parse_results_survives_a_latin1_decoded_bom():
+    """football-data serves a UTF-8 BOM but labels files Latin-1."""
+    from football_ml.sources.football_data import parse_results
+    assert len(parse_results("\u00ef\u00bb\u00bf" + CSV)) == len(parse_results(CSV))

@@ -6,7 +6,7 @@
     "pick_strategy": "expected-points",
     "scorer_model": "chance"
   },
-  "generated_at": "2026-11-08T21:25:35.287275+00:00",
+  "generated_at": "2026-11-08T21:29:39.479071+00:00",
   "model": {
     "name": "dixon-coles",
     "trained_until": "2026-09-04",
@@ -14,8 +14,7 @@
     "rho": -0.056,
     "goal_time_samples": 62,
     "injury_impact": 0.0,
-    "scorer_profiles": 432,
-    "odds_model_weight": 1.0
+    "scorer_profiles": 432
   },
   "matches": [
     {
@@ -73,13 +72,6 @@
       "expected_goals": {
         "home": 1.21,
         "away": 2.33
-      },
-      "rates": {
-        "model": {
-          "home": 1.209,
-          "away": 2.334
-        },
-        "market": null
       },
       "top_scorelines": [
         {
@@ -166,13 +158,6 @@
         "home": 1.76,
         "away": 1.25
       },
-      "rates": {
-        "model": {
-          "home": 1.758,
-          "away": 1.251
-        },
-        "market": null
-      },
       "top_scorelines": [
         {
           "score": "1-1",
@@ -257,13 +242,6 @@
       "expected_goals": {
         "home": 1.67,
         "away": 0.83
-      },
-      "rates": {
-        "model": {
-          "home": 1.669,
-          "away": 0.827
-        },
-        "market": null
       },
       "top_scorelines": [
         {
@@ -350,13 +328,6 @@
         "home": 1.66,
         "away": 1.15
       },
-      "rates": {
-        "model": {
-          "home": 1.661,
-          "away": 1.151
-        },
-        "market": null
-      },
       "top_scorelines": [
         {
           "score": "1-1",
@@ -437,13 +408,6 @@
       "expected_goals": {
         "home": 1.43,
         "away": 1.07
-      },
-      "rates": {
-        "model": {
-          "home": 1.43,
-          "away": 1.072
-        },
-        "market": null
       },
       "top_scorelines": [
         {
@@ -537,13 +501,6 @@
         "home": 2.87,
         "away": 0.73
       },
-      "rates": {
-        "model": {
-          "home": 2.871,
-          "away": 0.728
-        },
-        "market": null
-      },
       "top_scorelines": [
         {
           "score": "2-0",
@@ -623,13 +580,6 @@
       "expected_goals": {
         "home": 1.62,
         "away": 1.22
-      },
-      "rates": {
-        "model": {
-          "home": 1.621,
-          "away": 1.216
-        },
-        "market": null
       },
       "top_scorelines": [
         {
@@ -724,13 +674,6 @@
         "home": 0.98,
         "away": 1.87
       },
-      "rates": {
-        "model": {
-          "home": 0.975,
-          "away": 1.866
-        },
-        "market": null
-      },
       "top_scorelines": [
         {
           "score": "1-1",
@@ -798,13 +741,6 @@
       "expected_goals": {
         "home": 1.25,
         "away": 1.27
-      },
-      "rates": {
-        "model": {
-          "home": 1.253,
-          "away": 1.266
-        },
-        "market": null
       },
       "top_scorelines": [
         {
@@ -885,13 +821,6 @@
       "expected_goals": {
         "home": 1.99,
         "away": 0.83
-      },
-      "rates": {
-        "model": {
-          "home": 1.988,
-          "away": 0.833
-        },
-        "market": null
       },
       "top_scorelines": [
         {

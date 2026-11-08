@@ -6,7 +6,7 @@ before that Monday, so no forecast sees its own week or later."""
 
 import logging
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
@@ -14,9 +14,7 @@ import pandas as pd
 from football_ml.config import BENCH_LEAGUE, MAX_GOALS, POINTS_CORRECT_RESULT, POINTS_EXACT_SCORE
 from football_ml.evaluate.forecast import exact_log_loss, outcome_log_loss, outcome_of, outcome_probabilities, rps
 from football_ml.model.dixon_coles import fit, matrix_from_rates
-from football_ml.model.market import rates_from_odds
 from football_ml.predict.scoreline import summarise
-from football_ml.sources.football_data import odds_for
 
 log = logging.getLogger(__name__)
 
@@ -32,15 +30,6 @@ class Forecast:
     lam: float
     mu: float
     rho: float
-    market_lam: float | None = None
-    market_mu: float | None = None
-
-    def blended(self, model_weight: float) -> tuple[float, float]:
-        """λ = w × model + (1 − w) × market; the model alone without market rates."""
-        if self.market_lam is None or self.market_mu is None:
-            return self.lam, self.mu
-        w = model_weight
-        return w * self.lam + (1 - w) * self.market_lam, w * self.mu + (1 - w) * self.market_mu
 
 
 def week_start(dates: pd.Series) -> pd.Series:
@@ -68,8 +57,8 @@ def walk_forward(
     return tuple(forecasts)
 
 
-def _scores(f: Forecast, model_weight: float) -> dict:
-    lam, mu = f.blended(model_weight)
+def _scores(f: Forecast) -> dict:
+    lam, mu = f.lam, f.mu
     matrix = matrix_from_rates(lam, mu, f.rho, MAX_GOALS)
     probs = outcome_probabilities(matrix)
     outcome = outcome_of(f.home_goals, f.away_goals)
@@ -86,14 +75,14 @@ def _scores(f: Forecast, model_weight: float) -> dict:
     }
 
 
-def per_match_log_loss(forecasts: Sequence[Forecast], model_weight: float = 1.0) -> np.ndarray:
-    return np.array([_scores(f, model_weight)["exact_log_loss"] for f in forecasts])
+def per_match_log_loss(forecasts: Sequence[Forecast]) -> np.ndarray:
+    return np.array([_scores(f)["exact_log_loss"] for f in forecasts])
 
 
-def forecast_metrics(forecasts: Sequence[Forecast], model_weight: float = 1.0) -> dict:
+def forecast_metrics(forecasts: Sequence[Forecast]) -> dict:
     """Mean log losses and RPS, modal-pick outcome points, and calibration of
     total goals and draws (predicted vs actual)."""
-    rows = [_scores(f, model_weight) for f in forecasts]
+    rows = [_scores(f) for f in forecasts]
     mean = lambda key: float(np.mean([r[key] for r in rows]))  # noqa: E731
     return {
         "matches": len(rows),
@@ -142,29 +131,3 @@ def tune(
     chosen = next((r for r in rows if (r["xi"], r["l2"]) == tuple(current) and r["within_one_se"]), best)
     return {"seasons": list(seasons), "rows": rows, "best": best, "chosen": chosen}
 
-
-def attach_market(forecasts: Sequence[Forecast], odds: pd.DataFrame) -> tuple[Forecast, ...]:
-    """Add market rates (pre-closing odds → λ, μ) where the match has odds."""
-    def with_market(f: Forecast) -> Forecast:
-        match = odds_for(odds, f.home, f.away, f.date)
-        if match is None:
-            return f
-        try:
-            lam, mu = rates_from_odds(match, f.rho)
-        except (ValueError, RuntimeError) as exc:
-            log.warning("No market rates for %s v %s on %s: %s", f.home, f.away, f.date.date(), exc)
-            return f
-        return replace(f, market_lam=lam, market_mu=mu)
-    return tuple(with_market(f) for f in forecasts)
-
-
-def tune_blend(forecasts: Sequence[Forecast], weights: Sequence[float]) -> dict:
-    """λ = w × model + (1 − w) × market for each w, on exact-score log loss."""
-    losses = {w: per_match_log_loss(forecasts, w) for w in weights}
-    close = within_one_se(losses)
-    rows = [{"model_weight": w, **forecast_metrics(forecasts, w), "within_one_se": w in close} for w in weights]
-    return {
-        "rows": rows,
-        "best": min(rows, key=lambda r: r["exact_log_loss"]),
-        "with_odds": sum(f.market_lam is not None for f in forecasts),
-    }
