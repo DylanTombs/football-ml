@@ -92,3 +92,34 @@ def test_leaderboard_ranks_by_points_then_exact_scores():
 def test_score_gameweek_rejects_report_without_matches():
     with pytest.raises(ValueError):
         score_gameweek({"gameweek": 1, "predictor": "x"}, ())
+
+
+def _with_rates(report, lam=1.8, mu=0.7, rho=-0.04):
+    return {**report, "matches": [{**m, "rates": {"home": lam, "away": mu, "rho": rho}} for m in report["matches"]]}
+
+
+def test_log_loss_of_the_actual_score_is_recorded_when_rates_exist():
+    import math
+    from football_ml.config import MAX_GOALS
+    from football_ml.model.dixon_coles import matrix_from_rates
+    result = score_gameweek(_with_rates(REPORT), ACTUAL)
+    expected = -math.log(matrix_from_rates(1.8, 0.7, -0.04, MAX_GOALS)[2, 0])
+    assert result["matches"][0]["log_loss"] == pytest.approx(expected, abs=1e-4)
+    assert result["totals"]["log_loss_sum"] == pytest.approx(expected, abs=1e-4)
+    assert result["totals"]["log_loss_matches"] == 1
+
+
+def test_reports_without_rates_have_no_log_loss():
+    result = score_gameweek(REPORT, ACTUAL)  # e.g. GW10, predicted before rates were saved
+    assert result["matches"][0]["log_loss"] is None
+    assert result["totals"]["log_loss_matches"] == 0
+
+
+def test_season_table_averages_log_loss_over_matches_that_have_it():
+    with_rates = score_gameweek(_with_rates(REPORT), ACTUAL)
+    without = {**score_gameweek(REPORT, ACTUAL), "gameweek": 4}
+    table = season_table([with_rates, without])
+    row = table["dixon-coles"]
+    assert row["log_loss_matches"] == 1
+    assert row["log_loss"] == pytest.approx(with_rates["totals"]["log_loss_sum"])
+    assert season_table([without])["dixon-coles"]["log_loss"] is None

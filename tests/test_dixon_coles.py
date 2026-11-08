@@ -132,3 +132,79 @@ def test_fit_with_gradient_reaches_the_same_optimum():
                     bounds=[(None, None)] * (2 * n + 1) + [(-0.2, 0.2)])
     assert _objective(np.concatenate([fast.attack, fast.defence, [fast.home_advantage, fast.rho]]), *args) \
         <= slow.fun + 1e-6
+
+
+# --- plan 07: structure extras ------------------------------------------------
+
+@pytest.mark.parametrize("seed", [0, 1])
+def test_gradient_with_extra_parameters_matches_finite_differences(seed):
+    from scipy.optimize import approx_fprime
+    from football_ml.model.dixon_coles import _gradient, _objective
+    n, h, a, hg, ag, w = _problem(seed)
+    rng = np.random.default_rng(seed + 20)
+    k = 3
+    x_lam = rng.integers(0, 2, (len(h), k)).astype(float)
+    x_mu = rng.integers(0, 2, (len(h), k)).astype(float)
+    pen = np.array([0.0, 0.5, 2.0])
+    theta = np.concatenate([rng.normal(0, 0.3, 2 * n), [0.25, -0.08], rng.normal(0, 0.2, k)])
+    args = (n, h, a, hg, ag, w, 0.5, x_lam, x_mu, pen)
+    numeric = approx_fprime(theta, _objective, 1e-7, *args)
+    np.testing.assert_allclose(_gradient(theta, *args), numeric, rtol=1e-4, atol=1e-4)
+
+
+def _two_leagues():
+    """Same four teams; 'E1' games are much higher scoring and have no home edge."""
+    base = _synthetic_results(16)
+    e0 = base.assign(league="E0", season="2526")
+    e1 = base.assign(league="E1", season="2526", date=base["date"] + pd.Timedelta(days=1),
+                     home_goals=base["home_goals"] + 1, away_goals=base["away_goals"] + 2)
+    return pd.concat([e0, e1], ignore_index=True)
+
+
+def test_per_league_structure_learns_a_league_offset():
+    from football_ml.model.dixon_coles import Structure
+    results = _two_leagues()
+    params = fit(results, pd.Timestamp("2026-06-01"), structure=Structure(per_league=True))
+    extras = dict(params.extras)
+    assert extras["league:E1"] > 0.3
+    assert extras["home:E1"] < 0
+    e0 = params.expected_goals("MidA", "MidB")
+    e1 = params.expected_goals("MidA", "MidB", league="E1")
+    assert e1[0] > e0[0] and e1[1] > e0[1]
+
+
+def test_season_home_advantage_tracks_each_season():
+    from football_ml.model.dixon_coles import Structure
+    old = _synthetic_results(16).assign(league="E0", season="2425")
+    flat = old.assign(season="2526", date=old["date"] + pd.Timedelta(days=400),
+                      home_goals=old["away_goals"], away_goals=old["home_goals"])  # roles swapped: no home edge overall
+    results = pd.concat([old, flat], ignore_index=True)
+    params = fit(results, pd.Timestamp("2027-06-01"), structure=Structure(season_home=True, season_home_l2=0.1))
+    extras = dict(params.extras)
+    assert extras["home_season:2425"] > extras["home_season:2526"]
+    assert params.expected_goals("MidA", "MidB", season="2425")[0] > params.expected_goals("MidA", "MidB", season="2526")[0]
+    # an unseen season uses the latest one
+    assert params.expected_goals("MidA", "MidB", season="2627") == params.expected_goals("MidA", "MidB", season="2526")
+
+
+def test_structure_needs_league_and_season_columns():
+    from football_ml.model.dixon_coles import Structure
+    with pytest.raises(ValueError, match="league"):
+        fit(_synthetic_results(), pd.Timestamp("2026-01-01"), structure=Structure(per_league=True))
+
+
+def test_default_structure_has_no_extras(params):
+    assert params.extras == ()
+
+
+def test_season_level_tracks_each_seasons_scoring():
+    from football_ml.model.dixon_coles import Structure
+    low = _synthetic_results(16).assign(league="E0", season="2425")
+    high = low.assign(season="2526", date=low["date"] + pd.Timedelta(days=400),
+                      home_goals=low["home_goals"] + 2, away_goals=low["away_goals"] + 2)
+    params = fit(pd.concat([low, high], ignore_index=True), pd.Timestamp("2027-06-01"),
+                 structure=Structure(season_level=True, season_level_l2=0.1))
+    extras = dict(params.extras)
+    assert extras["season:2526"] > extras["season:2425"]
+    hi, lo = params.expected_goals("MidA", "MidB", season="2526"), params.expected_goals("MidA", "MidB", season="2425")
+    assert hi[0] > lo[0] and hi[1] > lo[1]

@@ -9,12 +9,17 @@ from pathlib import Path
 import pandas as pd
 
 from football_ml.config import (
+    CURRENT_SEASON,
     INJURY_IMPACT,
     PREDICTIONS_DIR,
+    RATING_L2_PENALTY,
     SNAPSHOTS_DIR,
+    TIME_DECAY_XI,
     TRAINING_SEASONS,
 )
-from football_ml.model.dixon_coles import DixonColesParams, fit
+from football_ml.model.dixon_coles import DixonColesParams
+from football_ml.model.shots import fit_team_model
+from football_ml.model.structure import VARIANTS, Structure, label
 from football_ml.predict.scorers import Player
 from football_ml.predict.scoring_chance import ScorerModel, build_scorer_model, penalty_goals
 from football_ml.predict.timing import GoalTime, parse_clock
@@ -112,14 +117,16 @@ class GameweekContext:
     fixtures: tuple[FixtureContext, ...]
 
 
-def gameweek_context(gameweek: int, inputs: SeasonInputs, injury_impact: float = INJURY_IMPACT) -> GameweekContext:
+def gameweek_context(
+    gameweek: int, inputs: SeasonInputs, injury_impact: float = INJURY_IMPACT, structure: Structure = Structure(),
+) -> GameweekContext:
     fixtures = fpl.parse_fixtures(inputs.raw_fixtures, inputs.bootstrap, gameweek)
     if not fixtures:
         raise ValueError(f"No fixtures with kickoff times found for gameweek {gameweek}")
 
     first_kickoff = min(f.kickoff for f in fixtures)
     cutoff = first_kickoff.tz_convert(None).normalize()
-    params = fit(inputs.results, reference_date=cutoff)
+    params = fit_team_model(inputs.results, cutoff, xi=TIME_DECAY_XI, l2=RATING_L2_PENALTY, structure=structure)
     distribution = goal_distribution(inputs.goal_events, before=first_kickoff)
     model = {
         "name": "dixon-coles",
@@ -128,6 +135,8 @@ def gameweek_context(gameweek: int, inputs: SeasonInputs, injury_impact: float =
         "rho": round(params.rho, 3),
         "goal_time_samples": len(distribution),
         "injury_impact": injury_impact,
+        "structure": label(structure),
+        "extras": {name: round(value, 4) for name, value in params.extras},
     }
     scorers = scorer_model(gameweek, inputs, before=first_kickoff)
     if scorers is not None:
@@ -135,7 +144,7 @@ def gameweek_context(gameweek: int, inputs: SeasonInputs, injury_impact: float =
     contexts = tuple(
         fixture_context(
             gameweek, f, params, inputs.players, distribution, injury_impact, inputs.results,
-            scorer_model=scorers,
+            scorer_model=scorers, season=CURRENT_SEASON,
         )
         for f in sorted(fixtures, key=lambda f: f.kickoff)
     )
@@ -180,9 +189,12 @@ def run_gameweek(
     predictions_dir: Path = PREDICTIONS_DIR,
     snapshots_dir: Path = SNAPSHOTS_DIR,
     now: pd.Timestamp | None = None,
+    variants: Mapping[str, Structure] = VARIANTS,
 ) -> list[dict]:
     """Snapshot FPL player state (before the deadline only), then predict the
-    gameweek with every predictor, building the shared context once."""
+    gameweek with every predictor, building the shared context once. Each
+    Dixon-Coles predictor is also run on every model variant (plan 07 shadow
+    variants) as `<name>-<variant>`."""
     needs_histories = any(getattr(p, "scorer_model", None) == "chance" for p in predictors)
     inputs = load_season_inputs(with_histories=needs_histories)
     number = gameweek or fpl.next_gameweek(inputs.bootstrap)
@@ -190,11 +202,21 @@ def run_gameweek(
     snapshot = write_snapshot(inputs.bootstrap, number, now, snapshots_dir)
     if snapshot:
         log.info("Wrote %s", snapshot)
-    gw = gameweek_context(number, inputs)
+    runs = [(gameweek_context(number, inputs), predictor, None) for predictor in predictors]
+    dixon_coles = [p for p in predictors if isinstance(p, DixonColesPredictor)]
+    for name, structure in variants.items():
+        try:
+            context = gameweek_context(number, inputs, structure=structure)
+        except (ValueError, KeyError, RuntimeError) as exc:  # a shadow variant must never block the prediction
+            log.warning("Skipping model variant '%s': %s", name, exc)
+            continue
+        runs += [(context, DixonColesPredictor(p.pick_strategy, name=f"{p.name}-{name}", scorer_model=p.scorer_model), p.name)
+                 for p in dixon_coles]
     reports = []
-    for predictor in predictors:
-        report = predictor_report(gw, predictor)
+    for context, predictor, variant_of in runs:
+        report = predictor_report(context, predictor)
         path = write_report(report, predictions_dir)
         log.info("Wrote %s", path)
-        reports.append({**report, "path": str(path), "snapshot": str(snapshot) if snapshot else None})
+        reports.append({**report, "path": str(path), "snapshot": str(snapshot) if snapshot else None,
+                        **({"variant_of": variant_of} if variant_of else {})})
     return reports

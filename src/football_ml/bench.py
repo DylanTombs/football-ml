@@ -6,14 +6,16 @@ before that Monday, so no forecast sees its own week or later."""
 
 import logging
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 import numpy as np
 import pandas as pd
 
 from football_ml.config import BENCH_LEAGUE, MAX_GOALS, POINTS_CORRECT_RESULT, POINTS_EXACT_SCORE
 from football_ml.evaluate.forecast import exact_log_loss, outcome_log_loss, outcome_of, outcome_probabilities, rps
-from football_ml.model.dixon_coles import fit, matrix_from_rates
+from football_ml.model.dixon_coles import matrix_from_rates
+from football_ml.model.shots import fit_team_model
+from football_ml.model.structure import Structure, label
 from football_ml.predict.scoreline import summarise
 
 log = logging.getLogger(__name__)
@@ -39,16 +41,17 @@ def week_start(dates: pd.Series) -> pd.Series:
 
 def walk_forward(
     results: pd.DataFrame, seasons: Sequence[str], xi: float, l2: float, league: str = BENCH_LEAGUE,
+    structure: Structure = Structure(),
 ) -> tuple[Forecast, ...]:
     """Model rates for every `league` match of `seasons`, refitting weekly."""
     tests = results[(results["league"] == league) & results["season"].isin(seasons)]
     tests = tests.assign(cutoff=week_start(tests["date"]))
     forecasts: list[Forecast] = []
     for cutoff, week in tests.groupby("cutoff", sort=True):
-        params = fit(results, reference_date=cutoff, xi=xi, l2=l2)
+        params = fit_team_model(results, cutoff, xi=xi, l2=l2, structure=structure)
         for row in week.itertuples():
             try:
-                lam, mu = params.expected_goals(row.home, row.away)
+                lam, mu = params.expected_goals(row.home, row.away, league=row.league, season=row.season)
             except KeyError as exc:
                 log.warning("Skipping %s v %s on %s: %s", row.home, row.away, row.date.date(), exc)
                 continue
@@ -109,10 +112,14 @@ def within_one_se(losses: Mapping[str, np.ndarray]) -> set[str]:
     return {name for name in losses if close(name)}
 
 
-def run_bench(results: pd.DataFrame, seasons: Sequence[str], xi: float, l2: float) -> dict:
-    forecasts = walk_forward(results, seasons, xi, l2)
-    return {"label": f"xi{xi}-l2{l2}", "seasons": list(seasons), "xi": xi, "l2": l2,
-            "metrics": forecast_metrics(forecasts)}
+def run_bench(
+    results: pd.DataFrame, seasons: Sequence[str], xi: float, l2: float, structure: Structure = Structure(),
+) -> dict:
+    forecasts = walk_forward(results, seasons, xi, l2, structure=structure)
+    suffix = "" if label(structure) == "base" else f"-{label(structure)}"
+    return {"label": f"xi{xi}-l2{l2}{suffix}", "seasons": list(seasons), "xi": xi, "l2": l2,
+            "structure": asdict(structure), "metrics": forecast_metrics(forecasts),
+            "per_match_log_loss": [round(x, 6) for x in per_match_log_loss(forecasts)]}
 
 
 def tune(

@@ -14,6 +14,8 @@ _COLUMNS = {
     "FTHG": "home_goals",
     "FTAG": "away_goals",
 }
+# Optional: shots on target (plan 07 shots variant). Missing values never drop a result.
+_SHOT_COLUMNS = {"HST": "home_sot", "AST": "away_sot"}
 
 
 def parse_results(csv_text: str) -> pd.DataFrame:
@@ -24,10 +26,12 @@ def parse_results(csv_text: str) -> pd.DataFrame:
         raise ValueError(f"football-data CSV missing columns: {sorted(missing)}")
 
     df = raw[list(_COLUMNS)].rename(columns=_COLUMNS).dropna()
+    shots = {c: raw.loc[df.index, c] if c in raw.columns else float("nan") for c in _SHOT_COLUMNS}
     return df.assign(
         date=pd.to_datetime(df["date"], dayfirst=True, format="mixed"),
         home_goals=df["home_goals"].astype(int),
         away_goals=df["away_goals"].astype(int),
+        **{name: pd.to_numeric(shots[col], errors="coerce") for col, name in _SHOT_COLUMNS.items()},
     ).reset_index(drop=True)
 
 

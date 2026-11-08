@@ -13,7 +13,7 @@ CSV = (
 
 def test_parse_results_normalises_columns_and_drops_incomplete_rows():
     df = parse_results(CSV)
-    assert list(df.columns) == ["date", "home", "away", "home_goals", "away_goals"]
+    assert list(df.columns) == ["date", "home", "away", "home_goals", "away_goals", "home_sot", "away_sot"]
     assert len(df) == 2
     assert df.iloc[0]["home"] == "Arsenal"
     assert df.iloc[0]["home_goals"] == 3
@@ -99,3 +99,14 @@ def test_parse_results_survives_a_latin1_decoded_bom():
     """football-data serves a UTF-8 BOM but labels files Latin-1."""
     from football_ml.sources.football_data import parse_results
     assert len(parse_results("\u00ef\u00bb\u00bf" + CSV)) == len(parse_results(CSV))
+
+
+def test_parse_results_keeps_shots_on_target_when_present():
+    csv = ("Div,Date,HomeTeam,AwayTeam,FTHG,FTAG,HST,AST\n"
+           "E0,21/08/2026,Arsenal,Coventry,3,0,8,2\n"
+           "E0,22/08/2026,Hull,Man United,1,1,,\n")
+    df = parse_results(csv)
+    assert len(df) == 2  # missing shots never drop a result
+    assert (df.loc[0, "home_sot"], df.loc[0, "away_sot"]) == (8, 2)
+    assert df["home_sot"].isna().iloc[1]
+    assert parse_results(CSV)["home_sot"].isna().all()

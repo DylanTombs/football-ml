@@ -65,6 +65,8 @@ class FixtureContext:
     away_form: tuple[FormResult, ...] = ()
     # P(home i, away j) behind `summary`; None only in hand-built contexts
     matrix: np.ndarray | None = field(default=None, compare=False, repr=False)
+    # (λ, μ, ρ) the matrix was built from; saved so `score` can compute log loss (plan 07)
+    rates: tuple[float, float, float] | None = field(default=None, compare=False)
     # plan 05 expected goals per player id; None when no scorer model was built
     home_scoring_rates: Mapping[int, float] | None = field(default=None, compare=False)
     away_scoring_rates: Mapping[int, float] | None = field(default=None, compare=False)
@@ -134,6 +136,8 @@ def match_json(ctx: FixtureContext, prediction: MatchPrediction) -> dict:
         "expected_goals": {
             "home": round(s.expected_home_goals, 2), "away": round(s.expected_away_goals, 2),
         },
+        **({"rates": {"home": round(ctx.rates[0], 4), "away": round(ctx.rates[1], 4), "rho": round(ctx.rates[2], 4)}}
+           if ctx.rates else {}),
         "top_scorelines": [
             {"score": f"{t.home_goals}-{t.away_goals}", "probability": round(t.probability, 4)}
             for t in s.top_scorelines

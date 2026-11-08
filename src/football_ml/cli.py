@@ -8,6 +8,7 @@ import sys
 
 from football_ml.backtest import run_backtest
 from football_ml.bench import run_bench, tune
+from football_ml.model.structure import Structure
 from football_ml.config import (
     AVAILABILITY_PROXIES,
     BENCH_DIR,
@@ -24,6 +25,8 @@ from football_ml.config import (
     RATING_L2_PENALTY,
     RESULTS_DIR,
     SCORER_MODELS,
+    SEASON_HOME_L2,
+    SEASON_LEVEL_L2,
     TIME_DECAY_XI,
     TRAINING_SEASONS,
 )
@@ -62,6 +65,7 @@ def _totals_line(t: dict) -> str:
         f"{t['points']} pts | {t['exact_scores']} exact, {t['correct_results']}/{t['matches']} results,"
         f" {t['scorer_hits']} scorers, {t['minute_hits']} minutes"
         + (f", {t['fallbacks']} fallbacks" if t.get("fallbacks") else "")
+        + (f", log loss {t['log_loss_sum'] / t['log_loss_matches']:.3f}" if t.get("log_loss_matches") else "")
     )
 
 
@@ -69,16 +73,36 @@ def _leaderboard_lines(table: dict) -> list[str]:
     return [f"{rank}. {name:<12} {_totals_line(row)}" for rank, (name, row) in enumerate(leaderboard(table), 1)]
 
 
+def _variant_lines(main: dict, variant: dict) -> list[str]:
+    """Plan 07 shadow variants: only the matches whose scoreline differs from the main prediction."""
+    name = variant["predictor"].removeprefix(f"{variant['variant_of']}-")
+    main_scores = {m["fixture_id"]: m["prediction"]["score"] for m in main["matches"]}
+    lines = []
+    for m in variant["matches"]:
+        score, base = m["prediction"]["score"], main_scores.get(m["fixture_id"])
+        if base and score != base:
+            lines.append(f"  {name}: {m['home']} {score['home']}-{score['away']} {m['away']}"
+                         f" (main {base['home']}-{base['away']})")
+    return lines or [f"  {name}: same scorelines as the main prediction"]
+
+
 def _predict(args) -> int:
     predictors = build_predictors(args.predictors, env=os.environ, pick_strategy=args.pick_strategy,
                                   scorer_model=args.scorer_model)
-    for report in run_gameweek(args.gameweek, predictors):
+    reports = run_gameweek(args.gameweek, predictors)
+    by_name = {r["predictor"]: r for r in reports}
+    for report in (r for r in reports if not r.get("variant_of")):
         print(f"\nGameweek {report['gameweek']}: {report['predictor']}\n")
         for match in report["matches"]:
             print(_format_match(match))
         print(f"\nSaved to {report['path']}")
         if report.get("snapshot"):
             print(f"Player snapshot: {report['snapshot']}")
+    variants = [r for r in reports if r.get("variant_of")]
+    if variants:
+        print("\nModel variants (shadow, plan 07), where they differ:")
+        for variant in variants:
+            print("\n".join(_variant_lines(by_name[variant["variant_of"]], variant)))
     return 0
 
 
@@ -171,8 +195,10 @@ def _bench(args) -> int:
               f" (* = within one SE of the best)")
         print(f"Saved to {_write_bench(f'grid-{args.seasons}', table)}")
         return 0
-    summary = run_bench(results, seasons, xi=args.xi, l2=args.l2)
-    print(f"\nBench {args.seasons} {', '.join(seasons)} (xi {args.xi}, l2 {args.l2})")
+    structure = Structure(per_league=args.per_league, season_home=args.season_home, season_home_l2=args.season_home_l2,
+                          season_level=args.season_level, season_level_l2=args.season_level_l2)
+    summary = run_bench(results, seasons, xi=args.xi, l2=args.l2, structure=structure)
+    print(f"\nBench {args.seasons} {', '.join(seasons)} ({summary['label']})")
     print(_metrics_line(summary["metrics"]))
     path = _write_bench(f"{args.seasons}-{summary['label']}", summary)
     print(f"Saved to {path}")
@@ -235,6 +261,13 @@ def _parser() -> argparse.ArgumentParser:
     bench.add_argument("--xi", type=float, default=TIME_DECAY_XI, help="time decay per day")
     bench.add_argument("--l2", type=float, default=RATING_L2_PENALTY, help="ridge penalty on ratings")
     bench.add_argument("--grid", action="store_true", help="tune xi and l2 over the grid in config")
+    bench.add_argument("--per-league", action="store_true", help="plan 07: own scoring level + home edge per league")
+    bench.add_argument("--season-home", action="store_true", help="plan 07: home advantage per season")
+    bench.add_argument("--season-home-l2", type=float, default=SEASON_HOME_L2,
+                       help=f"ridge on each season's home advantage (default {SEASON_HOME_L2})")
+    bench.add_argument("--season-level", action="store_true", help="plan 07: scoring level per season")
+    bench.add_argument("--season-level-l2", type=float, default=SEASON_LEVEL_L2,
+                       help=f"ridge on each season's scoring level (default {SEASON_LEVEL_L2})")
     bench.set_defaults(handler=_bench)
     return parser
 

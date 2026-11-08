@@ -51,6 +51,11 @@ TIME_DECAY_XI = 0.0019
 # Ridge penalty on ratings so promoted teams with few PL games stay sane.
 RATING_L2_PENALTY = 0.5
 RHO_BOUNDS = (-0.2, 0.2)
+# Plan 07 structure tweaks (each on only if it beat the plan 06 bench and holdout).
+REFERENCE_LEAGUE = "E0"  # other leagues get their own scoring level and home edge
+SEASON_HOME_L2 = 10.0  # ridge on each season's home advantage (best of 0.1 / 1 / 10 on the bench)
+SEASON_LEVEL_L2 = 10.0  # ridge on each season's scoring level
+SHOTS_WEIGHT = 0.5  # shots variant: log λ = (1 − w) log λ_goals + w log λ_shots
 MAX_GOALS = 10
 TOP_SCORELINES = 3
 FORM_MATCHES = 5  # recent results given to predictors as context

@@ -10,12 +10,12 @@ ESPN scoreboard ─────┘ fixtures, squads,                            
                                        build_actual_matches(gw) ─► score_gameweek ─► out/results/gwNN/<predictor>.json + season.json
 ```
 
-Per fixture: Dixon-Coles rates λ, μ → injury adjustment (`INJURY_IMPACT`, off by default) → score matrix → pick (`--pick-strategy`):
+Per fixture: Dixon-Coles rates λ, μ (plus the plan 07 shadow variants, each fitted separately) → injury adjustment (`INJURY_IMPACT`, off by default) → score matrix → pick (`--pick-strategy`):
 
 - **expected-points** (default): the scoreline with probability ≥ `MIN_SCORELINE_PROBABILITY` worth the most expected points; scorers greedy on P(player scores ≥ k), with player goals Poisson. `--scorer-model chance` (default, plan 05): shrunk non-penalty xG per 90 × expected minutes, shared out of the side's open-play rate, plus the penalty taker's term. `weights`: (0.7 xG + 0.3 goals) share × side's expected goals. Fixed minutes from `REPEAT_PICK_MINUTES`.
 - **modal**: likeliest result, then the likeliest score within it; scorers greedy by xG + goals with a repeat decay; minutes sampled from this season's goal times, seeded by fixture id. This is `ctx.baseline`, which the LLM predictors fall back to.
 
-`predict` also writes `data/snapshots/gwNN.json` (FPL player state, before the deadline only). These files are committed.
+`predict` also writes one file per model variant (`dixon-coles-<variant>.json`, shadow, plan 07) and `data/snapshots/gwNN.json` (FPL player state, before the deadline only). These files are committed.
 
 ## Modules (`src/football_ml/`)
 
@@ -29,6 +29,7 @@ Per fixture: Dixon-Coles rates λ, μ → injury adjustment (`INJURY_IMPACT`, of
 | `predictors/` | `base` (`Predictor`, `FixtureContext`, `MatchPrediction`, JSON), `context` (Dixon-Coles baseline + form per fixture), `dixon_coles` (pick strategy), `expected_points`, `llm` + `llm_prompt` (validation, retry, fallback), `registry` (names → predictors, API key checks) |
 | `llm/` | `LLMProvider` protocol, `anthropic` (SDK, structured outputs), `openrouter` (GPT, Gemini…), `cache` |
 | `pipeline.py` | `SeasonInputs`, `gameweek_context`, `predictor_report`, `run_gameweek` |
+| `model/structure.py`, `model/shots.py` | Plan 07 variants: per-league, season home advantage, season scoring level (extra design-matrix terms) and the shots-on-target blend; `VARIANTS` run every predict as `dixon-coles-<name>` |
 | `bench.py` | Multi-season walk-forward (weekly refits, PL matches only), exact-score log loss / 1X2 log loss / RPS / calibration, xi-l2 grid (plan 06) |
 | `backtest.py` | Replays past gameweeks without access to later results: modal, the chosen strategy (weights), and the chance scorer model, compared with modal (and chance vs weights) |
 | `snapshots.py` | Pre-deadline FPL player snapshots and loading them back as `Player`s |

@@ -86,3 +86,19 @@ def test_tune_grid_keeps_current_settings_when_within_one_se():
     chosen = (table["chosen"]["xi"], table["chosen"]["l2"])
     assert chosen == (0.0019, 0.5) if table["rows"][0]["within_one_se"] else chosen == (best["xi"], best["l2"])
 
+
+
+def test_walk_forward_passes_the_structure_to_each_fit():
+    from football_ml.model.dixon_coles import Structure
+    plain = walk_forward(RESULTS, ("2122",), xi=0.0019, l2=0.5)
+    league = walk_forward(RESULTS, ("2122",), xi=0.0019, l2=0.5, structure=Structure(per_league=True))
+    assert len(plain) == len(league)
+    assert any(abs(a.lam - b.lam) > 1e-6 for a, b in zip(plain, league))
+
+
+def test_run_bench_labels_the_structure():
+    from football_ml.bench import run_bench
+    from football_ml.model.dixon_coles import Structure
+    summary = run_bench(RESULTS, ("2122",), xi=0.0019, l2=0.5, structure=Structure(season_home=True, season_home_l2=2.0))
+    assert summary["label"] == "xi0.0019-l20.5-season_home2.0"
+    assert summary["structure"]["season_home"] is True and summary["structure"]["season_home_l2"] == 2.0

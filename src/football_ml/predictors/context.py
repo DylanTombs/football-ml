@@ -60,18 +60,15 @@ def fixture_context(
     injury_impact: float,
     results: pd.DataFrame | None = None,
     scorer_model: ScorerModel | None = None,
+    season: str | None = None,
 ) -> FixtureContext:
     home_squad = tuple(p for p in players if p.team == fixture.home)
     away_squad = tuple(p for p in players if p.team == fixture.away)
     home_avail, away_avail = team_availability(home_squad), team_availability(away_squad)
 
-    lam, mu = params.expected_goals(fixture.home, fixture.away)
-    matrix = matrix_from_rates(
-        adjust_rate(lam, home_avail.missing_share, injury_impact),
-        adjust_rate(mu, away_avail.missing_share, injury_impact),
-        params.rho,
-        MAX_GOALS,
-    )
+    lam, mu = params.expected_goals(fixture.home, fixture.away, season=season)
+    lam, mu = adjust_rate(lam, home_avail.missing_share, injury_impact), adjust_rate(mu, away_avail.missing_share, injury_impact)
+    matrix = matrix_from_rates(lam, mu, params.rho, MAX_GOALS)
     summary = summarise(matrix, TOP_SCORELINES)
     before = fixture.kickoff.tz_convert(None).normalize()
     form = (lambda team: recent_form(results, team, before)) if results is not None else (lambda _: ())
@@ -89,6 +86,7 @@ def fixture_context(
         home_form=form(fixture.home),
         away_form=form(fixture.away),
         matrix=matrix,
+        rates=(lam, mu, params.rho),
         home_scoring_rates=rates(home_squad, fixture.home, summary.expected_home_goals),
         away_scoring_rates=rates(away_squad, fixture.away, summary.expected_away_goals),
     )

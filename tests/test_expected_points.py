@@ -126,3 +126,11 @@ def test_chance_scorer_model_needs_rates():
     with pytest.raises(ValueError, match="scorer model"):
         DixonColesPredictor("expected-points", scorer_model="vibes")
 
+
+
+def test_match_json_saves_the_rates_behind_the_matrix():
+    ctx = _context()
+    rates = match_json(ctx, ctx.baseline)["rates"]
+    lam, mu = PARAMS.expected_goals("Arsenal", "Coventry")
+    assert rates == {"home": pytest.approx(lam, abs=1e-4), "away": pytest.approx(mu, abs=1e-4),
+                     "rho": pytest.approx(PARAMS.rho, abs=1e-4)}

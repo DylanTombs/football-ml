@@ -221,3 +221,28 @@ def test_cli_bench_runs_the_walk_forward(monkeypatch, capsys, tmp_path):
     assert seen["seasons"] == ("2526",) and seen["xi"] == 0.002
     assert "3.0000" in capsys.readouterr().out
     assert (tmp_path / "holdout-x.json").exists()
+
+
+def test_cli_predict_shows_only_where_variants_differ(monkeypatch, capsys):
+    changed = {**MATCH, "prediction": {**MATCH["prediction"], "score": {"home": 1, "away": 1}}}
+    other = {**MATCH, "fixture_id": 2, "home": "Leeds", "away": "Spurs"}
+    main = {"gameweek": 11, "predictor": "dixon-coles", "matches": [{**MATCH, "fixture_id": 1}, other], "path": "p"}
+    variants = [
+        {"gameweek": 11, "predictor": "dixon-coles-season-home", "variant_of": "dixon-coles", "path": "v1",
+         "matches": [{**changed, "fixture_id": 1}, other]},
+        {"gameweek": 11, "predictor": "dixon-coles-per-league", "variant_of": "dixon-coles", "path": "v2",
+         "matches": [{**MATCH, "fixture_id": 1}, other]},
+    ]
+    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors: [main, *variants])
+    assert cli.main(["predict"]) == 0
+    out = capsys.readouterr().out
+    assert "season-home: Arsenal 1-1 Hull (main 2-0)" in out
+    assert "per-league: same scorelines as the main prediction" in out
+    assert out.count("Gameweek 11") == 1
+
+
+def test_totals_line_shows_log_loss_when_known():
+    totals = {"points": 18, "exact_scores": 2, "correct_results": 6, "matches": 10, "scorer_hits": 6,
+              "minute_hits": 2, "log_loss_sum": 29.5, "log_loss_matches": 10}
+    assert "log loss 2.950" in cli._totals_line(totals)
+    assert "log loss" not in cli._totals_line({**totals, "log_loss_matches": 0})

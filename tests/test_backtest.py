@@ -42,7 +42,8 @@ def _history():
     """Two seasons of results where home always wins 2-0."""
     dates = pd.date_range("2024-08-01", "2026-07-01", freq="7D")
     return pd.DataFrame([
-        {"date": d, "home": TEAMS[i % 4], "away": TEAMS[(i + 1) % 4], "home_goals": 2, "away_goals": 0}
+        {"date": d, "home": TEAMS[i % 4], "away": TEAMS[(i + 1) % 4], "home_goals": 2, "away_goals": 0,
+         "league": "E0", "season": "2425" if d < pd.Timestamp("2025-07-01") else "2526"}
         for i, d in enumerate(dates)
     ])
 
@@ -166,7 +167,39 @@ def test_reports_carry_no_bookmaker_data(monkeypatch, tmp_path):
     """Decided 2026-11-08: the series is a statistical model; odds are not used anywhere."""
     from football_ml import pipeline
     monkeypatch.setattr(pipeline, "load_season_inputs", lambda **_: _inputs())
-    (report,) = run_gameweek(2, (DixonColesPredictor(),), predictions_dir=tmp_path / "predictions",
-                             snapshots_dir=tmp_path / "snapshots", now=START)
-    text = json.dumps(report).lower()
+    reports = run_gameweek(2, (DixonColesPredictor(),), predictions_dir=tmp_path / "predictions",
+                           snapshots_dir=tmp_path / "snapshots", now=START)
+    text = json.dumps(reports).lower()
     assert "odds" not in text and "market" not in text
+
+
+def test_gameweek_context_fits_the_given_structure():
+    from football_ml.model.structure import Structure
+    gw = gameweek_context(2, _inputs(), structure=Structure(season_home=True, season_home_l2=10.0))
+    assert gw.model["structure"] == "season_home10.0"
+    assert any(name.startswith("home_season:") for name in gw.model["extras"])
+    assert gameweek_context(2, _inputs()).model["structure"] == "base"
+
+
+def test_run_gameweek_saves_every_model_variant_for_dixon_coles(monkeypatch, tmp_path):
+    from football_ml import pipeline
+    from football_ml.model.structure import Structure
+    monkeypatch.setattr(pipeline, "load_season_inputs", lambda **_: _inputs())
+    variants = {"season-home": Structure(season_home=True, season_home_l2=10.0)}
+    reports = run_gameweek(2, (DixonColesPredictor(),), predictions_dir=tmp_path, snapshots_dir=tmp_path / "s",
+                           now=START, variants=variants)
+    assert [r["predictor"] for r in reports] == ["dixon-coles", "dixon-coles-season-home"]
+    assert (tmp_path / "gw02" / "dixon-coles-season-home.json").exists()
+    assert reports[1]["variant_of"] == "dixon-coles"
+    assert reports[1]["predictor_config"]["scorer_model"] == reports[0]["predictor_config"]["scorer_model"]
+
+
+def test_a_failing_variant_never_blocks_the_main_prediction(monkeypatch, tmp_path, caplog):
+    from football_ml import pipeline
+    from football_ml.model.structure import Structure
+    monkeypatch.setattr(pipeline, "load_season_inputs", lambda **_: _inputs())  # history has no shots data
+    reports = run_gameweek(2, (DixonColesPredictor(),), predictions_dir=tmp_path, snapshots_dir=tmp_path / "s",
+                           now=START, variants={"shots": Structure(shots_weight=0.5),
+                                                "season-home": Structure(season_home=True)})
+    assert [r["predictor"] for r in reports] == ["dixon-coles", "dixon-coles-season-home"]
+    assert "Skipping model variant 'shots'" in caplog.text

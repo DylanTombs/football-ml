@@ -3,12 +3,26 @@
 import json
 from pathlib import Path
 
+from football_ml.config import MAX_GOALS
+from football_ml.evaluate.forecast import exact_log_loss
 from football_ml.evaluate.points import score_prediction
+from football_ml.model.dixon_coles import matrix_from_rates
 from football_ml.sources.results import ActualMatch
 
 _TOTAL_KEYS = (
     "points", "matches", "exact_scores", "correct_results", "scorer_hits", "minute_hits", "fallbacks",
+    "log_loss_sum", "log_loss_matches",
 )
+
+
+def _log_loss(predicted: dict, actual: ActualMatch) -> float | None:
+    """−log P(actual score) from the model rates saved with the prediction
+    (plan 07: separates model variants faster than points)."""
+    rates = predicted.get("rates")
+    if not rates:
+        return None
+    matrix = matrix_from_rates(rates["home"], rates["away"], rates["rho"], MAX_GOALS)
+    return round(exact_log_loss(matrix, actual.home_goals, actual.away_goals), 6)
 
 
 def _match_row(predicted: dict, actual: ActualMatch) -> dict:
@@ -31,6 +45,7 @@ def _match_row(predicted: dict, actual: ActualMatch) -> dict:
             "minutes": pts.minute_points,
             "total": pts.total,
         },
+        "log_loss": _log_loss(predicted, actual),
         "_hits": {"exact": pts.exact, "result": pts.correct_result,
                   "scorers": pts.scorer_hits, "minutes": pts.minute_hits,
                   "fallback": bool(predicted["prediction"].get("fallback", False))},
@@ -52,6 +67,8 @@ def score_gameweek(report: dict, actual: tuple[ActualMatch, ...]) -> dict:
         "scorer_hits": sum(r["_hits"]["scorers"] for r in rows),
         "minute_hits": sum(r["_hits"]["minutes"] for r in rows),
         "fallbacks": sum(r["_hits"]["fallback"] for r in rows),
+        "log_loss_sum": round(sum(r["log_loss"] for r in rows if r["log_loss"] is not None), 6),
+        "log_loss_matches": sum(r["log_loss"] is not None for r in rows),
     }
     return {
         "gameweek": report["gameweek"],
@@ -75,7 +92,10 @@ def season_table(gameweek_results: list[dict]) -> dict:
                 "by_gameweek": {**previous["by_gameweek"], str(result["gameweek"]): result["totals"]["points"]},
             },
         }
-    return table
+    return {
+        name: {**row, "log_loss": row["log_loss_sum"] / row["log_loss_matches"] if row["log_loss_matches"] else None}
+        for name, row in table.items()
+    }
 
 
 def leaderboard(table: dict) -> list[tuple[str, dict]]:
