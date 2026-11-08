@@ -40,6 +40,7 @@ Per fixture: Dixon-Coles rates λ, μ → injury adjustment (`INJURY_IMPACT`, of
 - **football-data.co.uk:** `www.` redirects to the bare domain. Only pre-closing odds (`AvgH/D/A`, `Avg>2.5`) are used; the season CSV has no odds for unplayed matches. The current season's CSV is refetched every 6 hours; past seasons are cached for good.
 - **FPL:** player stats are season-to-date only. This leaks future information into the scorer part of the backtest. Weekly snapshots exist from GW10 (plan 04); plan 05 uses them.
 - **FPL own goals:** listed under the side of the player who scored them.
+- **FPL finished flags:** `finished` waits for bonus points (often the next morning); scoring also accepts `finished_provisional`, when the score and scorers are already final.
 - **FPL availability:** only the current injury news exists, with no history. Status `u` means left or loaned out. `event/N/live/` gives per-gameweek minutes, which the backtest uses to infer past absences.
 - **ESPN:** no date-range queries, so it's one request per day, cached for good once the day is over. Own goals are credited to the team that benefits. Clocks look like `90'+3'`.
 - **Understat:** unreachable from here, so it isn't used.

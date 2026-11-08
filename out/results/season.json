@@ -1,0 +1,14 @@
+{
+  "dixon-coles": {
+    "points": 18,
+    "matches": 10,
+    "exact_scores": 2,
+    "correct_results": 6,
+    "scorer_hits": 6,
+    "minute_hits": 2,
+    "fallbacks": 0,
+    "by_gameweek": {
+      "10": 18
+    }
+  }
+}

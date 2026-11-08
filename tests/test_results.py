@@ -55,6 +55,16 @@ def test_unfinished_and_other_gameweeks_are_skipped():
     assert build_actual_matches(raw, BOOTSTRAP, (), gameweek=1) == ()
 
 
+def test_provisionally_finished_matches_count():
+    """FPL sets `finished` only once bonus points are confirmed, often the next
+    morning; the score and scorers are final at `finished_provisional`."""
+    provisional = {**_fixture(fid=1, finished=False, goals_h=[(10, 1)], hs=1, as_=0), "finished_provisional": True}
+    in_play = {**_fixture(fid=2, finished=False), "finished_provisional": False}
+    (match,) = build_actual_matches([provisional, in_play], BOOTSTRAP, (), gameweek=1)
+    assert match.fixture_id == 1
+    assert match.goals[0].scorer_id == 10
+
+
 def test_missing_espn_data_leaves_minutes_empty():
     raw = [_fixture(goals_h=[(10, 1)], hs=1, as_=0)]
     (match,) = build_actual_matches(raw, BOOTSTRAP, (), gameweek=1)

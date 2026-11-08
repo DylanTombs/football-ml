@@ -96,13 +96,14 @@ def build_actual_matches(
     espn_events: tuple[GoalEvent, ...],
     gameweek: int,
 ) -> tuple[ActualMatch, ...]:
-    """Finished matches of a gameweek. A home/away pairing is unique per season,
+    """Finished (incl. provisionally) matches of a gameweek. A home/away pairing is unique per season,
     so ESPN events are joined on (home, away)."""
     teams = team_names(bootstrap)
     players = {p.id: p for p in parse_players(bootstrap)}
     matches = []
     for f in raw_fixtures:
-        if f.get("event") != gameweek or not f.get("finished"):
+        # `finished` waits for bonus points; the score is final at `finished_provisional`.
+        if f.get("event") != gameweek or not (f.get("finished") or f.get("finished_provisional")):
             continue
         home, away = teams[f["team_h"]], teams[f["team_a"]]
         espn_goals = [e for e in espn_events if (e.home, e.away) == (home, away)]
