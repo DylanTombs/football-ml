@@ -141,6 +141,15 @@ ANTHROPIC_EFFORT = "high"
 # Server-side refusal fallback: the API re-runs a declined request on another model.
 ANTHROPIC_FALLBACK_BETA = "server-side-fallback-2026-07-01"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+
+# --- News facts (plan 08): Claude turns FPL news text into facts only -------
+# Pinned model so the forward record stays comparable week to week.
+NEWS_FACTS_MODEL = "claude-opus-5-5"
+NEWS_FACT_REASONS = (
+    "injury", "illness", "suspension", "fitness", "international", "personal", "returned", "other",
+)
+# A stated return further out than this from the news date is treated as invalid.
+NEWS_MAX_RETURN_DAYS = 400
 # Valid predicted goal clocks: regulation minute 1-90, stoppage only after 45 or 90.
 MAX_STOPPAGE_MINUTES = 15
 STOPPAGE_MINUTES = (45, 90)

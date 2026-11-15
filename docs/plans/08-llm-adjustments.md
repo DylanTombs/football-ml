@@ -16,11 +16,25 @@
 - **Testing the LLM part:** forward only. Backtests on past matches leak, because the model may know the results. Run it in shadow mode: write the adjusted prediction alongside the real one, frozen before kickoff, with a pinned model version and logged prompts. Turn it on only after enough matches (several hundred) show a paired gain.
 - **Inputs:** FPL `news` and `chance_of_playing` from snapshots, plus saved preview text rather than live web search, so runs can be reproduced. LLM providers, caching and validation come from plan 03. Every player named is checked against the FPL squad.
 
+## Decisions made 2026-11-16
+
+- **LLM layer first.** It can only be tested forward, so every gameweek it misses is lost from the record. The availability fit waits for next week's data.
+- **Fixed small priors to start.** Each fact moves λ/μ by a fixed effect set in `config.py` (about ±3–8%, capped at ±15% overall, re-centred per gameweek). These priors affect the shadow only and get replaced by fitted values once there's data. Claude still only reports facts.
+- **Sources by fact:**
+  - Players out, doubtful or back: FPL `status`, `chance_of_playing_*`, `news` and `news_added`, from snapshots. Claude turns the `news` text into facts.
+  - Fixture congestion (European or cup games): ESPN team schedules across all competitions. Rest days are computed, with no LLM.
+  - Derbies: a fixed list in `config.py`.
+  - New manager: a date check against a small table of managerial changes.
+  - Press-conference text: added later (Guardian Open Platform API if its licence fits, otherwise pasted into `data/previews/gwNN/`).
+- All text Claude reads is saved to disk before the run, so every shadow prediction can be repeated.
+
 ## Tasks
 
-- [ ] Availability features from snapshots, fitted with shrinkage, backtested against the plan 06 baseline
-- [ ] Facts schema + LLM extractor (reusing plan 03's `llm/`), with validation tests
-- [ ] Shadow-mode output: `out/predictions/gwNN/pipeline-shadow.json`
+- [x] Facts schema + Claude extractor over FPL `news` (reusing plan 03's `llm/`), with validation tests
+- [ ] Structured facts: ESPN congestion, derby list, manager changes
+- [ ] Fixed-prior adjustment (capped, re-centred) → `out/predictions/gwNN/pipeline-shadow.json`, scored by `score`
+- [ ] Press-conference text source
+- [ ] Availability features from snapshots, fitted with shrinkage, backtested against the plan 06 baseline (next week's data)
 - [ ] Forward-test log, with results recorded here every few gameweeks
 
 ## Done when
