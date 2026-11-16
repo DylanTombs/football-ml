@@ -150,6 +150,31 @@ NEWS_FACT_REASONS = (
 )
 # A stated return further out than this from the news date is treated as invalid.
 NEWS_MAX_RETURN_DAYS = 400
+
+# --- Fixture facts (plan 08): computed, no LLM -------------------------------
+ESPN_TEAMS_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/teams?limit=50"
+# `all` covers every competition (league, cups, Europe); `fixture=true` gives upcoming matches.
+ESPN_TEAM_SCHEDULE_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/all/teams/{team_id}/schedule?"
+ESPN_TEAM_FIXTURES_URL = ESPN_TEAM_SCHEDULE_URL + "fixture=true"
+ESPN_FRIENDLY_MARKER = "friendly"  # competitions whose slug contains this are skipped
+# ESPN and FPL kickoff times for the same match can differ a little.
+SAME_MATCH_HOURS = 12
+# Days after an appointment that still count as a "new manager".
+NEW_MANAGER_WINDOW_DAYS = 56
+# Canonical (football-data) names, either way round.
+DERBIES = frozenset(frozenset(pair) for pair in (
+    ("Arsenal", "Tottenham"), ("Arsenal", "Chelsea"), ("Chelsea", "Tottenham"),
+    ("West Ham", "Tottenham"), ("West Ham", "Chelsea"), ("West Ham", "Arsenal"), ("West Ham", "Millwall"),
+    ("Chelsea", "Fulham"), ("Fulham", "Brentford"), ("Fulham", "QPR"), ("Brentford", "QPR"),
+    ("Crystal Palace", "Brighton"), ("Crystal Palace", "Millwall"), ("Charlton", "Millwall"),
+    ("Liverpool", "Everton"), ("Liverpool", "Man United"), ("Man City", "Man United"),
+    ("Leeds", "Man United"), ("Newcastle", "Sunderland"), ("Middlesbrough", "Sunderland"),
+    ("Middlesbrough", "Newcastle"), ("Aston Villa", "Birmingham"), ("Wolves", "West Brom"),
+    ("Nott'm Forest", "Derby"), ("Nott'm Forest", "Leicester"), ("Sheffield United", "Sheffield Weds"),
+    ("Southampton", "Portsmouth"), ("Ipswich", "Norwich"), ("Burnley", "Blackburn"),
+))
+# (team, appointed YYYY-MM-DD, manager). Add each new permanent appointment as it happens.
+MANAGER_CHANGES: tuple[tuple[str, str, str], ...] = ()
 # Valid predicted goal clocks: regulation minute 1-90, stoppage only after 45 or 90.
 MAX_STOPPAGE_MINUTES = 15
 STOPPAGE_MINUTES = (45, 90)

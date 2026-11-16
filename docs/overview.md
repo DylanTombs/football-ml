@@ -22,12 +22,13 @@ Per fixture: Dixon-Coles rates λ, μ (plus the plan 07 shadow variants, each fi
 | Module | Role |
 |---|---|
 | `config.py` | Every constant, URL, team-name map and points value |
-| `sources/` | `http` (disk cache, falls back to stale cache), `football_data`, `fpl`, `player_history` (per-player match rows), `espn`, `results` (actual matches) |
+| `sources/` | `http` (disk cache, falls back to stale cache), `football_data`, `fpl`, `player_history` (per-player match rows), `espn`, `espn_schedule` (all-competition team schedules), `results` (actual matches) |
 | `model/dixon_coles.py` | Fit (time decay, ridge penalty, ρ correction) and score matrix |
 | `predict/` | `scoreline`, `scorers`, `timing` (incl. fixed minutes), `picks` (expected points, floor, P(X ≥ k) scorers), `scoring_chance` (plan 05 scorer model), `availability` (missing xG share per team) |
 | `evaluate/` | `points` (one match), `season` (gameweek totals + season table), `compare` (paired block bootstrap over gameweeks) |
 | `predictors/` | `base` (`Predictor`, `FixtureContext`, `MatchPrediction`, JSON), `context` (Dixon-Coles baseline + form per fixture), `dixon_coles` (pick strategy), `expected_points`, `llm` + `llm_prompt` (validation, retry, fallback), `registry` (names → predictors, API key checks) |
 | `llm/` | `LLMProvider` protocol, `anthropic` (SDK, structured outputs), `openrouter` (GPT, Gemini…), `cache` |
+| `facts/` | Plan 08: `news` (snapshot news items), `prompt` + `extractor` (Claude → validated reason/return-date facts, cached with prompt), `fixture` (rest days and next game from ESPN schedules, derbies, new manager) |
 | `pipeline.py` | `SeasonInputs`, `gameweek_context`, `predictor_report`, `run_gameweek` |
 | `model/structure.py`, `model/shots.py` | Plan 07 variants: per-league, season home advantage, season scoring level (extra design-matrix terms) and the shots-on-target blend; `VARIANTS` run every predict as `dixon-coles-<name>` |
 | `bench.py` | Multi-season walk-forward (weekly refits, PL matches only), exact-score log loss / 1X2 log loss / RPS / calibration, xi-l2 grid (plan 06) |

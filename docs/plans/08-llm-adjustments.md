@@ -28,10 +28,16 @@
   - Press-conference text: added later (Guardian Open Platform API if its licence fits, otherwise pasted into `data/previews/gwNN/`).
 - All text Claude reads is saved to disk before the run, so every shadow prediction can be repeated.
 
+## Notes as built
+
+- **News facts:** one Claude call per gameweek covers every player with news who hasn't left (86 at GW10). Claude returns a reason (including `returned`) and an expected return date. Each answer is checked against the items sent, with one retry; if that fails too, there are no facts. The prompt and response are cached together.
+- **Congestion:** ESPN `soccer/all/teams/{id}/schedule` (played) plus `?fixture=true` (upcoming) covers league, cups and Europe. Rest days and days to the next game are worked out per side, with friendlies skipped.
+- **Derbies** and **manager changes** are tables in `config.py`. A manager counts as new for 56 days. The table is empty at GW12: nine changes were made in the summer, none confirmed in-season (Palace reported to be close to replacing Sage).
+
 ## Tasks
 
 - [x] Facts schema + Claude extractor over FPL `news` (reusing plan 03's `llm/`), with validation tests
-- [ ] Structured facts: ESPN congestion, derby list, manager changes
+- [x] Structured facts: ESPN congestion, derby list, manager changes
 - [ ] Fixed-prior adjustment (capped, re-centred) → `out/predictions/gwNN/pipeline-shadow.json`, scored by `score`
 - [ ] Press-conference text source
 - [ ] Availability features from snapshots, fitted with shrinkage, backtested against the plan 06 baseline (next week's data)
