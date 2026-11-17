@@ -2,7 +2,7 @@
 
 import json
 import logging
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -13,10 +13,12 @@ from football_ml.config import (
     INJURY_IMPACT,
     PREDICTIONS_DIR,
     RATING_L2_PENALTY,
+    SHADOW_PREDICTOR_NAME,
     SNAPSHOTS_DIR,
     TIME_DECAY_XI,
     TRAINING_SEASONS,
 )
+from football_ml.llm.base import LLMError
 from football_ml.model.dixon_coles import DixonColesParams
 from football_ml.model.shots import fit_team_model
 from football_ml.model.structure import VARIANTS, Structure, label
@@ -28,8 +30,9 @@ from football_ml.predictors.context import fixture_context
 from football_ml.predictors.dixon_coles import DixonColesPredictor
 from football_ml.sources import espn, fpl
 from football_ml.sources.espn import GoalEvent
-from football_ml.snapshots import write_snapshot
+from football_ml.snapshots import load_snapshot, snapshot_path, write_snapshot
 from football_ml.sources.football_data import fetch_results
+from football_ml.sources.http import DataSourceError
 from football_ml.sources.player_history import Appearance, fetch_player_histories
 from football_ml.sources.results import build_actual_matches
 
@@ -119,7 +122,9 @@ class GameweekContext:
 
 def gameweek_context(
     gameweek: int, inputs: SeasonInputs, injury_impact: float = INJURY_IMPACT, structure: Structure = Structure(),
+    multipliers: Mapping[int, tuple[float, float]] | None = None,
 ) -> GameweekContext:
+    """`multipliers` (fixture id → (home, away)) scale the rates; used by the plan 08 shadow."""
     fixtures = fpl.parse_fixtures(inputs.raw_fixtures, inputs.bootstrap, gameweek)
     if not fixtures:
         raise ValueError(f"No fixtures with kickoff times found for gameweek {gameweek}")
@@ -145,6 +150,7 @@ def gameweek_context(
         fixture_context(
             gameweek, f, params, inputs.players, distribution, injury_impact, inputs.results,
             scorer_model=scorers, season=CURRENT_SEASON,
+            rate_multipliers=(multipliers or {}).get(f.id, (1.0, 1.0)),
         )
         for f in sorted(fixtures, key=lambda f: f.kickoff)
     )
@@ -183,6 +189,10 @@ def write_report(report: dict, predictions_dir: Path = PREDICTIONS_DIR) -> Path:
     return path
 
 
+# (gameweek, inputs, base context, snapshot, predictor) → report; see facts/shadow.py
+ShadowRunner = Callable[[int, SeasonInputs, GameweekContext, dict, Predictor], dict]
+
+
 def run_gameweek(
     gameweek: int | None,
     predictors: tuple[Predictor, ...],
@@ -190,11 +200,12 @@ def run_gameweek(
     snapshots_dir: Path = SNAPSHOTS_DIR,
     now: pd.Timestamp | None = None,
     variants: Mapping[str, Structure] = VARIANTS,
+    shadow: ShadowRunner | None = None,
 ) -> list[dict]:
     """Snapshot FPL player state (before the deadline only), then predict the
     gameweek with every predictor, building the shared context once. Each
     Dixon-Coles predictor is also run on every model variant (plan 07 shadow
-    variants) as `<name>-<variant>`."""
+    variants) as `<name>-<variant>`, and through `shadow` (plan 08) when given."""
     needs_histories = any(getattr(p, "scorer_model", None) == "chance" for p in predictors)
     inputs = load_season_inputs(with_histories=needs_histories)
     number = gameweek or fpl.next_gameweek(inputs.bootstrap)
@@ -219,4 +230,28 @@ def run_gameweek(
         log.info("Wrote %s", path)
         reports.append({**report, "path": str(path), "snapshot": str(snapshot) if snapshot else None,
                         **({"variant_of": variant_of} if variant_of else {})})
+    if shadow and dixon_coles:
+        reports += _shadow_reports(number, inputs, runs[0][0], dixon_coles[0], shadow, predictions_dir, snapshots_dir)
     return reports
+
+
+_SHADOW_ERRORS = (LLMError, DataSourceError, ValueError, KeyError, TypeError, OSError)
+
+
+def _shadow_reports(gameweek: int, inputs: SeasonInputs, base: GameweekContext, main: DixonColesPredictor,
+                    shadow: ShadowRunner, predictions_dir: Path, snapshots_dir: Path) -> list[dict]:
+    """The plan 08 shadow prediction, from the saved pre-deadline snapshot. Runs after the
+    main predictions are written and never blocks them."""
+    path = snapshot_path(gameweek, snapshots_dir)
+    if not path.exists():
+        log.warning("Skipping the shadow prediction: no GW%d snapshot at %s", gameweek, path)
+        return []
+    predictor = DixonColesPredictor(main.pick_strategy, name=SHADOW_PREDICTOR_NAME, scorer_model=main.scorer_model)
+    try:
+        report = shadow(gameweek, inputs, base, load_snapshot(path), predictor)
+    except _SHADOW_ERRORS as exc:
+        log.warning("Skipping the shadow prediction: %s: %s", type(exc).__name__, exc)
+        return []
+    written = write_report(report, predictions_dir)
+    log.info("Wrote %s", written)
+    return [{**report, "path": str(written), "snapshot": str(path), "variant_of": main.name}]

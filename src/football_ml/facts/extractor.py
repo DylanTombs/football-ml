@@ -28,6 +28,7 @@ class PlayerFact:
     team: str
     reason: str
     expected_return: date | None
+    news_added: date | None = None
 
 
 @dataclass(frozen=True)
@@ -63,7 +64,7 @@ def _fact(by_id: dict[int, NewsItem], raw) -> PlayerFact:
     reason = raw.get("reason")
     if reason not in NEWS_FACT_REASONS:
         raise InvalidFacts(f"reason for id {item.player_id} must be one of {NEWS_FACT_REASONS}, got {reason!r}")
-    return PlayerFact(item.player_id, item.team, reason, _return_date(item, raw.get("expected_return")))
+    return PlayerFact(item.player_id, item.team, reason, _return_date(item, raw.get("expected_return")), item.news_added)
 
 
 def parse_facts(items: tuple[NewsItem, ...], data) -> tuple[PlayerFact, ...]:

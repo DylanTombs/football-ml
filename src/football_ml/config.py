@@ -175,6 +175,27 @@ DERBIES = frozenset(frozenset(pair) for pair in (
 ))
 # (team, appointed YYYY-MM-DD, manager). Add each new permanent appointment as it happens.
 MANAGER_CHANGES: tuple[tuple[str, str, str], ...] = ()
+
+# --- Shadow adjustment (plan 08): fixed small priors until fitted values exist ---
+SHADOW_PREDICTOR_NAME = "pipeline-shadow"
+# Relative change to a side's expected goals per fact. Shadow only; replaced once fitted.
+FACT_EFFECTS = {
+    "key_attacker_out": -0.06,   # own rate, scaled by the chance he misses
+    "key_attacker_back": 0.04,   # own rate
+    "defender_out": 0.03,        # opponent's rate, scaled by the chance he misses
+    "short_rest": -0.03,         # own rate
+    "europe_next": -0.03,        # own rate: rotation before a European game
+    "new_manager": 0.04,         # own rate
+    "derby": -0.03,              # both rates
+}
+MAX_ADJUSTMENT = 0.15            # cap on a side's total change, either way
+NEWS_RECENT_DAYS = 14            # older news is already reflected in the ratings
+KEY_ATTACKER_XG_SHARE = 0.15     # share of the team's xG that makes a player "key"
+REGULAR_MINUTES_SHARE = 0.6      # minutes vs the team's most-used player that make a defender "regular"
+DEFENDER_POSITIONS = (1, 2)      # FPL element_type: goalkeeper, defender
+SHORT_REST_DAYS = 3.5
+CONGESTION_AHEAD_DAYS = 3.5
+EUROPEAN_COMPETITION_PREFIX = "uefa."
 # Valid predicted goal clocks: regulation minute 1-90, stoppage only after 45 or 90.
 MAX_STOPPAGE_MINUTES = 15
 STOPPAGE_MINUTES = (45, 90)

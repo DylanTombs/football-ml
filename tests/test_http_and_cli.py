@@ -70,7 +70,7 @@ def test_cli_rejects_bad_gameweek():
 
 
 def test_cli_reports_failure(monkeypatch, capsys):
-    def fail(*_):
+    def fail(*_, **__):
         raise http.DataSourceError("FPL down")
     monkeypatch.setattr(cli, "run_gameweek", fail)
     assert cli.main(["predict"]) == 1
@@ -78,7 +78,7 @@ def test_cli_reports_failure(monkeypatch, capsys):
 
 
 def test_cli_prints_report(monkeypatch, capsys):
-    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors: [
+    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors, **_: [
         {"gameweek": 10, "predictor": p.name, "matches": [MATCH], "path": "p"} for p in predictors])
     assert cli.main(["predict", "--gameweek", "10"]) == 0
     assert "Gameweek 10: dixon-coles" in capsys.readouterr().out
@@ -86,7 +86,7 @@ def test_cli_prints_report(monkeypatch, capsys):
 
 def test_cli_predict_checks_keys_before_running(monkeypatch, capsys):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-    monkeypatch.setattr(cli, "run_gameweek", lambda *a: pytest.fail("ran without a key"))
+    monkeypatch.setattr(cli, "run_gameweek", lambda *a, **k: pytest.fail("ran without a key"))
     assert cli.main(["predict", "--predictors", "dixon-coles,claude"]) == 1
     assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
 
@@ -169,7 +169,7 @@ def test_cli_rejects_bad_injury_impact():
 
 def test_cli_predict_passes_pick_strategy(monkeypatch):
     seen = {}
-    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors: seen.update(p=predictors) or [])
+    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors, **_: seen.update(p=predictors) or [])
     assert cli.main(["predict", "--pick-strategy", "expected-points"]) == 0
     assert seen["p"][0].pick_strategy == "expected-points"
 
@@ -195,7 +195,7 @@ def test_cli_backtest_prints_comparisons(monkeypatch, capsys):
 
 def test_cli_predict_passes_scorer_model(monkeypatch):
     seen = {}
-    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors: seen.update(p=predictors) or [])
+    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors, **_: seen.update(p=predictors) or [])
     assert cli.main(["predict", "--scorer-model", "chance"]) == 0
     assert seen["p"][0].scorer_model == "chance"
 
@@ -233,7 +233,7 @@ def test_cli_predict_shows_only_where_variants_differ(monkeypatch, capsys):
         {"gameweek": 11, "predictor": "dixon-coles-per-league", "variant_of": "dixon-coles", "path": "v2",
          "matches": [{**MATCH, "fixture_id": 1}, other]},
     ]
-    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors: [main, *variants])
+    monkeypatch.setattr(cli, "run_gameweek", lambda gw, predictors, **_: [main, *variants])
     assert cli.main(["predict"]) == 0
     out = capsys.readouterr().out
     assert "season-home: Arsenal 1-1 Hull (main 2-0)" in out
@@ -246,3 +246,41 @@ def test_totals_line_shows_log_loss_when_known():
               "minute_hits": 2, "log_loss_sum": 29.5, "log_loss_matches": 10}
     assert "log loss 2.950" in cli._totals_line(totals)
     assert "log loss" not in cli._totals_line({**totals, "log_loss_matches": 0})
+
+
+def _capture_shadow(monkeypatch):
+    seen = {}
+
+    def fake(gw, predictors, shadow=None):
+        seen["shadow"] = shadow
+        return [{"gameweek": 10, "predictor": "dixon-coles", "matches": [MATCH], "path": "p"}]
+    monkeypatch.setattr(cli, "run_gameweek", fake)
+    return seen
+
+
+def test_predict_runs_the_shadow_when_a_claude_key_is_set(monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "k")
+    seen = _capture_shadow(monkeypatch)
+    assert cli.main(["predict", "--gameweek", "10"]) == 0
+    assert callable(seen["shadow"])
+
+
+def test_predict_skips_the_shadow_without_a_key_or_when_asked(monkeypatch, capsys):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    seen = _capture_shadow(monkeypatch)
+    assert cli.main(["predict", "--gameweek", "10"]) == 0
+    assert seen["shadow"] is None and "ANTHROPIC_API_KEY" in capsys.readouterr().err
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "k")
+    assert cli.main(["predict", "--gameweek", "10", "--no-shadow"]) == 0
+    assert seen["shadow"] is None
+
+
+def test_shadow_lines_show_adjustments_where_the_pick_changes():
+    main = {"matches": [{**MATCH, "fixture_id": 1}]}
+    shadow = {"predictor": "pipeline-shadow", "variant_of": "dixon-coles", "matches": [{
+        **MATCH, "fixture_id": 1, "prediction": {**MATCH["prediction"], "score": {"home": 1, "away": 0}},
+        "adjustments": {"home_multiplier": 0.94, "away_multiplier": 1.0, "items": [
+            {"side": "home", "kind": "key_attacker_out", "effect": -0.06, "detail": "Saka (injury, 100% to miss)"}]},
+    }]}
+    text = "\n".join(cli._shadow_lines(main, shadow))
+    assert "1-0" in text and "Saka" in text and "x0.94" in text

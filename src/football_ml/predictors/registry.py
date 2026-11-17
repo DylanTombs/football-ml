@@ -1,6 +1,7 @@
 """Turn predictor names from the CLI into ready-to-run predictors."""
 
 from collections.abc import Mapping
+from functools import partial
 from pathlib import Path
 
 from anthropic import Anthropic
@@ -10,9 +11,12 @@ from football_ml.config import (
     DEFAULT_SCORER_MODEL,
     LLM_CACHE_DIR,
     LLM_TIMEOUT_SECONDS,
+    NEWS_FACTS_MODEL,
     PREDICTOR_SPECS,
     PROVIDER_API_KEY_ENV,
 )
+from football_ml.facts.extractor import NewsFactExtractor
+from football_ml.facts.shadow import run_shadow
 from football_ml.llm.anthropic import AnthropicProvider
 from football_ml.llm.cache import JsonFileCache
 from football_ml.llm.openrouter import OpenRouterProvider
@@ -68,3 +72,12 @@ def build_predictors(
         else LLMPredictor(name, _provider(spec[0], spec[1], _api_key(env, spec[0])), cache)
         for name, spec in specs.items()
     )
+
+
+def build_shadow_runner(env: Mapping[str, str], cache_dir: Path = LLM_CACHE_DIR):
+    """The plan 08 shadow (Claude reads the news), or None when there's no Anthropic key."""
+    key = _api_key(env, "anthropic")
+    if key is None:
+        return None
+    extractor = NewsFactExtractor(_provider("anthropic", NEWS_FACTS_MODEL, key), JsonFileCache(cache_dir))
+    return partial(run_shadow, extractor=extractor)

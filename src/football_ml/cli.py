@@ -25,6 +25,7 @@ from football_ml.config import (
     RATING_L2_PENALTY,
     RESULTS_DIR,
     SCORER_MODELS,
+    SHADOW_PREDICTOR_NAME,
     SEASON_HOME_L2,
     SEASON_LEVEL_L2,
     TIME_DECAY_XI,
@@ -33,7 +34,7 @@ from football_ml.config import (
 from football_ml.evaluate.season import leaderboard, score_gameweek, season_table, write_gameweek_results
 from football_ml.llm.base import LLMError
 from football_ml.pipeline import load_season_inputs, run_gameweek
-from football_ml.predictors.registry import build_predictors, parse_predictor_names
+from football_ml.predictors.registry import build_predictors, build_shadow_runner, parse_predictor_names
 from football_ml.sources import fpl
 from football_ml.sources.football_data import fetch_results
 from football_ml.sources.http import DataSourceError
@@ -86,10 +87,39 @@ def _variant_lines(main: dict, variant: dict) -> list[str]:
     return lines or [f"  {name}: same scorelines as the main prediction"]
 
 
+def _percent(effect: float) -> str:
+    return f"{effect:+.0%}"
+
+
+def _shadow_lines(main: dict, shadow: dict) -> list[str]:
+    """Plan 08 shadow: every adjusted match, with the facts behind it."""
+    main_scores = {m["fixture_id"]: m["prediction"]["score"] for m in main["matches"]}
+    lines = []
+    for m in shadow["matches"]:
+        adj = m.get("adjustments") or {}
+        if not adj.get("items"):
+            continue
+        score, base = m["prediction"]["score"], main_scores.get(m["fixture_id"])
+        changed = f" (main {base['home']}-{base['away']})" if base and base != score else ""
+        facts = "; ".join(f"{i['side']} {i['kind']} {_percent(i['effect'])}: {i['detail']}" for i in adj["items"])
+        lines.append(f"  {m['home']} {score['home']}-{score['away']} {m['away']}{changed}"
+                     f" | x{adj['home_multiplier']:.2f} / x{adj['away_multiplier']:.2f} | {facts}")
+    return lines or ["  no adjustments this gameweek"]
+
+
+def _shadow(args):
+    if args.no_shadow:
+        return None
+    runner = build_shadow_runner(os.environ)
+    if runner is None:
+        print("Shadow prediction skipped: set ANTHROPIC_API_KEY to run it (plan 08)", file=sys.stderr)
+    return runner
+
+
 def _predict(args) -> int:
     predictors = build_predictors(args.predictors, env=os.environ, pick_strategy=args.pick_strategy,
                                   scorer_model=args.scorer_model)
-    reports = run_gameweek(args.gameweek, predictors)
+    reports = run_gameweek(args.gameweek, predictors, shadow=_shadow(args))
     by_name = {r["predictor"]: r for r in reports}
     for report in (r for r in reports if not r.get("variant_of")):
         print(f"\nGameweek {report['gameweek']}: {report['predictor']}\n")
@@ -98,7 +128,11 @@ def _predict(args) -> int:
         print(f"\nSaved to {report['path']}")
         if report.get("snapshot"):
             print(f"Player snapshot: {report['snapshot']}")
-    variants = [r for r in reports if r.get("variant_of")]
+    shadows = [r for r in reports if r["predictor"] == SHADOW_PREDICTOR_NAME]
+    for report in shadows:
+        print(f"\nShadow prediction (plan 08), saved to {report.get('path')}:")
+        print("\n".join(_shadow_lines(by_name[report["variant_of"]], report)))
+    variants = [r for r in reports if r.get("variant_of") and r["predictor"] != SHADOW_PREDICTOR_NAME]
     if variants:
         print("\nModel variants (shadow, plan 07), where they differ:")
         for variant in variants:
@@ -238,6 +272,8 @@ def _parser() -> argparse.ArgumentParser:
                          help=f"how Dixon-Coles picks its scoreline (default {DEFAULT_PICK_STRATEGY})")
     predict.add_argument("--scorer-model", choices=SCORER_MODELS, default=DEFAULT_SCORER_MODEL,
                          help=f"how expected-points picks choose scorers (default {DEFAULT_SCORER_MODEL})")
+    predict.add_argument("--no-shadow", action="store_true",
+                         help="skip the plan 08 shadow prediction (Claude reads the injury news)")
     predict.set_defaults(handler=_predict)
 
     score = sub.add_parser("score", help="Score saved predictions against actual results")

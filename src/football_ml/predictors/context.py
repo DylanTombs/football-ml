@@ -61,13 +61,16 @@ def fixture_context(
     results: pd.DataFrame | None = None,
     scorer_model: ScorerModel | None = None,
     season: str | None = None,
+    rate_multipliers: tuple[float, float] = (1.0, 1.0),
 ) -> FixtureContext:
+    """`rate_multipliers` scale λ and μ after the injury adjustment (plan 08 shadow)."""
     home_squad = tuple(p for p in players if p.team == fixture.home)
     away_squad = tuple(p for p in players if p.team == fixture.away)
     home_avail, away_avail = team_availability(home_squad), team_availability(away_squad)
 
     lam, mu = params.expected_goals(fixture.home, fixture.away, season=season)
     lam, mu = adjust_rate(lam, home_avail.missing_share, injury_impact), adjust_rate(mu, away_avail.missing_share, injury_impact)
+    lam, mu = lam * rate_multipliers[0], mu * rate_multipliers[1]
     matrix = matrix_from_rates(lam, mu, params.rho, MAX_GOALS)
     summary = summarise(matrix, TOP_SCORELINES)
     before = fixture.kickoff.tz_convert(None).normalize()

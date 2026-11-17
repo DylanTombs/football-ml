@@ -33,12 +33,23 @@
 - **News facts:** one Claude call per gameweek covers every player with news who hasn't left (86 at GW10). Claude returns a reason (including `returned`) and an expected return date. Each answer is checked against the items sent, with one retry; if that fails too, there are no facts. The prompt and response are cached together.
 - **Congestion:** ESPN `soccer/all/teams/{id}/schedule` (played) plus `?fixture=true` (upcoming) covers league, cups and Europe. Rest days and days to the next game are worked out per side, with friendlies skipped.
 - **Derbies** and **manager changes** are tables in `config.py`. A manager counts as new for 56 days. The table is empty at GW12: nine changes were made in the summer, none confirmed in-season (Palace reported to be close to replacing Sage).
+- **Shadow adjustment:** the fixed priors live in `FACT_EFFECTS`:
+  - key attacker out −6%, scaled by the chance he misses (0 if Claude's return date is before kickoff);
+  - key attacker back +4%;
+  - regular defender out +3% to the opponent;
+  - short rest (<3.5 days) −3%;
+  - European game within 3.5 days −3%;
+  - new manager +4%;
+  - derby −3% to both sides.
+  
+  Only news from the last 14 days counts. Each side is capped at ±15%, then everything is re-centred so the gameweek's total expected goals don't change. The shadow uses the main pick strategy on the adjusted rates, which `score` marks like any other file (points and log loss). It runs when `ANTHROPIC_API_KEY` is set and never blocks the main prediction. Turn it off with `--no-shadow`.
+- **Dry run on live GW11 data**, with a stand-in for Claude that reads FPL status: 7 of 10 fixtures adjusted, all multipliers between ×0.95 and ×1.03, no predicted scoreline changed. Small priors were intended, so the forward record will mostly show log-loss differences, not points.
 
 ## Tasks
 
 - [x] Facts schema + Claude extractor over FPL `news` (reusing plan 03's `llm/`), with validation tests
 - [x] Structured facts: ESPN congestion, derby list, manager changes
-- [ ] Fixed-prior adjustment (capped, re-centred) → `out/predictions/gwNN/pipeline-shadow.json`, scored by `score`
+- [x] Fixed-prior adjustment (capped, re-centred) → `out/predictions/gwNN/pipeline-shadow.json`, scored by `score`
 - [ ] Press-conference text source
 - [ ] Availability features from snapshots, fitted with shrinkage, backtested against the plan 06 baseline (next week's data)
 - [ ] Forward-test log, with results recorded here every few gameweeks
