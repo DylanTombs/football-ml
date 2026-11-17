@@ -61,7 +61,7 @@ def test_shadow_report_adjusts_rates_and_records_why():
     assert arsenal["adjustments"]["home_multiplier"] < 1
     assert report["model"]["shadow"] == {
         "news_model": "fake-model", "news_fallback": False, "news_items": 1, "news_facts": 1,
-        "schedule_matches": 1, "as_of": (KICKOFF - timedelta(days=2)).date().isoformat(),
+        "press_teams": [], "press_facts": 0, "press_fallbacks": 0, "schedule_matches": 1, "as_of": (KICKOFF - timedelta(days=2)).date().isoformat(),
     }
 
 
@@ -131,3 +131,29 @@ def test_score_marks_the_shadow_like_any_prediction():
     result = score_gameweek(report, actual)
     assert result["predictor"] == SHADOW_PREDICTOR_NAME and result["complete"]
     assert result["totals"]["log_loss_matches"] == 2
+
+
+def test_shadow_uses_pasted_press_text_over_fpl_news(tmp_path):
+    from football_ml.facts.press import PressFactExtractor
+    (tmp_path / "gw02").mkdir()
+    (tmp_path / "gw02" / "arsenal.md").write_text("Saka has recovered and is fit to start.", encoding="utf-8")
+    press = {"players": [{"player_id": 1, "status": "fit", "reason": "returned", "expected_return": None}]}
+    base = gameweek_context(2, INPUTS)
+    report = shadow.run_shadow(2, INPUTS, base, SNAPSHOT, DixonColesPredictor(name=SHADOW_PREDICTOR_NAME),
+                               extractor=NewsFactExtractor(ScriptedProvider(FACTS)), fetch_schedules=lambda t: (),
+                               press_extractor=PressFactExtractor(ScriptedProvider(press)), previews_dir=tmp_path)
+    arsenal = next(m for m in report["matches"] if m["home"] == "Arsenal")
+    # FPL had him out; the press conference says he's back, so no absence, a return instead
+    assert [i["kind"] for i in arsenal["adjustments"]["items"]] == ["key_attacker_back"]
+    assert report["model"]["shadow"]["press_teams"] == ["Arsenal"]
+    assert report["model"]["shadow"]["press_facts"] == 1 and report["model"]["shadow"]["press_fallbacks"] == 0
+
+
+def test_shadow_without_a_press_extractor_ignores_previews(tmp_path):
+    (tmp_path / "gw02").mkdir()
+    (tmp_path / "gw02" / "arsenal.md").write_text("anything", encoding="utf-8")
+    base = gameweek_context(2, INPUTS)
+    report = shadow.run_shadow(2, INPUTS, base, SNAPSHOT, DixonColesPredictor(name=SHADOW_PREDICTOR_NAME),
+                               extractor=NewsFactExtractor(ScriptedProvider(FACTS)), fetch_schedules=lambda t: (),
+                               previews_dir=tmp_path)
+    assert report["model"]["shadow"]["press_teams"] == []

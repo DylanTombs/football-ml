@@ -28,7 +28,7 @@ Per fixture: Dixon-Coles rates λ, μ (plus the plan 07 shadow variants, each fi
 | `evaluate/` | `points` (one match), `season` (gameweek totals + season table), `compare` (paired block bootstrap over gameweeks) |
 | `predictors/` | `base` (`Predictor`, `FixtureContext`, `MatchPrediction`, JSON), `context` (Dixon-Coles baseline + form per fixture), `dixon_coles` (pick strategy), `expected_points`, `llm` + `llm_prompt` (validation, retry, fallback), `registry` (names → predictors, API key checks) |
 | `llm/` | `LLMProvider` protocol, `anthropic` (SDK, structured outputs), `openrouter` (GPT, Gemini…), `cache` |
-| `facts/` | Plan 08: `news` (snapshot news items), `prompt` + `extractor` (Claude → validated reason/return-date facts, cached with prompt), `fixture` (rest days and next game from ESPN schedules, derbies, new manager), `adjust` (facts → capped, re-centred rate multipliers), `shadow` (writes `pipeline-shadow.json` with each match's adjustments) |
+| `facts/` | Plan 08: `news` (snapshot news items), `prompt` + `extractor` (Claude → validated reason/return-date facts, cached with prompt), `fixture` (rest days and next game from ESPN schedules, derbies, new manager), `press` (pasted press-conference text in `data/previews/gwNN/` → availability facts by FPL id, which take priority over FPL news), `llm_call` (shared validated, cached call), `adjust` (facts → capped, re-centred rate multipliers), `shadow` (writes `pipeline-shadow.json` with each match's adjustments) |
 | `pipeline.py` | `SeasonInputs`, `gameweek_context`, `predictor_report`, `run_gameweek` |
 | `model/structure.py`, `model/shots.py` | Plan 07 variants: per-league, season home advantage, season scoring level (extra design-matrix terms) and the shots-on-target blend; `VARIANTS` run every predict as `dixon-coles-<name>` |
 | `bench.py` | Multi-season walk-forward (weekly refits, PL matches only), exact-score log loss / 1X2 log loss / RPS / calibration, xi-l2 grid (plan 06) |
@@ -46,6 +46,7 @@ Per fixture: Dixon-Coles rates λ, μ (plus the plan 07 shadow variants, each fi
 - **FPL finished flags:** `finished` waits for bonus points (often the next morning); scoring also accepts `finished_provisional`, when the score and scorers are already final.
 - **FPL availability:** only the current injury news exists, with no history. Status `u` means left or loaned out. `event/N/live/` gives per-gameweek minutes, which the backtest uses to infer past absences.
 - **ESPN:** no date-range queries, so it's one request per day, cached for good once the day is over. Own goals are credited to the team that benefits. Clocks look like `90'+3'`.
+- **Press conferences:** pasted by hand into `data/previews/gwNN/<team-slug>.md`; the Guardian API's free key is non-commercial and reportedly bars text mining.
 - **Understat:** unreachable from here, so it isn't used.
 
 ## Prediction JSON (key fields)

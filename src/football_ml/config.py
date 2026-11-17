@@ -151,6 +151,14 @@ NEWS_FACT_REASONS = (
 # A stated return further out than this from the news date is treated as invalid.
 NEWS_MAX_RETURN_DAYS = 400
 
+# --- Press-conference text (plan 08): pasted, one file per team ------------
+# The Guardian Open Platform's free key is non-commercial and reportedly bars text
+# mining, so text is pasted by hand into data/previews/gwNN/<team-slug>.md (or .txt).
+PREVIEWS_DIR = PROJECT_ROOT / "data" / "previews"
+PREVIEW_SUFFIXES = (".md", ".txt")
+# Chance of playing for each status Claude can report from a press conference.
+PRESS_STATUS_AVAILABILITY = {"out": 0.0, "doubtful": 0.5, "fit": 1.0}
+
 # --- Fixture facts (plan 08): computed, no LLM -------------------------------
 ESPN_TEAMS_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/teams?limit=50"
 # `all` covers every competition (league, cups, Europe); `fixture=true` gives upcoming matches.

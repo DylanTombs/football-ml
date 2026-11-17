@@ -48,7 +48,8 @@ def _is_recent(fact: PlayerFact, as_of: date) -> bool:
 def _chance_missing(fact: PlayerFact, player: Player, match_day: date) -> float:
     if fact.expected_return is not None and fact.expected_return <= match_day:
         return 0.0
-    return 1.0 - player.availability
+    chance = player.availability if fact.availability is None else fact.availability
+    return 1.0 - chance
 
 
 def _player_adjustments(fact: PlayerFact, player: Player, squad: tuple[Player, ...], side: str,

@@ -120,3 +120,11 @@ def test_gameweek_adjustments_are_recentred_so_total_goals_stay_the_same():
 def test_gameweek_without_facts_leaves_every_rate_alone():
     result = gameweek_adjustments((CTX, OTHER_CTX), (), {}, POSITIONS, AS_OF)
     assert {(a.home_multiplier, a.away_multiplier) for a in result.values()} == {(1.0, 1.0)}
+
+
+def test_press_availability_overrides_fpl():
+    fit = PlayerFact(1, "Arsenal", "injury", None, RECENT, availability=1.0)
+    assert fixture_adjustments(CTX, (fit,), PLAIN, POSITIONS, AS_OF) == ()
+    doubt = PlayerFact(2, "Arsenal", "fitness", None, RECENT, availability=0.5)
+    [adj] = fixture_adjustments(CTX, (doubt,), PLAIN, POSITIONS, AS_OF)
+    assert adj.effect == pytest.approx(FACT_EFFECTS["key_attacker_out"] * 0.5)

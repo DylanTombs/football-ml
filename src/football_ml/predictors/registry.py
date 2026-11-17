@@ -16,6 +16,7 @@ from football_ml.config import (
     PROVIDER_API_KEY_ENV,
 )
 from football_ml.facts.extractor import NewsFactExtractor
+from football_ml.facts.press import PressFactExtractor
 from football_ml.facts.shadow import run_shadow
 from football_ml.llm.anthropic import AnthropicProvider
 from football_ml.llm.cache import JsonFileCache
@@ -79,5 +80,6 @@ def build_shadow_runner(env: Mapping[str, str], cache_dir: Path = LLM_CACHE_DIR)
     key = _api_key(env, "anthropic")
     if key is None:
         return None
-    extractor = NewsFactExtractor(_provider("anthropic", NEWS_FACTS_MODEL, key), JsonFileCache(cache_dir))
-    return partial(run_shadow, extractor=extractor)
+    provider, cache = _provider("anthropic", NEWS_FACTS_MODEL, key), JsonFileCache(cache_dir)
+    return partial(run_shadow, extractor=NewsFactExtractor(provider, cache),
+                   press_extractor=PressFactExtractor(provider, cache))

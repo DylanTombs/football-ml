@@ -44,13 +44,14 @@
   
   Only news from the last 14 days counts. Each side is capped at ±15%, then everything is re-centred so the gameweek's total expected goals don't change. The shadow uses the main pick strategy on the adjusted rates, which `score` marks like any other file (points and log loss). It runs when `ANTHROPIC_API_KEY` is set and never blocks the main prediction. Turn it off with `--no-shadow`.
 - **Dry run on live GW11 data**, with a stand-in for Claude that reads FPL status: 7 of 10 fixtures adjusted, all multipliers between ×0.95 and ×1.03, no predicted scoreline changed. Small priors were intended, so the forward record will mostly show log-loss differences, not points.
+- **Press-conference text:** the Guardian Open Platform API was not used. Its free key is for non-commercial use only, and the terms reportedly bar text mining and machine learning. Text is pasted instead, into `data/previews/gwNN/<team-slug>.md`. Claude reports out/doubtful/fit for each player the text mentions, by FPL id from that squad, which gives availability 0, 0.5 or 1. These facts take priority over FPL news for the same player. A press conference that repeats an absence FPL already showed keeps the FPL news date, so it isn't counted as new. The news and press extractors share one validated, cached call (`facts/llm_call.py`).
 
 ## Tasks
 
 - [x] Facts schema + Claude extractor over FPL `news` (reusing plan 03's `llm/`), with validation tests
 - [x] Structured facts: ESPN congestion, derby list, manager changes
 - [x] Fixed-prior adjustment (capped, re-centred) → `out/predictions/gwNN/pipeline-shadow.json`, scored by `score`
-- [ ] Press-conference text source
+- [x] Press-conference text source
 - [ ] Availability features from snapshots, fitted with shrinkage, backtested against the plan 06 baseline (next week's data)
 - [ ] Forward-test log, with results recorded here every few gameweeks
 

@@ -2,24 +2,20 @@
 prediction then equals the baseline). Prompt and response are cached together so every
 run can be repeated and audited."""
 
-import hashlib
-import logging
 from dataclasses import dataclass
-from datetime import date, timedelta
+from datetime import date
+from functools import partial
 
-from football_ml.config import LLM_MAX_ATTEMPTS, NEWS_FACT_REASONS, NEWS_MAX_RETURN_DAYS
+from football_ml.config import LLM_MAX_ATTEMPTS, NEWS_FACT_REASONS
+from football_ml.facts.llm_call import InvalidFacts, cache_key, check_return_date, repeated_ids, validated_call
 from football_ml.facts.news import NewsItem
 from football_ml.facts.prompt import RESPONSE_SCHEMA, SYSTEM_PROMPT, build_prompt
-from football_ml.llm.base import LLMConfigError, LLMError, LLMProvider
+from football_ml.llm.base import LLMProvider
 from football_ml.llm.cache import JsonFileCache
 
-log = logging.getLogger(__name__)
+__all__ = ["InvalidFacts", "NewsFactExtractor", "NewsFacts", "PlayerFact", "parse_facts"]
 
 CACHE_NAMESPACE = "news-facts"
-
-
-class InvalidFacts(ValueError):
-    """The LLM's JSON doesn't describe one valid fact per news item."""
 
 
 @dataclass(frozen=True)
@@ -29,6 +25,8 @@ class PlayerFact:
     reason: str
     expected_return: date | None
     news_added: date | None = None
+    # 0..1 chance of playing from a press conference; None = use FPL's chance
+    availability: float | None = None
 
 
 @dataclass(frozen=True)
@@ -36,23 +34,6 @@ class NewsFacts:
     facts: tuple[PlayerFact, ...]
     model: str
     fallback: bool
-
-
-def _return_date(item: NewsItem, raw) -> date | None:
-    if raw is None:
-        return None
-    try:
-        parsed = date.fromisoformat(raw) if isinstance(raw, str) else None
-    except ValueError:
-        parsed = None
-    if parsed is None:
-        raise InvalidFacts(f"expected_return for id {item.player_id} must be a YYYY-MM-DD date or null, got {raw!r}")
-    if item.news_added is not None:
-        if parsed < item.news_added:
-            raise InvalidFacts(f"expected_return {raw} for id {item.player_id} is before the news ({item.news_added})")
-        if parsed > item.news_added + timedelta(days=NEWS_MAX_RETURN_DAYS):
-            raise InvalidFacts(f"expected_return {raw} for id {item.player_id} is too far after the news")
-    return parsed
 
 
 def _fact(by_id: dict[int, NewsItem], raw) -> PlayerFact:
@@ -64,7 +45,8 @@ def _fact(by_id: dict[int, NewsItem], raw) -> PlayerFact:
     reason = raw.get("reason")
     if reason not in NEWS_FACT_REASONS:
         raise InvalidFacts(f"reason for id {item.player_id} must be one of {NEWS_FACT_REASONS}, got {reason!r}")
-    return PlayerFact(item.player_id, item.team, reason, _return_date(item, raw.get("expected_return")), item.news_added)
+    back = check_return_date(item.player_id, raw.get("expected_return"), item.news_added)
+    return PlayerFact(item.player_id, item.team, reason, back, item.news_added)
 
 
 def parse_facts(items: tuple[NewsItem, ...], data) -> tuple[PlayerFact, ...]:
@@ -75,19 +57,12 @@ def parse_facts(items: tuple[NewsItem, ...], data) -> tuple[PlayerFact, ...]:
         raise InvalidFacts("players must be a list")
     by_id = {i.player_id: i for i in items}
     facts = [_fact(by_id, raw) for raw in raw_players]
-    ids = [f.player_id for f in facts]
-    repeated = sorted({i for i in ids if ids.count(i) > 1})
-    if repeated:
-        raise InvalidFacts(f"player ids listed more than once: {repeated}")
-    missing = sorted(set(by_id) - set(ids))
+    repeated_ids([f.player_id for f in facts])
+    missing = sorted(set(by_id) - {f.player_id for f in facts})
     if missing:
         raise InvalidFacts(f"entries missing for player ids {missing}")
     by_fact = {f.player_id: f for f in facts}
     return tuple(by_fact[i.player_id] for i in items)
-
-
-def _digest(model: str, prompt: str) -> str:
-    return hashlib.sha256(f"{model}\n{SYSTEM_PROMPT}\n{prompt}".encode()).hexdigest()[:16]
 
 
 class NewsFactExtractor:
@@ -97,45 +72,12 @@ class NewsFactExtractor:
         self._cache = cache
         self._max_attempts = max_attempts
 
-    def _cached(self, key, items) -> tuple[PlayerFact, ...] | None:
-        entry = self._cache.get(key) if self._cache else None
-        if entry is None:
-            return None
-        try:
-            return parse_facts(items, entry.get("response"))
-        except InvalidFacts as exc:
-            log.warning("Ignoring invalid cached news facts %s: %s", key, exc)
-            return None
-
-    def _ask(self, prompt: str, items) -> tuple[tuple[PlayerFact, ...], dict] | None:
-        error = None
-        for attempt in range(1, self._max_attempts + 1):
-            user = prompt if error is None else f"{prompt}\n\nYour previous answer was rejected: {error}. Fix it."
-            try:
-                data = self._provider.complete_json(SYSTEM_PROMPT, user, RESPONSE_SCHEMA)
-                return parse_facts(items, data), data
-            except LLMConfigError:
-                raise
-            except (LLMError, InvalidFacts) as exc:
-                error = str(exc)
-                log.warning("News facts attempt %d failed: %s", attempt, exc)
-        return None
-
     def extract(self, gameweek: int, items: tuple[NewsItem, ...], as_of: date) -> NewsFacts:
         model = self._provider.model
         if not items:
             return NewsFacts((), model, fallback=False)
         prompt = build_prompt(items, as_of)
-        key = (f"gw{gameweek:02d}", CACHE_NAMESPACE, _digest(model, prompt))
-        cached = self._cached(key, items)
-        if cached is not None:
-            return NewsFacts(cached, model, fallback=False)
-
-        answer = self._ask(prompt, items)
-        if answer is None:
-            log.warning("GW%d news facts: giving up after %d attempts; using no facts", gameweek, self._max_attempts)
-            return NewsFacts((), model, fallback=True)
-        facts, data = answer
-        if self._cache:
-            self._cache.put(key, {"model": model, "system": SYSTEM_PROMPT, "prompt": prompt, "response": data})
-        return NewsFacts(facts, model, fallback=False)
+        key = cache_key(gameweek, CACHE_NAMESPACE, model, SYSTEM_PROMPT, prompt)
+        facts = validated_call(self._provider, self._cache, key, SYSTEM_PROMPT, prompt, RESPONSE_SCHEMA,
+                               partial(parse_facts, items), self._max_attempts)
+        return NewsFacts(facts or (), model, fallback=facts is None)
